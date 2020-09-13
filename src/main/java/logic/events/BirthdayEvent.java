@@ -1,11 +1,16 @@
 package logic.events;
 
+import utils.calendar.CalendarUtils;
+
+import java.util.GregorianCalendar;
+
 public class BirthdayEvent extends BaseEvent {
 
-    public BirthdayEvent(){
-        super();
-        targetPerson = DEFAULT_PERSON;
-        presentDescription = DEFAULT_PRESENT_DESCRIPTION;
+    public BirthdayEvent(GregorianCalendar date, String eventDescription,
+                         String targetPerson, String presentDescription){
+        super(date, eventDescription);
+        this.targetPerson = targetPerson;
+        this.presentDescription = presentDescription;
     }
 
     private String targetPerson;
@@ -25,6 +30,18 @@ public class BirthdayEvent extends BaseEvent {
 
     public void setPresentDescription(String presentDescription) {
         this.presentDescription = presentDescription;
+    }
+
+    @Override
+    public String shortDescription() {
+        return super.shortDescription() + ". Birthday. Date: " + CalendarUtils.toDateString(eventDate) +
+                ". Person : " + targetPerson + "\n";
+    }
+
+    @Override
+    public String fullDescription() {
+        return shortDescription() + "Present: " + presentDescription +
+                "\nEvent description: " + eventDescription + "\n";
     }
 
     private static final String DEFAULT_PERSON = "Person doesn't setted";

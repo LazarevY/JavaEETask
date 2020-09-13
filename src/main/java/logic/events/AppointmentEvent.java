@@ -1,10 +1,14 @@
 package logic.events;
 
+import utils.calendar.CalendarUtils;
+
 import java.util.GregorianCalendar;
 
-public class AppointmentEvent {
+public class AppointmentEvent extends BaseEvent {
 
-    public AppointmentEvent(String targetPerson, GregorianCalendar appointmentTime) {
+    public AppointmentEvent(GregorianCalendar date, String eventDescription,
+                            String targetPerson, GregorianCalendar appointmentTime) {
+        super(date, eventDescription);
         this.targetPerson = targetPerson;
         this.appointmentTime = appointmentTime;
     }
@@ -23,6 +27,19 @@ public class AppointmentEvent {
 
     public void setAppointmentTime(GregorianCalendar appointmentTime) {
         this.appointmentTime = appointmentTime;
+    }
+
+    @Override
+    public String shortDescription() {
+        return super.shortDescription() + ". Appointment. Date: " + CalendarUtils.toDateString(super.eventDate) +
+                ". Person: " + targetPerson + "\n";
+    }
+
+    @Override
+    public String fullDescription(){
+        return shortDescription() +
+                "Appointment time: " + CalendarUtils.toHoursMinutesString(appointmentTime) +
+                "\nDescription: " + eventDescription + "\n";
     }
 
     private String targetPerson;

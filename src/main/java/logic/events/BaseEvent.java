@@ -11,17 +11,24 @@ public abstract class BaseEvent {
     }
 
     public  BaseEvent(GregorianCalendar date, String eventDescription){
+        this.eventId = eventIdCounter++;
         eventDate = date;
         this.eventDescription = eventDescription;
     }
 
+    protected GregorianCalendar eventDate;
+    protected String eventDescription;
+    private final int eventId;
+
+    private static int eventIdCounter = 0;
+
 
     public String shortDescription(){
-        return "Empty description";
+        return "Event " + eventId;
     }
 
     public String fullDescription(){
-        return "Empty description";
+        return this.shortDescription();
     }
 
     @Override
@@ -29,10 +36,7 @@ public abstract class BaseEvent {
         return fullDescription();
     }
 
-    private GregorianCalendar eventDate;
-    private String eventDescription;
-
-    public GregorianCalendar eventDate() {
+    public GregorianCalendar getEventDate() {
         return eventDate;
     }
 
@@ -60,5 +64,9 @@ public abstract class BaseEvent {
     @Override
     public int hashCode() {
         return Objects.hash(eventDate, eventDescription);
+    }
+
+    public int getEventId() {
+        return eventId;
     }
 }

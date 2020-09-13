@@ -1,22 +1,15 @@
 package main;
 import logic.events.*;
 import utils.calendar.CalendarUtils;
-import utils.comparators.GregorianCalendarComparator;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<GregorianCalendar> cals = new ArrayList<>();
-        cals.add(CalendarUtils.createCalendarForDate(2020, 2, 30));
-
-        for (GregorianCalendar c: cals){
-            System.out.println(CalendarUtils.toDateString(c));
-            c.getTime();
-        }
+        BaseEvent e = new BirthdayEvent(
+                CalendarUtils.createCalendarForDate(2021, 6, 20),
+                "My best friend BD",
+                "Andrey",
+                "Comrades friendship");
+        System.out.println(e.shortDescription());
+        System.out.println(e.fullDescription());
     }
 }
