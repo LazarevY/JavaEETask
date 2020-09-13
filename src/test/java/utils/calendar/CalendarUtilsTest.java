@@ -48,4 +48,19 @@ public class CalendarUtilsTest {
         GregorianCalendar cal = CalendarUtils.createCalendarForTime(0,0);
         assertEquals("00:00", CalendarUtils.toHoursMinutesString(cal));
     }
+
+    @Test
+    public void createCalenderForDate00(){
+        GregorianCalendar cal = CalendarUtils.createCalendarForDate(2020, 9, 13);
+        assertEquals(2020, cal.get(Calendar.YEAR));
+        assertEquals(9, cal.get(Calendar.MONTH));
+        assertEquals(13, cal.get(Calendar.DAY_OF_MONTH));
+    }
+    @Test
+    public void createCalenderForDate01(){
+        GregorianCalendar cal = CalendarUtils.createCalendarForDate(2020, 6, 2);
+        assertEquals(2020, cal.get(Calendar.YEAR));
+        assertEquals(6, cal.get(Calendar.MONTH));
+        assertEquals(2, cal.get(Calendar.DAY_OF_MONTH));
+    }
 }
