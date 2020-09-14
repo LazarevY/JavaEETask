@@ -1,16 +1,15 @@
 package logic.events;
 
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public abstract class BaseEvent {
 
-    public BaseEvent(){
+    public BaseEvent() {
         this(new GregorianCalendar(), "");
     }
 
-    public  BaseEvent(GregorianCalendar date, String eventDescription){
+    public BaseEvent(GregorianCalendar date, String eventDescription) {
         this.eventId = eventIdCounter++;
         eventDate = date;
         this.eventDescription = eventDescription;
@@ -23,11 +22,11 @@ public abstract class BaseEvent {
     private static int eventIdCounter = 0;
 
 
-    public String shortDescription(){
-        return "Event " + eventId;
+    public String shortDescription() {
+        return "Event id: " + eventId;
     }
 
-    public String fullDescription(){
+    public String fullDescription() {
         return this.shortDescription();
     }
 
