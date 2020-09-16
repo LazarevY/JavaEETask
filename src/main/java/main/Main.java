@@ -8,12 +8,12 @@ import java.util.Calendar;
 public class Main {
     public static void main(String[] args) {
         BaseEvent e = new BirthdayEvent(
-                CalendarUtils.createCalendarForDate(2021, 6, 20),
+                CalendarUtils.createCalendarForDate(2020, 8, 20),
                 "My best friend BD",
                 "Andrey",
                 "Comrades friendship");
         BaseEvent e1 = new BirthdayEvent(
-                CalendarUtils.createCalendarForDate(2022, 6, 20),
+                CalendarUtils.createCalendarForDate(2022, 12, 20),
                 "My best friend BD",
                 "Andrey",
                 "Comrades friendship");
@@ -30,7 +30,7 @@ public class Main {
 
         for (BaseEvent evt: dataBaseEmulation.
                 eventsForPredicate(
-                        ev->ev.getEventDate().get(Calendar.YEAR) == 2020
+                        ev->ev.getEventDate().get(Calendar.MONTH) >= Calendar.AUGUST || ev.getEventDate().get(Calendar.YEAR) <= 2021
                 ))
             System.out.println(evt.shortDescription());
 

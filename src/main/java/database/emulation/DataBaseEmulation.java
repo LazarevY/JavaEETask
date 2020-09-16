@@ -18,10 +18,6 @@ public class DataBaseEmulation {
         return eventHashMap;
     }
 
-    public void setEventHashMap(HashMap<Integer, BaseEvent> eventHashMap) {
-        this.eventHashMap = eventHashMap;
-    }
-
     public List<BaseEvent> eventsForKeys(List<Integer> keys){
         List<BaseEvent> events = new ArrayList<>();
         for (Integer key : keys)
@@ -37,8 +33,16 @@ public class DataBaseEmulation {
         eventHashMap.remove(eventId);
     }
 
+    public void deleteEvents(List<Integer> keys){
+        for (Integer key: keys)
+            deleteEvent(key);
+    }
+
     public List<BaseEvent> eventsForPredicate(Predicate<BaseEvent> predicate){
-        return eventHashMap.values().stream().filter(predicate).collect(Collectors.toList());
+        return eventHashMap.values()
+                .stream()
+                .filter(predicate)
+                .collect(Collectors.toList());
     }
 
     public List<Integer> keysForPredicate(Predicate<BaseEvent> predicate){
