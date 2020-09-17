@@ -1,15 +1,15 @@
 package logic.tokens.base;
 
-public abstract class IntegerToken  implements BooleanBinaryToken {
+public abstract class IntegerToken implements BooleanBinaryToken {
 
-    public IntegerToken(){
+    public IntegerToken() {
         left = 0;
         right = 0;
     }
 
     @Override
     public void setLeftOperand(Object operand) {
-        left = (Integer)operand;
+        left = (Integer) operand;
     }
 
     @Override
@@ -18,6 +18,6 @@ public abstract class IntegerToken  implements BooleanBinaryToken {
     }
 
     protected Integer left;
-    protected   Integer right;
+    protected Integer right;
 
 }
