@@ -119,4 +119,52 @@ public class AriphmeticTokensTest {
         assertFalse(t.evaluate());
     }
 
+    @Test
+    public void test014() {
+        BooleanToken t = new MoreToken();
+        t.setOperand("left", 3);
+        t.setOperand("right", 4);
+        assertFalse(t.evaluate());
+    }
+
+    @Test
+    public void test015() {
+        BooleanToken t = new MoreToken();
+        t.setOperand("left", 4);
+        t.setOperand("right", 4);
+        assertFalse(t.evaluate());
+    }
+
+    @Test
+    public void test016() {
+        BooleanToken t = new MoreToken();
+        t.setOperand("left", 5);
+        t.setOperand("right", 4);
+        assertTrue(t.evaluate());
+    }
+
+    @Test
+    public void test017() {
+        BooleanToken t = new MoreEqualToken();
+        t.setOperand("left", 3);
+        t.setOperand("right", 4);
+        assertFalse(t.evaluate());
+    }
+
+    @Test
+    public void test018() {
+        BooleanToken t = new MoreEqualToken();
+        t.setOperand("left", 4);
+        t.setOperand("right", 4);
+        assertTrue(t.evaluate());
+    }
+
+    @Test
+    public void test019() {
+        BooleanToken t = new MoreEqualToken();
+        t.setOperand("left", 5);
+        t.setOperand("right", 4);
+        assertTrue(t.evaluate());
+    }
+
 }
