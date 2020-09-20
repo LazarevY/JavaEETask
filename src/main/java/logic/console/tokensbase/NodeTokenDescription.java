@@ -8,6 +8,12 @@ public class NodeTokenDescription {
         token.setOperand(operandName, operand);
     }
 
+    public NodeTokenDescription(BooleanToken token, String operandName, String nodeParamName) {
+        this.token = token;
+        this.operandName = operandName;
+        this.nodeParamName = nodeParamName;
+    }
+
     public NodeTokenDescription(BooleanToken token, String operandName) {
         this.token = token;
         this.operandName = operandName;
@@ -31,4 +37,13 @@ public class NodeTokenDescription {
 
     private BooleanToken token;
     private String operandName;
+    private String nodeParamName;
+
+    public String getNodeParamName() {
+        return nodeParamName;
+    }
+
+    public void setNodeParamName(String nodeParamName) {
+        this.nodeParamName = nodeParamName;
+    }
 }
