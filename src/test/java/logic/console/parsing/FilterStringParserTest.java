@@ -193,4 +193,52 @@ public class FilterStringParserTest
         assertTrue(parsed.evaluate());
     }
 
+    @Test
+    public void test020(){
+        TokensBaseBirthdayEvent base = new TokensBaseBirthdayEvent();
+        BooleanToken parsed = FilterStringParser.parseExpression("day>", base);
+        BirthdayEvent e =  new BirthdayEvent(
+                CalendarUtils.createCalendarForDate(2020, 7, 14),
+                "Null",
+                "Gachi",
+                "Void");
+        assertNull(parsed);
+    }
+
+    @Test
+    public void test021(){
+        TokensBaseBirthdayEvent base = new TokensBaseBirthdayEvent();
+        BooleanToken parsed = FilterStringParser.parseExpression("1&2|3", base);
+        BirthdayEvent e =  new BirthdayEvent(
+                CalendarUtils.createCalendarForDate(2020, 7, 14),
+                "Null",
+                "Gachi",
+                "Void");
+        assertNull(parsed);
+    }
+
+    @Test
+    public void test022(){
+        TokensBaseBirthdayEvent base = new TokensBaseBirthdayEvent();
+        BooleanToken parsed = FilterStringParser.parseExpression("1&ааа", base);
+        BirthdayEvent e =  new BirthdayEvent(
+                CalendarUtils.createCalendarForDate(2020, 7, 14),
+                "Null",
+                "Gachi",
+                "Void");
+        assertNull(parsed);
+    }
+
+    @Test
+    public void test023(){
+        TokensBaseBirthdayEvent base = new TokensBaseBirthdayEvent();
+        BooleanToken parsed = FilterStringParser.parseExpression("1>ааа", base);
+        BirthdayEvent e =  new BirthdayEvent(
+                CalendarUtils.createCalendarForDate(2020, 7, 14),
+                "Null",
+                "Gachi",
+                "Void");
+        assertNull(parsed);
+    }
+
 }

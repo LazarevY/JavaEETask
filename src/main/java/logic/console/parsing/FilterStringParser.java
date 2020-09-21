@@ -145,11 +145,19 @@ public class FilterStringParser {
 
 
         if (isInteger(left)) {
+            boolean wrongOtherToken = !isInteger(right) && !keywords.contains(right);
+
+            if (wrongOtherToken)
+                return Collections.emptyList();
+
             rightDesc.setNodeParamName(right);
             rightDesc.getToken().setOperand("left", Integer.parseInt(left));
             out.add(rightDesc);
         }
         if (isInteger(right)) {
+            boolean wrongOtherToken = !isInteger(left) && !keywords.contains(left);
+            if (wrongOtherToken)
+                return Collections.emptyList();
             leftDesc.setNodeParamName(left);
             leftDesc.getToken().setOperand("right", Integer.parseInt(right));
             out.add(leftDesc);
