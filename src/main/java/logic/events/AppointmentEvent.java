@@ -2,15 +2,18 @@ package logic.events;
 
 import utils.calendar.CalendarUtils;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.GregorianCalendar;
 
-public class AppointmentEvent extends BaseEvent {
+public class AppointmentEvent extends Event {
 
-    public AppointmentEvent(GregorianCalendar date, String eventDescription,
-                            String targetPerson, GregorianCalendar appointmentTime) {
+    public AppointmentEvent(LocalDate date, String eventDescription,
+                            String targetPerson, LocalTime time) {
         super(date, eventDescription);
         this.targetPerson = targetPerson;
-        this.appointmentTime = appointmentTime;
+        this.time = time;
     }
 
     public String getTargetPerson() {
@@ -21,27 +24,27 @@ public class AppointmentEvent extends BaseEvent {
         this.targetPerson = targetPerson;
     }
 
-    public GregorianCalendar getAppointmentTime() {
-        return appointmentTime;
+    public LocalTime getTime() {
+        return time;
     }
 
-    public void setAppointmentTime(GregorianCalendar appointmentTime) {
-        this.appointmentTime = appointmentTime;
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 
     @Override
     public String shortDescription() {
-        return super.shortDescription() + ". Appointment. Date: " + CalendarUtils.toDateString(super.eventDate) +
+        return super.shortDescription() + ". Appointment. Date: " + super.date.toString() +
                 ". Person: " + targetPerson + "\n";
     }
 
     @Override
     public String fullDescription(){
         return shortDescription() +
-                "Appointment time: " + CalendarUtils.toHoursMinutesString(appointmentTime) +
-                "\nDescription: " + eventDescription + "\n";
+                "Appointment time: " + time.toString() +
+                "\nDescription: " + description + "\n";
     }
 
     private String targetPerson;
-    private GregorianCalendar appointmentTime;
+    private LocalTime time;
 }

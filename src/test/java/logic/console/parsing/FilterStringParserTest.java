@@ -2,7 +2,7 @@ package logic.console.parsing;
 
 import logic.console.tokensbase.NodeTokenDescription;
 import logic.console.tokensbase.TokensBaseBirthdayEvent;
-import logic.events.BirthdayEvent;
+import logic.events.Birthday;
 import logic.tokens.ariphmetic.EqualToken;
 import logic.tokens.ariphmetic.LessToken;
 import logic.tokens.ariphmetic.NotEqualToken;
@@ -12,6 +12,7 @@ import logic.tokens.base.IntegerToken;
 import org.junit.Test;
 import utils.calendar.CalendarUtils;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -169,8 +170,8 @@ public class FilterStringParserTest
     public void test018(){
         TokensBaseBirthdayEvent base = new TokensBaseBirthdayEvent();
         BooleanToken parsed = FilterStringParser.parseExpression("day > 10 & month > 5", base);
-        BirthdayEvent e =  new BirthdayEvent(
-                CalendarUtils.createCalendarForDate(2020, 7, 14),
+        Birthday e =  new Birthday(
+                LocalDate.of(2020, 7, 14),
                 "Null",
                 "Person",
                 "Void");
@@ -182,9 +183,9 @@ public class FilterStringParserTest
     @Test
     public void test019(){
         TokensBaseBirthdayEvent base = new TokensBaseBirthdayEvent();
-        BooleanToken parsed = FilterStringParser.parseExpression("day >= 14 & month > 5 & person=Gachi", base);
-        BirthdayEvent e =  new BirthdayEvent(
-                CalendarUtils.createCalendarForDate(2020, 7, 14),
+        BooleanToken parsed = FilterStringParser.parseExpression("day >= 14 & month >= 7 & person=Gachi", base);
+        Birthday e =  new Birthday(
+                LocalDate.of(2020, 7, 14),
                 "Null",
                 "Gachi",
                 "Void");
@@ -197,8 +198,8 @@ public class FilterStringParserTest
     public void test020(){
         TokensBaseBirthdayEvent base = new TokensBaseBirthdayEvent();
         BooleanToken parsed = FilterStringParser.parseExpression("day>", base);
-        BirthdayEvent e =  new BirthdayEvent(
-                CalendarUtils.createCalendarForDate(2020, 7, 14),
+        Birthday e =  new Birthday(
+                LocalDate.of(2020, 7, 14),
                 "Null",
                 "Gachi",
                 "Void");
@@ -209,8 +210,8 @@ public class FilterStringParserTest
     public void test021(){
         TokensBaseBirthdayEvent base = new TokensBaseBirthdayEvent();
         BooleanToken parsed = FilterStringParser.parseExpression("1&2|3", base);
-        BirthdayEvent e =  new BirthdayEvent(
-                CalendarUtils.createCalendarForDate(2020, 7, 14),
+        Birthday e =  new Birthday(
+                LocalDate.of(2020, 7, 14),
                 "Null",
                 "Gachi",
                 "Void");
@@ -221,8 +222,8 @@ public class FilterStringParserTest
     public void test022(){
         TokensBaseBirthdayEvent base = new TokensBaseBirthdayEvent();
         BooleanToken parsed = FilterStringParser.parseExpression("1&ааа", base);
-        BirthdayEvent e =  new BirthdayEvent(
-                CalendarUtils.createCalendarForDate(2020, 7, 14),
+        Birthday e =  new Birthday(
+                LocalDate.of(2020, 7, 14),
                 "Null",
                 "Gachi",
                 "Void");
@@ -233,8 +234,8 @@ public class FilterStringParserTest
     public void test023(){
         TokensBaseBirthdayEvent base = new TokensBaseBirthdayEvent();
         BooleanToken parsed = FilterStringParser.parseExpression("1>ааа", base);
-        BirthdayEvent e =  new BirthdayEvent(
-                CalendarUtils.createCalendarForDate(2020, 7, 14),
+        Birthday e =  new Birthday(
+                LocalDate.of(2020, 7, 14),
                 "Null",
                 "Gachi",
                 "Void");

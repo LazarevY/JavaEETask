@@ -1,14 +1,13 @@
 package logic.console.tokensbase;
 
-import logic.events.BaseEvent;
-import logic.events.BirthdayEvent;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-public abstract class TokensBaseForEvent<Event extends BaseEvent> {
+public abstract class TokensBaseForEvent<Event extends logic.events.Event> {
+
+    private HashMap<String, List<NodeTokenDescription>> nodesMap;
 
     public TokensBaseForEvent() {
         this.nodesMap = new HashMap<>();
@@ -36,21 +35,19 @@ public abstract class TokensBaseForEvent<Event extends BaseEvent> {
         List<NodeTokenDescription> l = listNodesForParameter("year");
 
         for (NodeTokenDescription d: l)
-            d.setOperandValue(e.getEventDate().get(Calendar.YEAR));
+            d.setOperandValue(e.getEventDate().getYear());
 
         l = listNodesForParameter("month");
 
         for (NodeTokenDescription d: l)
             // Plus one because GregorianCalendar class has first month as 0
-            d.setOperandValue(e.getEventDate().get(Calendar.MONTH) + 1);
+            d.setOperandValue(e.getEventDate().getMonth().getValue());
 
         l = listNodesForParameter("day");
 
         for (NodeTokenDescription d: l)
-            d.setOperandValue(e.getEventDate().get(Calendar.DAY_OF_MONTH));
+            d.setOperandValue(e.getEventDate().getDayOfMonth());
 
-        l = listNodesForParameter("person");
     }
 
-    private HashMap<String, List<NodeTokenDescription>> nodesMap;
 }

@@ -1,14 +1,14 @@
 package database.emulation;
 
 import logic.console.tokensbase.TokensBaseForEvent;
-import logic.events.BaseEvent;
+import logic.events.Event;
 import logic.tokens.base.BooleanToken;
 import logic.tokens.logical.AndToken;
 import logic.tokens.logical.TestBoolToken;
 
 import java.util.function.Predicate;
 
-public class EventFilterPredicate<EventT extends BaseEvent> implements Predicate<EventT> {
+public class EventFilterPredicate<EventT extends Event> implements Predicate<EventT> {
 
     public EventFilterPredicate(TokensBaseForEvent<EventT> tokensBaseForEvent){
         this.tokensBaseForEvent = tokensBaseForEvent;
@@ -25,7 +25,12 @@ public class EventFilterPredicate<EventT extends BaseEvent> implements Predicate
     }
 
     private TokensBaseForEvent<EventT> tokensBaseForEvent;
-    BooleanToken rootToken;
+
+    public void setRootToken(BooleanToken rootToken) {
+        this.rootToken = rootToken;
+    }
+
+    private BooleanToken rootToken;
 
     @Override
     public boolean test(EventT baseEvent) {

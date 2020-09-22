@@ -7,21 +7,21 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class CalendarUtils {
-    public static GregorianCalendar createCalendarForTime(int hours, int minutes, int seconds) {
+    public static GregorianCalendar createForTime(int hours, int minutes, int seconds) {
         GregorianCalendar cal = new GregorianCalendar();
         cal.set(Calendar.HOUR, hours);
         cal.set(Calendar.MINUTE, minutes);
         cal.set(Calendar.SECOND, seconds);
         return cal;
     }
-    public static GregorianCalendar createCalendarForTime(int hours, int minutes) {
+    public static GregorianCalendar createForTime(int hours, int minutes) {
         GregorianCalendar cal = new GregorianCalendar();
         cal.set(Calendar.HOUR_OF_DAY, hours);
         cal.set(Calendar.MINUTE, minutes);
         return cal;
     }
 
-    public static GregorianCalendar createCalendarForDate(int year, int month, int day){
+    public static GregorianCalendar createForDate(int year, int month, int day){
         GregorianCalendar cal = new GregorianCalendar();
         cal.set(Calendar.YEAR, year);
         cal.set(Calendar.MONTH, month - 1);

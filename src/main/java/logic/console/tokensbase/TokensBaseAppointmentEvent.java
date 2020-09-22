@@ -15,11 +15,11 @@ public class TokensBaseAppointmentEvent extends TokensBaseForEvent<AppointmentEv
 
         l = listNodesForParameter("hour");
         for (NodeTokenDescription d: l)
-            d.setOperandValue(e.getAppointmentTime().get(Calendar.HOUR_OF_DAY));
+            d.setOperandValue(e.getTime().getHour());
 
         l = listNodesForParameter("minute");
         for (NodeTokenDescription d: l)
-            d.setOperandValue(e.getAppointmentTime().get(Calendar.MINUTE));
+            d.setOperandValue(e.getTime().getMinute());
     }
 }
 

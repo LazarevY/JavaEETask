@@ -16,9 +16,9 @@ public class GregorianCalendarComparatorTest {
     @Test
     public void compare00() {
         ArrayList<GregorianCalendar> cals = new ArrayList<>();
-        cals.add(CalendarUtils.createCalendarForDate(2021, 1, 5));
-        cals.add(CalendarUtils.createCalendarForDate(2020,9,13));
-        cals.add(CalendarUtils.createCalendarForDate(2020, 10, 12));
+        cals.add(CalendarUtils.createForDate(2021, 1, 5));
+        cals.add(CalendarUtils.createForDate(2020,9,13));
+        cals.add(CalendarUtils.createForDate(2020, 10, 12));
 
         List<GregorianCalendar> sorted = cals.stream()
                 .sorted(new GregorianCalendarComparator(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH))
@@ -36,9 +36,9 @@ public class GregorianCalendarComparatorTest {
     @Test
     public void compare01() {
         ArrayList<GregorianCalendar> cals = new ArrayList<>();
-        cals.add(CalendarUtils.createCalendarForDate(2020, 1, 5));
-        cals.add(CalendarUtils.createCalendarForDate(2020, 2, 12));
-        cals.add(CalendarUtils.createCalendarForDate(2020, 1,13));
+        cals.add(CalendarUtils.createForDate(2020, 1, 5));
+        cals.add(CalendarUtils.createForDate(2020, 2, 12));
+        cals.add(CalendarUtils.createForDate(2020, 1,13));
 
         List<GregorianCalendar> sorted = cals.stream()
                 .sorted(new GregorianCalendarComparator(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH))
@@ -57,9 +57,9 @@ public class GregorianCalendarComparatorTest {
     @Test
     public void compare02() {
         ArrayList<GregorianCalendar> cals = new ArrayList<>();
-        cals.add(CalendarUtils.createCalendarForDate(2020, 12, 5));
-        cals.add(CalendarUtils.createCalendarForDate(2021, 6, 2));
-        cals.add(CalendarUtils.createCalendarForDate(2020, 11,13));
+        cals.add(CalendarUtils.createForDate(2020, 12, 5));
+        cals.add(CalendarUtils.createForDate(2021, 6, 2));
+        cals.add(CalendarUtils.createForDate(2020, 11,13));
 
         List<GregorianCalendar> sorted = cals.stream()
                 .sorted(new GregorianCalendarComparator(Calendar.DAY_OF_MONTH, Calendar.MONTH, Calendar.YEAR))
@@ -78,9 +78,9 @@ public class GregorianCalendarComparatorTest {
     @Test
     public void compare03() {
         ArrayList<GregorianCalendar> cals = new ArrayList<>();
-        cals.add(CalendarUtils.createCalendarForDate(2020, 6, 2));
-        cals.add(CalendarUtils.createCalendarForDate(2021, 6, 2));
-        cals.add(CalendarUtils.createCalendarForDate(2020, 12,2));
+        cals.add(CalendarUtils.createForDate(2020, 6, 2));
+        cals.add(CalendarUtils.createForDate(2021, 6, 2));
+        cals.add(CalendarUtils.createForDate(2020, 12,2));
 
         List<GregorianCalendar> sorted = cals.stream()
                 .sorted(new GregorianCalendarComparator(Calendar.DAY_OF_MONTH, Calendar.MONTH, Calendar.YEAR))
@@ -99,16 +99,16 @@ public class GregorianCalendarComparatorTest {
     }
     @Test
     public void compare04() {
-        GregorianCalendar cal1 = CalendarUtils.createCalendarForDate(2020, 2, 2);
-        GregorianCalendar cal2 = CalendarUtils.createCalendarForDate(2021,2,2);
+        GregorianCalendar cal1 = CalendarUtils.createForDate(2020, 2, 2);
+        GregorianCalendar cal2 = CalendarUtils.createForDate(2021,2,2);
         assertEquals(1,
                 new GregorianCalendarComparator(Calendar.DAY_OF_MONTH, Calendar.MONTH, Calendar.YEAR)
         .compare(cal2, cal1));
     }
     @Test
     public void compare05() {
-        GregorianCalendar cal1 = CalendarUtils.createCalendarForDate(2020, 2, 2);
-        GregorianCalendar cal2 = CalendarUtils.createCalendarForDate(2021,6,2);
+        GregorianCalendar cal1 = CalendarUtils.createForDate(2020, 2, 2);
+        GregorianCalendar cal2 = CalendarUtils.createForDate(2021,6,2);
         assertEquals(1,
                 new GregorianCalendarComparator(Calendar.DAY_OF_MONTH, Calendar.MONTH, Calendar.YEAR)
                         .compare(cal2, cal1));
@@ -116,8 +116,8 @@ public class GregorianCalendarComparatorTest {
 
     @Test
     public void compare06() {
-        GregorianCalendar cal1 = CalendarUtils.createCalendarForDate(2020, 6, 2);
-        GregorianCalendar cal2 = CalendarUtils.createCalendarForDate(2021,6,2);
+        GregorianCalendar cal1 = CalendarUtils.createForDate(2020, 6, 2);
+        GregorianCalendar cal2 = CalendarUtils.createForDate(2021,6,2);
         assertEquals(1,
                 new GregorianCalendarComparator(Calendar.DAY_OF_MONTH, Calendar.MONTH, Calendar.YEAR)
                         .compare(cal2, cal1));

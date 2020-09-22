@@ -3,7 +3,7 @@ package logic.console.parsing;
 import database.emulation.EventFilterPredicate;
 import logic.console.tokensbase.NodeTokenDescription;
 import logic.console.tokensbase.TokensBaseForEvent;
-import logic.events.BaseEvent;
+import logic.events.Event;
 import logic.tokens.ariphmetic.*;
 import logic.tokens.base.BooleanBinaryToken;
 import logic.tokens.base.BooleanToken;
@@ -22,7 +22,7 @@ public class FilterStringParser {
 
     private static HashSet<String> keywords = new HashSet<>(Arrays.asList("day", "month", "year", "person"));
 
-    public static <EventT extends BaseEvent> Predicate<BaseEvent> parsePredicate(String filter, TokensBaseForEvent<EventT> base) {
+    public static <EventT extends Event> Predicate<Event> parsePredicate(String filter, TokensBaseForEvent<EventT> base) {
 
         EventFilterPredicate<EventT> p = new EventFilterPredicate<>(base);
         AndToken root = new AndToken();
@@ -30,11 +30,13 @@ public class FilterStringParser {
         BooleanToken parsed = parseExpression(filter, base);
         if (parsed == null)
             return null;
-        root.setRightOperand(root);
-        return (Predicate<BaseEvent>) p;
+        root.setRightOperand(parsed);
+        p.setRootToken(root);
+
+        return (Predicate<Event>) p;
     }
 
-    public static <EventT extends BaseEvent> BooleanToken parseExpression(String filter, TokensBaseForEvent<EventT> base) {
+    public static <EventT extends Event> BooleanToken parseExpression(String filter, TokensBaseForEvent<EventT> base) {
         BooleanToken token = null;
 
         int orInd = filter.indexOf("|");
@@ -64,7 +66,7 @@ public class FilterStringParser {
         return token;
     }
 
-    private static <EventT extends BaseEvent> BooleanToken parseLogicalExpression(
+    private static <EventT extends Event> BooleanToken parseLogicalExpression(
             String filter,
             TokensBaseForEvent<EventT> base,
             int separateIndex,

@@ -1,6 +1,6 @@
 package database.emulation;
 
-import logic.events.BaseEvent;
+import logic.events.Event;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -8,25 +8,26 @@ import java.util.stream.Collectors;
 
 public class DataBaseEmulation {
 
-    private HashMap<Integer, BaseEvent> eventHashMap;
+    private HashMap<Integer, Event> eventHashMap;
 
     public DataBaseEmulation(){
         eventHashMap = new HashMap<>();
     }
 
-    public HashMap<Integer, BaseEvent> getEventHashMap() {
+    public HashMap<Integer, Event> getEventHashMap() {
         return eventHashMap;
     }
 
-    public List<BaseEvent> eventsForKeys(List<Integer> keys){
-        List<BaseEvent> events = new ArrayList<>();
+    public List<Event> eventsForKeys(List<Integer> keys){
+        List<Event> events = new ArrayList<>();
         for (Integer key : keys)
             events.add(eventHashMap.get(key));
         return events;
     }
 
-    public void insertEvent(BaseEvent e){
-        eventHashMap.put(e.getEventId(), e);
+    public void insertEvent(Event e){
+        e.setId(idCounter++);
+        eventHashMap.put(e.getId(), e);
     }
 
     public void deleteEvent(Integer eventId){
@@ -38,17 +39,19 @@ public class DataBaseEmulation {
             deleteEvent(key);
     }
 
-    public List<BaseEvent> eventsForPredicate(Predicate<BaseEvent> predicate){
+    public List<Event> eventsForPredicate(Predicate<Event> predicate){
         return eventHashMap.values()
                 .stream()
                 .filter(predicate)
                 .collect(Collectors.toList());
     }
 
-    public List<Integer> keysForPredicate(Predicate<BaseEvent> predicate){
+    public List<Integer> keysForPredicate(Predicate<Event> predicate){
        return eventHashMap.values()
                .stream()
                .filter(predicate)
-               .map(BaseEvent::getEventId).collect(Collectors.toList());
+               .map(Event::getId).collect(Collectors.toList());
     }
+
+    private static int idCounter;
 }

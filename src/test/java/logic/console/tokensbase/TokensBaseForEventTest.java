@@ -1,11 +1,15 @@
 package logic.console.tokensbase;
 
 import logic.events.AppointmentEvent;
-import logic.events.BirthdayEvent;
+import logic.events.Birthday;
 import logic.tokens.ariphmetic.*;
 import logic.tokens.base.BooleanToken;
 import org.junit.Test;
 import utils.calendar.CalendarUtils;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import static org.junit.Assert.*;
 
@@ -27,8 +31,8 @@ public class TokensBaseForEventTest {
         tree.insertNode("person", forName);
         tree.insertNode("year", forYear);
 
-        BirthdayEvent e = new BirthdayEvent(
-                CalendarUtils.createCalendarForDate(2019, 5, 7),
+        Birthday e = new Birthday(
+                LocalDate.of(2019, 5, 7),
                 "Event",
                 "Name",
                 "Void");
@@ -66,8 +70,8 @@ public class TokensBaseForEventTest {
         tree.insertNode("year", forYearMore);
         tree.insertNode("day", forDay);
 
-        BirthdayEvent e = new BirthdayEvent(
-                CalendarUtils.createCalendarForDate(2019, 5, 7),
+        Birthday e = new Birthday(
+                LocalDate.of(2019, 5, 7),
                 "Event",
                 "Name",
                 "Void");
@@ -107,8 +111,8 @@ public class TokensBaseForEventTest {
         tree.insertNode("year", forYearMore);
         tree.insertNode("day", forDay);
 
-        BirthdayEvent e = new BirthdayEvent(
-                CalendarUtils.createCalendarForDate(2019, 5, 7),
+        Birthday e = new Birthday(
+                LocalDate.of(2019, 5, 7),
                 "Event",
                 "Name",
                 "Void");
@@ -155,10 +159,10 @@ public class TokensBaseForEventTest {
         tree.insertNode("day", forDay);
 
         AppointmentEvent e = new AppointmentEvent(
-                CalendarUtils.createCalendarForDate(2019, 5, 7),
+                LocalDate.of(2019, 5, 7),
                 "Event",
                 "Name",
-                CalendarUtils.createCalendarForTime(14, 30));
+               LocalTime.of(14, 30, 0,0));
 
         tree.acceptEvent(e);
 
