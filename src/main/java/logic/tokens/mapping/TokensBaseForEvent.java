@@ -1,4 +1,6 @@
-package logic.console.tokensbase;
+package logic.tokens.mapping;
+
+import logic.console.tokensbase.NodeTokenDescription;
 
 import java.util.ArrayList;
 import java.util.Calendar;

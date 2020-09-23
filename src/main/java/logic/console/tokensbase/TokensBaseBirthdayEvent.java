@@ -1,6 +1,7 @@
 package logic.console.tokensbase;
 
 import logic.events.Birthday;
+import logic.tokens.mapping.TokensBaseForEvent;
 
 import java.util.List;
 

@@ -1,5 +1,6 @@
 package logic.tokens.base;
 
+
 public interface BooleanToken {
 
     boolean evaluate();

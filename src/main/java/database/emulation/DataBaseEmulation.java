@@ -25,6 +25,8 @@ public class DataBaseEmulation {
         return events;
     }
 
+
+
     public void insertEvent(Event e){
         e.setId(idCounter++);
         eventHashMap.put(e.getId(), e);

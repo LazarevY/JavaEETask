@@ -1,6 +1,6 @@
 package database.emulation;
 
-import logic.console.tokensbase.TokensBaseForEvent;
+import logic.tokens.mapping.TokensBaseForEvent;
 import logic.events.Event;
 import logic.tokens.base.BooleanToken;
 import logic.tokens.logical.AndToken;

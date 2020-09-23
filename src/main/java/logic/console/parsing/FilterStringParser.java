@@ -2,7 +2,7 @@ package logic.console.parsing;
 
 import database.emulation.EventFilterPredicate;
 import logic.console.tokensbase.NodeTokenDescription;
-import logic.console.tokensbase.TokensBaseForEvent;
+import logic.tokens.mapping.TokensBaseForEvent;
 import logic.events.Event;
 import logic.tokens.ariphmetic.*;
 import logic.tokens.base.BooleanBinaryToken;

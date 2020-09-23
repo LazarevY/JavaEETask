@@ -7,10 +7,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.GregorianCalendar;
 
-public class AppointmentEvent extends Event {
+public class Appointment extends Event {
 
-    public AppointmentEvent(LocalDate date, String eventDescription,
-                            String targetPerson, LocalTime time) {
+    public Appointment(LocalDate date, String eventDescription,
+                       String targetPerson, LocalTime time) {
         super(date, eventDescription);
         this.targetPerson = targetPerson;
         this.time = time;

@@ -1,13 +1,13 @@
 package logic.console.tokensbase;
 
-import logic.events.AppointmentEvent;
+import logic.events.Appointment;
+import logic.tokens.mapping.TokensBaseForEvent;
 
-import java.util.Calendar;
 import java.util.List;
 
-public class TokensBaseAppointmentEvent extends TokensBaseForEvent<AppointmentEvent> {
+public class TokensBaseAppointmentEvent extends TokensBaseForEvent<Appointment> {
     @Override
-    public void acceptEvent(AppointmentEvent e) {
+    public void acceptEvent(Appointment e) {
         super.acceptEvent(e);
         List<NodeTokenDescription> l = listNodesForParameter("person");
         for (NodeTokenDescription d: l)
