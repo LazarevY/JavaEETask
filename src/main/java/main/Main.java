@@ -2,22 +2,35 @@ package main;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import data.AttributeFilterType;
+import data.Filter;
+import data.json.AttributeMapper;
 
 import java.io.File;
 import java.io.IOException;
 
 public class Main {
+
+
     public static void main(String[] args) throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        JsonNode node = mapper.readTree(new File("resources/test.json"));
+        String json = "{\n" +
+                "  \"attribute\": \"day\",\n" +
+                "  \"operator\": \"=\",\n" +
+                "  \"value\": 20,\n" +
+                "  \"type\": \"And\"\n" +
+                "}";
 
-        JsonNode node1 = node.get("color");
+        Filter f = mapper.readValue(json, Filter.class);
+        f = mapper.treeToValue(AttributeMapper.createJsonNode(f), Filter.class);
 
-        String color = node1.get("f").asText();
+        System.out.println(f.getAttribute());
+        System.out.println(f.getOperator());
+        System.out.println(f.getValue().toString());
+        System.out.println(f.getType());
 
-        System.out.println(color);
 
     }
 }

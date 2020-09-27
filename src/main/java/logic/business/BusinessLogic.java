@@ -1,38 +1,80 @@
 package logic.business;
 
-import data.DAO;
+import data.Attribute;
+import data.dao.DAO;
+import data.Filter;
+import data.query.Delete;
+import data.query.Insert;
+import data.query.Select;
+import data.query.Update;
 import logic.events.Event;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+
+import java.util.*;
 
 public class BusinessLogic {
 
-    private DAO dao;
+    private HashMap<Class<? extends Event>, DAO> daoHashMap;
 
-    public List<String> getEventsDescription(Predicate<Event> predicate){
-        return dao.select(predicate).stream().map(Event::shortDescription).collect(Collectors.toList());
+    public BusinessLogic() {
+        this.daoHashMap = new HashMap<>();
     }
 
-    public Event get(Predicate<Event> predicate){
-        List<Event> lst = dao.select(predicate);
-        if (lst.size() > 1)
-            throw new IllegalArgumentException("Predicate must set unique instance of event");
-        if (lst.size() == 0)
-            throw new IllegalArgumentException("Predicate doesn't set any event");
-        return lst.get(0);
+    public <DataType extends Event> void registerDao(Class<DataType> dataTypeClass, DAO<DataType> dao){
+        daoHashMap.put(dataTypeClass, dao);
     }
 
-    public void addEvent(Event event){
-        dao.insert(event);
+    private <DataType> DAO<DataType> getDao(Class<DataType> dataTypeClass){
+        return (DAO<DataType>) daoHashMap.get(dataTypeClass);
     }
 
-    public void updateEvents(Event newEvent, Predicate<Event> predicate){
-        dao.update(newEvent, predicate);
+    public List<Event> getAllEvents(List<Filter> filters){
+        List<Event> events = new ArrayList<>();
+
+        for (Map.Entry<Class<? extends Event>, DAO> entry: daoHashMap.entrySet()){
+            Select<? extends Event> select = new Select<>(entry.getKey());
+            select.setFilters(filters);
+            events.addAll(entry.getValue().select(select));
+        }
+
+        return events;
+
     }
 
-    public void removeEvents(Predicate<Event> predicate){
-        dao.delete(predicate);
+    public <T extends Event> List<T> listOf(List<Filter> filters, Class<T> tClass){
+        Select<T> select = new Select<>(tClass);
+        select.setFilters(filters);
+        return getDao(tClass).select(select);
+    }
+
+    public void addEvents(List<Event> events){
+        for (Event e: events){
+            Insert insert = new Insert<>(e.getClass());
+            insert.setBody(Collections.singletonList(e));
+            getDao(e.getClass()).insert(insert);
+        }
+    }
+
+    public <T extends Event> void updateEvents(List<Attribute> newAttributes, List<Filter> filters, Class<T> tClass){
+        Update<T> update = new Update<>(tClass);
+        update.setAttributes(newAttributes);
+        update.setFilters(filters);
+    }
+
+    public void updateAllEvents(List<Attribute> newAttributes, List<Filter> filters){
+        for (Map.Entry<Class<? extends Event>, DAO> entry: daoHashMap.entrySet()){
+            Update<? extends Event> update = new Update<>(entry.getKey());
+            update.setFilters(filters);
+            update.setAttributes(newAttributes);
+            entry.getValue().update(update);
+        }
+    }
+
+    public void removeEvents(List<Filter> filters){
+        for (Map.Entry<Class<? extends Event>, DAO> entry: daoHashMap.entrySet()){
+            Delete<? extends Event> delete = new Delete<>(entry.getKey());
+            delete.setFilters(filters);
+            entry.getValue().delete(delete);
+        }
     }
 
 }

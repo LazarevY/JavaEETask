@@ -1,0 +1,6 @@
+{
+  "attribute": "day",
+  "operator": "=",
+  "value": 20,
+  "type": "And"
+}
