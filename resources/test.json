@@ -1,0 +1,21 @@
+{
+  "queryType": "select",
+  "targetEntity": "Event",
+  "body": {
+    "conditions":
+    [
+      {
+        "type": "and",
+        "attribute": "day",
+        "comparator": "=",
+        "value": 20
+      },
+      {
+        "type": "or",
+        "attribute": "month",
+        "comparator": "<=",
+        "value": 6
+      }
+    ]
+  }
+}

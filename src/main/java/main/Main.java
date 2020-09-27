@@ -1,34 +1,23 @@
 package main;
 
-import logic.events.Birthday;
-import logic.events.Event;
-import logic.expressions.comparators.ComparatorCreator;
-import logic.expressions.conditions.Condition;
-import logic.expressions.interfaces.SpecificComparator;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.time.LocalDate;
-import java.time.Month;
+import java.io.File;
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        Condition<Event, Integer> checkDayMore =
-                new Condition<>(
-                        (SpecificComparator<Integer>) ComparatorCreator.create(">"),
-                        (instance, value, comparator) ->
-                                comparator.compare(instance.getEventDate().getDayOfMonth(), value),
-                        3
-                );
+        ObjectMapper mapper = new ObjectMapper();
 
-        Event e =
-                new Birthday(
-                        LocalDate.of(2020, Month.JANUARY, 10),
-                        "None",
-                        "Person",
-                        "Gift"
-                );
+        JsonNode node = mapper.readTree(new File("resources/test.json"));
 
-        System.out.println(checkDayMore.check(e));
+        JsonNode node1 = node.get("color");
+
+        String color = node1.get("f").asText();
+
+        System.out.println(color);
 
     }
 }
