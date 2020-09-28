@@ -1,5 +1,7 @@
 package logic.business;
 
+import data.AttributeFilterType;
+import data.Filter;
 import data.dao.HashMapDao;
 import logic.events.Appointment;
 import logic.events.Birthday;
@@ -59,6 +61,35 @@ public class BusinessLogicTest {
 
         List<Appointment> appointments = logic.listOf(Collections.emptyList(), Appointment.class);
         List<Birthday> birthdays = logic.listOf(Collections.emptyList(), Birthday.class);
+
+        assertEquals(0, appointments.size());
+        assertEquals(1, birthdays.size());
+
+    }
+
+    @Test
+    public void test002(){
+        BusinessLogic logic = new BusinessLogic();
+
+        HashMapDao<Birthday> birthdayHashMapDao = new HashMapDao<>();
+        HashMapDao<Appointment> appointmentHashMapDao = new HashMapDao<>();
+
+        logic.registerDao(Birthday.class, birthdayHashMapDao);
+        logic.registerDao(Appointment.class, appointmentHashMapDao);
+
+        Birthday birthday =
+                new Birthday(LocalDate.of(2020, Month.APRIL, 12),
+                        "Desc",
+                        "You",
+                        "Gift");
+
+        logic.addEvents(Collections.singletonList(birthday));
+
+        List<Appointment> appointments = logic.listOf(Collections.emptyList(), Appointment.class);
+        List<Birthday> birthdays = logic.listOf(
+                Collections.singletonList(
+                        new Filter("day", "=", 12, AttributeFilterType.And)
+                ), Birthday.class);
 
         assertEquals(0, appointments.size());
         assertEquals(1, birthdays.size());

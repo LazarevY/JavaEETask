@@ -18,7 +18,7 @@ public class ComparatorCreator {
             case "!=":
                 return (v1, v2) -> !v1.equals(v2);
             default:
-                return null;
+                throw new IllegalArgumentException("Unknow operation '" + operation + "'");
         }
 
     }
