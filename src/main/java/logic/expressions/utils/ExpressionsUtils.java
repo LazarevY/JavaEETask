@@ -11,31 +11,31 @@ import logic.expressions.interfaces.SpecificComparator;
 
 public class ExpressionsUtils {
 
-    public static Condition<?,?> createConditionForFilter(Filter filter){
+    public static Condition<? extends Event,?> createConditionForFilter(Filter filter){
         switch (filter.getAttribute()){
             case "day":
-                return new Condition<Event, Integer>(
+                return new Condition<>(
                         (SpecificComparator<Integer>) ComparatorCreator.create(filter.getOperator()),
                         (instance, value, comparator) ->
                                 comparator.compare(instance.getEventDate().getDayOfMonth(), value),
                         (Integer) filter.getValue()
                 );
             case "month":
-                return new Condition<Event, Integer>(
+                return new Condition<>(
                         (SpecificComparator<Integer>) ComparatorCreator.create(filter.getOperator()),
                         (instance, value, comparator) ->
                                 comparator.compare(instance.getEventDate().getMonthValue(), value),
                         (Integer) filter.getValue()
                 );
             case "year":
-                return new Condition<Event, Integer>(
+                return new Condition<>(
                         (SpecificComparator<Integer>) ComparatorCreator.create(filter.getOperator()),
                         (instance, value, comparator) ->
                                 comparator.compare(instance.getEventDate().getYear(), value),
                         (Integer) filter.getValue()
                 );
             case "id":
-                return new Condition<Event, Integer>(
+                return new Condition<>(
                         (SpecificComparator<Integer>) ComparatorCreator.create(filter.getOperator()),
                         (instance, value, comparator) ->
                                 comparator.compare(instance.getId(), value),

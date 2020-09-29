@@ -1,5 +1,8 @@
 package logic.events;
 
+import annotations.PropertyGetter;
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -65,11 +68,17 @@ public abstract class Event {
         return Objects.hash(date, description);
     }
 
+    @PropertyGetter("id")
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @PropertyGetter("day")
+    private int getDay(){
+        return date.getDayOfMonth();
     }
 }

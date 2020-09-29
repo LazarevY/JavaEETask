@@ -88,7 +88,7 @@ public class BusinessLogicTest {
         List<Appointment> appointments = logic.listOf(Collections.emptyList(), Appointment.class);
         List<Birthday> birthdays = logic.listOf(
                 Collections.singletonList(
-                        new Filter("day", "=", 12, AttributeFilterType.And)
+                        new Filter("birthdayPerson", "=", "You", AttributeFilterType.And)
                 ), Birthday.class);
 
         assertEquals(0, appointments.size());
