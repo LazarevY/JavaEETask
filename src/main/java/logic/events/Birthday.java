@@ -1,5 +1,6 @@
 package logic.events;
 
+import annotations.PropertyGetter;
 import utils.calendar.CalendarUtils;
 
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ public class Birthday extends Event {
     private String targetPerson;
     private String gift;
 
+    @PropertyGetter("birthdayPerson")
     public String getTargetPerson() {
         return targetPerson;
     }

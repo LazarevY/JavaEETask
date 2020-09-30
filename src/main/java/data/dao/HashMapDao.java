@@ -1,12 +1,15 @@
 package data.dao;
 
 import data.Filter;
+import data.property.PropertyManager;
 import data.query.Delete;
 import data.query.Insert;
 import data.query.Select;
 import data.query.Update;
 import logic.events.Event;
+import logic.expressions.comparators.ComparatorCreator;
 import logic.expressions.conditions.Condition;
+import logic.expressions.interfaces.SpecificComparator;
 import logic.expressions.predicates.ConditionsPredicate;
 import logic.expressions.utils.ExpressionsUtils;
 
@@ -42,9 +45,9 @@ public class HashMapDao<DataType extends Event> implements DAO<DataType> {
                 new ConditionsPredicate<>();
         for (Filter d : selectQuery.getFilters()){
             Condition<DataType,?> c =
-                    (Condition<DataType, ?>) ExpressionsUtils.createConditionForFilter(d);
-            if (c == null)
-                throw new IllegalArgumentException("Wrong condtition data type");
+                    new Condition<>((SpecificComparator<Object>) ComparatorCreator.create(d.getOperator()),
+                            new PropertyManager(d.getAttribute()),
+                            d.getValue());
             predicate.addCondition(c);
         }
         try {

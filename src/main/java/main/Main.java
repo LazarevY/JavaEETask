@@ -30,24 +30,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        ObjectMapper mapper = new ObjectMapper();
-
-        String json = "{\n" +
-                "  \"attribute\": \"day\",\n" +
-                "  \"operator\": \"=\",\n" +
-                "  \"value\": 20,\n" +
-                "  \"type\": \"And\"\n" +
-                "}";
-
-        Filter f = mapper.readValue(json, Filter.class);
-        f = mapper.treeToValue(AttributeMapper.createJsonNode(f), Filter.class);
-
-        System.out.println(f.getAttribute());
-        System.out.println(f.getOperator());
-        System.out.println(f.getValue().toString());
-        System.out.println(f.getType());
-
-        Condition<Event, Integer> condition = (Condition<Event, Integer>) ExpressionsUtils.createConditionForFilter(f);
         Birthday b =
                 new Birthday(
                         LocalDate.of(2020, Month.APRIL, 20),
