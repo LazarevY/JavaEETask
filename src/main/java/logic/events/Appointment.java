@@ -1,13 +1,15 @@
 package logic.events;
 
+import annotations.PropertyGetter;
 import utils.calendar.CalendarUtils;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.GregorianCalendar;
 
-public class Appointment extends Event {
+public class Appointment extends Event implements Serializable {
 
     public Appointment(LocalDate date, String eventDescription,
                        String targetPerson, LocalTime time) {
@@ -16,6 +18,7 @@ public class Appointment extends Event {
         this.time = time;
     }
 
+    @PropertyGetter("appointmentPerson")
     public String getTargetPerson() {
         return targetPerson;
     }

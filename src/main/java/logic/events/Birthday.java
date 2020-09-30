@@ -1,12 +1,14 @@
 package logic.events;
 
 import annotations.PropertyGetter;
+import annotations.PropertySetter;
 import utils.calendar.CalendarUtils;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class Birthday extends Event {
+public class Birthday extends Event implements Serializable {
 
     public Birthday(LocalDate date, String description,
                     String targetPerson, String gift){
@@ -23,6 +25,7 @@ public class Birthday extends Event {
         return targetPerson;
     }
 
+    @PropertySetter("birthdayPerson")
     public void setTargetPerson(String targetPerson) {
         this.targetPerson = targetPerson;
     }
@@ -45,6 +48,11 @@ public class Birthday extends Event {
     public String fullDescription() {
         return shortDescription() + "Present: " + gift +
                 "\nEvent description: " + description + "\n";
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     private static final String DEFAULT_PERSON = "Person doesn't setted";

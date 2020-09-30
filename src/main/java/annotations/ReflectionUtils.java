@@ -36,4 +36,13 @@ public class ReflectionUtils {
                 })
                 .collect(Collectors.toList());
     }
+
+    public static List<Method> getAllPropertySetterAnnotatedWithValue(String value, Class<?> targetClass){
+        return getAllAnnotatedMethods(targetClass, PropertySetter.class)
+                .stream().filter(method -> {
+                    method.setAccessible(true);
+                    return method.getAnnotation(PropertySetter.class).value().equals(value);
+                })
+                .collect(Collectors.toList());
+    }
 }

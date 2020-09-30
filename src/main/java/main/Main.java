@@ -13,6 +13,7 @@ import logic.events.Event;
 import logic.expressions.conditions.Condition;
 import logic.expressions.interfaces.ConditionChecker;
 import logic.expressions.utils.ExpressionsUtils;
+import utils.common.Cloner;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +29,7 @@ import java.util.Set;
 public class Main {
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, CloneNotSupportedException {
 
         Birthday b =
                 new Birthday(
@@ -37,6 +38,8 @@ public class Main {
                         "Name",
                         "Deeeep"
                 );
+
+        Birthday b1 = Cloner.clone(b);
 
 
         PropertyManager m =

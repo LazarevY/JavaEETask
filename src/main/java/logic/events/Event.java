@@ -1,14 +1,16 @@
 package logic.events;
 
 import annotations.PropertyGetter;
+import annotations.PropertySetter;
 import com.fasterxml.jackson.annotation.JsonGetter;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
-public abstract class Event {
+public abstract class Event implements Serializable {
 
     protected LocalDate date = LocalDate.ofEpochDay(1);
     protected String description = "";
@@ -73,6 +75,7 @@ public abstract class Event {
         return id;
     }
 
+    @PropertySetter("id")
     public void setId(int id) {
         this.id = id;
     }
@@ -80,5 +83,30 @@ public abstract class Event {
     @PropertyGetter("day")
     private int getDay(){
         return date.getDayOfMonth();
+    }
+
+    @PropertySetter("day")
+    private void setDay(int value){
+        date = LocalDate.of(date.getYear(), date.getMonth(), value);
+    }
+
+    @PropertyGetter("month")
+    private int getMonthValue(){
+        return date.getMonthValue();
+    }
+
+    @PropertySetter("month")
+    private void setMonth(int value){
+        date = LocalDate.of(date.getYear(), value, date.getDayOfMonth());
+    }
+
+    @PropertyGetter("year")
+    private int getYear(){
+        return date.getYear();
+    }
+
+    @PropertySetter("year")
+    private void setYear(int value){
+        date = LocalDate.of(value, date.getMonth(), date.getDayOfMonth());
     }
 }
