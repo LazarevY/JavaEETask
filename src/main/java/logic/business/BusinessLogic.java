@@ -27,7 +27,7 @@ public class BusinessLogic {
         return (DAO<DataType>) daoHashMap.get(dataTypeClass);
     }
 
-    public List<Event> getAllEvents(List<Filter> filters){
+    public List<Event> getAllEvents(List<Filter<?>> filters){
         List<Event> events = new ArrayList<>();
 
         for (Map.Entry<Class<? extends Event>, DAO> entry: daoHashMap.entrySet()){
@@ -40,7 +40,7 @@ public class BusinessLogic {
 
     }
 
-    public <T extends Event> List<T> listOf(List<Filter> filters, Class<T> tClass){
+    public <T extends Event> List<T> listOf(List<Filter<?>> filters, Class<T> tClass){
         Select<T> select = new Select<>(tClass);
         select.setFilters(filters);
         return getDao(tClass).select(select);
@@ -54,13 +54,13 @@ public class BusinessLogic {
         }
     }
 
-    public <T extends Event> void updateEvents(List<Attribute> newAttributes, List<Filter> filters, Class<T> tClass){
+    public <T extends Event> void updateEvents(List<Attribute> newAttributes, List<Filter<?>> filters, Class<T> tClass){
         Update<T> update = new Update<>(tClass);
         update.setAttributes(newAttributes);
         update.setFilters(filters);
     }
 
-    public void updateAllEvents(List<Attribute> newAttributes, List<Filter> filters){
+    public void updateAllEvents(List<Attribute> newAttributes, List<Filter<?>> filters){
         for (Map.Entry<Class<? extends Event>, DAO> entry: daoHashMap.entrySet()){
             Update<? extends Event> update = new Update<>(entry.getKey());
             update.setFilters(filters);
@@ -69,7 +69,7 @@ public class BusinessLogic {
         }
     }
 
-    public void removeEvents(List<Filter> filters){
+    public void removeEvents(List<Filter<?>> filters){
         for (Map.Entry<Class<? extends Event>, DAO> entry: daoHashMap.entrySet()){
             Delete<? extends Event> delete = new Delete<>(entry.getKey());
             delete.setFilters(filters);

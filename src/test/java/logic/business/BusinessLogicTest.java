@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -89,7 +90,7 @@ public class BusinessLogicTest {
         List<Appointment> appointments = logic.listOf(Collections.emptyList(), Appointment.class);
         List<Birthday> birthdays = logic.listOf(
                 Collections.singletonList(
-                        new Filter("birthdayPerson", "=", "You", AttributeFilterType.And)
+                        new Filter<>("birthdayPerson", "=", "You", String.class, AttributeFilterType.And)
                 ), Birthday.class);
 
         assertEquals(0, appointments.size());
@@ -118,7 +119,7 @@ public class BusinessLogicTest {
         List<Appointment> appointments = logic.listOf(Collections.emptyList(), Appointment.class);
         List<Birthday> birthdays = logic.listOf(
                 Collections.singletonList(
-                        new Filter("day", "=", 11, AttributeFilterType.And)
+                        new Filter<>("day", "=", 11,Integer.class, AttributeFilterType.And)
                 ), Birthday.class);
 
         assertEquals(0, appointments.size());
@@ -155,7 +156,7 @@ public class BusinessLogicTest {
                   new Attribute("day", 20)
                 ),
                 Collections.singletonList(
-                        new Filter("day", "=", 12, AttributeFilterType.And)
+                        new Filter<>("day", "=", 12,Integer.class, AttributeFilterType.And)
                 ));
 
         birthdays =
@@ -164,6 +165,54 @@ public class BusinessLogicTest {
         assertEquals(0, appointments.size());
         assertEquals(1, birthdays.size());
         assertEquals(20, birthday.getEventDate().getDayOfMonth());
+
+    }
+
+    @Test
+    public void test005(){
+        BusinessLogic logic = new BusinessLogic();
+
+        HashMapDao<Birthday> birthdayHashMapDao = new HashMapDao<>();
+        HashMapDao<Appointment> appointmentHashMapDao = new HashMapDao<>();
+
+        logic.registerDao(Birthday.class, birthdayHashMapDao);
+        logic.registerDao(Appointment.class, appointmentHashMapDao);
+
+        Birthday b0 =
+                new Birthday(LocalDate.of(2020, Month.APRIL, 12),
+                        "Desc",
+                        "You",
+                        "Gift");
+        Birthday b1 =
+                new Birthday(LocalDate.of(2020, Month.JULY, 7),
+                        "Desc",
+                        "You",
+                        "Gift");
+
+        Birthday b2 =
+                new Birthday(LocalDate.of(2020, Month.JANUARY, 19),
+                        "Desc",
+                        "You",
+                        "Gift");
+
+        Birthday b3 =
+                new Birthday(LocalDate.of(2020, Month.NOVEMBER, 22),
+                        "Desc",
+                        "You",
+                        "Gift");
+
+        logic.addEvents(Arrays.asList(b0, b1, b2, b3));
+
+        List<Event> events =
+                logic.getAllEvents(Arrays.asList(
+                        new Filter("day", "<=", 20,Integer.class, AttributeFilterType.And),
+                        new Filter("month", "<=", Month.AUGUST.getValue(),Integer.class, AttributeFilterType.And),
+                        new Filter("year", "<=", 2020,Integer.class, AttributeFilterType.And)
+                ));
+
+        assertEquals(3, events.size());
+
+
 
     }
 
