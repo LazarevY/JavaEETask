@@ -1,56 +1,53 @@
 package main;
 
-import annotations.PropertyGetter;
-import annotations.ReflectionUtils;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import data.AttributeFilterType;
-import data.Filter;
-import data.json.AttributeMapper;
-import data.property.PropertyManager;
+import data.dao.HashMapDao;
+import logic.business.BusinessLogic;
+import logic.events.Appointment;
 import logic.events.Birthday;
-import logic.events.Event;
-import logic.expressions.conditions.Condition;
-import logic.expressions.interfaces.ConditionChecker;
-import logic.expressions.utils.ExpressionsUtils;
-import utils.common.Cloner;
+import ui.console.commands.BaseActionChoose;
 
-import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collections;
 
 public class Main {
 
 
     public static void main(String[] args) throws IOException, CloneNotSupportedException {
+        BusinessLogic logic = new BusinessLogic();
+        HashMapDao<Birthday> birthdayHashMapDao = new HashMapDao<>();
+        HashMapDao<Appointment> appointmentHashMapDao = new HashMapDao<>();
 
-        Birthday b =
-                new Birthday(
-                        LocalDate.of(2020, Month.APRIL, 20),
+        logic.registerDao(Birthday.class, birthdayHashMapDao);
+        logic.registerDao(Appointment.class, appointmentHashMapDao);
+
+        Appointment a1 =
+                new Appointment(LocalDate.of(2019, Month.DECEMBER, 30),
                         "Desc",
-                        "Name",
-                        "Deeeep"
-                );
+                        "Person",
+                        LocalTime.of(18,10));
+        Appointment a2 =
+                new Appointment(LocalDate.of(2019, Month.DECEMBER, 31),
+                        "Desc",
+                        "Person",
+                        LocalTime.of(12, 30));
+        Appointment a3 =
+                new Appointment(LocalDate.of(2019, Month.DECEMBER, 30),
+                        "Desc",
+                        "Person",
+                        LocalTime.of(14,15));
+        Appointment a4 =
+                new Appointment(LocalDate.of(2019, Month.DECEMBER, 27),
+                        "Desc",
+                        "Person",
+                        LocalTime.of(17, 0));
 
-        Birthday b1 = Cloner.clone(b);
+        logic.addEvents(Arrays.asList(a1, a2, a3, a4));
+        BaseActionChoose choose = new BaseActionChoose(logic);
 
-
-        PropertyManager m =
-                new PropertyManager("day");
-
-        try {
-            System.out.println(m.getValue(b));
-        } catch (InvocationTargetException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-
+        choose.execute(Collections.emptyMap());
     }
 }
