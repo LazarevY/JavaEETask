@@ -9,17 +9,17 @@ import java.util.Map;
 
 public class ViewAction implements Command {
 
-    private BusinessLogic businessLogic;
+    private final BusinessLogic businessLogic;
 
     public ViewAction(BusinessLogic businessLogic) {
         this.businessLogic = businessLogic;
     }
 
     @Override
-    public int execute(Map<String, Object> args) {
+    public ExecuteResult execute(Map<String, Object> args) {
         List<Event> events = businessLogic.getAllEvents(Collections.emptyList());
         for (Event e: events)
             System.out.println(e.shortDescription());
-        return 0;
+        return ExecuteResult.emptySuccessResult();
     }
 }

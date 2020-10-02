@@ -14,12 +14,11 @@ public class BaseActionChoose implements Command{
     public BaseActionChoose(BusinessLogic logic){
         commandMap = new HashMap<String, Command>(){{
             put("view", new ViewAction(logic));
-            put("input", new InputCommand());
         }};
     }
 
     @Override
-    public int execute(Map<String, Object> args) {
+    public ExecuteResult execute(Map<String, Object> args) {
             String command = InputManager.getInstance().getStringFromStandardInput("Input command");
             while (!command.equals("exit")){
                 if (!commandMap.containsKey(command))
@@ -28,6 +27,6 @@ public class BaseActionChoose implements Command{
                     commandMap.get(command).execute(Collections.emptyMap());
                 command = InputManager.getInstance().getStringFromStandardInput("Input command");
             }
-            return 0;
+            return ExecuteResult.emptySuccessResult();
     }
 }
