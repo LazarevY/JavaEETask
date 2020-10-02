@@ -14,6 +14,7 @@ public class BaseActionChoose implements Command{
     public BaseActionChoose(BusinessLogic logic){
         commandMap = new HashMap<String, Command>(){{
             put("view", new ViewAction(logic));
+            put("input", new InputCommand());
         }};
     }
 

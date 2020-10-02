@@ -17,6 +17,8 @@ public class Main {
 
 
     public static void main(String[] args) throws IOException, CloneNotSupportedException {
+
+
         BusinessLogic logic = new BusinessLogic();
         HashMapDao<Birthday> birthdayHashMapDao = new HashMapDao<>();
         HashMapDao<Appointment> appointmentHashMapDao = new HashMapDao<>();

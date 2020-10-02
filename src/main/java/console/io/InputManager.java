@@ -27,17 +27,32 @@ public class InputManager {
         return getIntFromStandardInput();
     }
 
+    public int getIntRangedFromStandardInput(String msg, int start, int end){
+        String msg1 = msg + String.format("range from %d to %d", start, end) + ": ";
+        printMessageNoNewLine(msg1);
+        int v = getIntFromStandardInput();
+
+        while (v < start || v > end){
+            System.out.printf("%d is not in range from %d to %d", v, start, end);
+            printMessageNoNewLine(msg1);
+            v = getIntFromStandardInput();
+        }
+
+        return v;
+    }
+
     public int getIntFromStandardInput(){
         return scanner.nextInt();
     }
 
     public String getStringFromStandardInput(String msg){
         printMessageNoNewLine(msg+": ");
-        return scanner.next();
+        return getStringFromStandardInput();
     }
 
+
     public String getStringFromStandardInput(){
-        return scanner.next();
+        return scanner.nextLine();
     }
 
 
