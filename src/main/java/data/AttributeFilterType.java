@@ -1,5 +1,5 @@
 package data;
 
 public enum AttributeFilterType {
-    And, Or;
+    And, Or, Enough
 }

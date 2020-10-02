@@ -84,7 +84,7 @@ public class HashMapDao<DataType extends Event> implements DAO<DataType> {
                                     .createComparator(d.getOperator(), d.getAttributeClass()),
                             new PropertyManager(d.getAttribute()),
                             d.getValue());
-            predicate.addCondition(c);
+            predicate.addCondition(c, d.getType());
         }
         return predicate;
     }
