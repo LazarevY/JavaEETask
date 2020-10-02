@@ -1,6 +1,7 @@
 package logic.events;
 
 import annotations.PropertyGetter;
+import annotations.PropertySetter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ public class Appointment extends Event implements Serializable {
         this.targetPerson = targetPerson;
     }
 
+    @PropertyGetter("appointmentTime")
     public LocalTime getTime() {
         return time;
     }
