@@ -78,7 +78,10 @@ public class HashMapDao<DataType extends Event> implements DAO<DataType> {
                 new ConditionsPredicate<>();
         for (Filter<?> d : filters) {
             Condition<DataType, ?> c =
-                    new Condition<>((SpecificComparator<Object>) ComparatorCreator.create(d.getOperator()),
+                    new Condition<>(
+                            (SpecificComparator<Object>) ComparatorCreator
+                                    .getInstance()
+                                    .createComparator(d.getOperator(), d.getAttributeClass()),
                             new PropertyManager(d.getAttribute()),
                             d.getValue());
             predicate.addCondition(c);

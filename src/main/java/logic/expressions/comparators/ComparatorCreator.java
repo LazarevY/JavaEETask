@@ -2,24 +2,34 @@ package logic.expressions.comparators;
 
 import logic.expressions.interfaces.SpecificComparator;
 
-public class ComparatorCreator {
-    public static SpecificComparator<?> create(String operation) {
-        switch (operation) {
-            case ">":
-                return (Integer v1, Integer v2) -> v1 > v2;
-            case ">=":
-                return (Integer v1, Integer v2) -> v1 >= v2;
-            case "<":
-                return (Integer v1, Integer v2) -> v1 < v2;
-            case "<=":
-                return (Integer v1, Integer v2) -> v1 <= v2;
-            case "=":
-                return Object::equals;
-            case "!=":
-                return (v1, v2) -> !v1.equals(v2);
-            default:
-                throw new IllegalArgumentException("Unknow operation '" + operation + "'");
-        }
+import java.time.LocalDate;
+import java.util.HashMap;
 
+public class ComparatorCreator {
+
+    private HashMap<Class<?>, SpecificComparatorFactory<?>> map;
+
+    private static ComparatorCreator instance = null;
+
+    private ComparatorCreator(){
+        map = new HashMap<Class<?>, SpecificComparatorFactory<?>>(){{
+            put(Integer.class, new IntegerComparatorsFactory());
+            put(String.class, new StringComparatorsFactory());
+            put(LocalDate.class, new DataComparatorsFactory());
+        }};
     }
+
+    public static ComparatorCreator getInstance(){
+        if (instance == null)
+            instance = new ComparatorCreator();
+        return instance;
+    }
+
+    public <T> SpecificComparator<T> createComparator(String operation, Class<T> tClass){
+        if (!map.containsKey(tClass))
+            throw new IllegalArgumentException("Not implemented factory for class " + tClass.getName());
+        return (SpecificComparator<T>) map.get(tClass).createForOperator(operation);
+    }
+
+
 }
