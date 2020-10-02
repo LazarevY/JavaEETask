@@ -3,6 +3,7 @@ package logic.expressions.comparators;
 import logic.expressions.interfaces.SpecificComparator;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.HashMap;
 
 public class ComparatorCreator {
@@ -16,6 +17,7 @@ public class ComparatorCreator {
             put(Integer.class, new IntegerComparatorsFactory());
             put(String.class, new StringComparatorsFactory());
             put(LocalDate.class, new DataComparatorsFactory());
+            put(LocalTime.class, new TimeComparatorsFactory());
         }};
     }
 

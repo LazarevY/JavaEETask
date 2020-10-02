@@ -4,6 +4,7 @@ import logic.expressions.interfaces.SpecificComparator;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Month;
 
 import static org.junit.Assert.*;
@@ -41,5 +42,38 @@ public class SpecificComparatorFactoryTest {
         LocalDate d2 = LocalDate.of(2020, Month.APRIL, 13);
 
         assertFalse(comparator.compare(d1, d2));
+    }
+
+    @Test
+    public void test003() {
+        SpecificComparator<LocalTime> comparator =
+                            ComparatorCreator.getInstance().createComparator(OperatorType.Less, LocalTime.class);
+        LocalTime t1 = LocalTime.of(23, 10);
+        LocalTime t2 = LocalTime.of(23,11);
+
+        assertTrue(comparator.compare(t1, t2));
+
+    }
+
+    @Test
+    public void test004() {
+        SpecificComparator<LocalTime> comparator =
+                ComparatorCreator.getInstance().createComparator(OperatorType.NotEqual, LocalTime.class);
+        LocalTime t1 = LocalTime.of(23, 10);
+        LocalTime t2 = LocalTime.of(23,11);
+
+        assertTrue(comparator.compare(t1, t2));
+
+    }
+
+    @Test
+    public void test005() {
+        SpecificComparator<LocalTime> comparator =
+                ComparatorCreator.getInstance().createComparator(OperatorType.Equal, LocalTime.class);
+        LocalTime t1 = LocalTime.of(23, 10);
+        LocalTime t2 = LocalTime.of(23,10);
+
+        assertTrue(comparator.compare(t1, t2));
+
     }
 }
