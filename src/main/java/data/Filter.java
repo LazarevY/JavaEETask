@@ -2,23 +2,24 @@ package data;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import logic.expressions.comparators.OperatorType;
 
 public class Filter<T> {
     private String attribute;
-    private String operator;
+    private OperatorType operator;
     private Object value;
     private Class<T> attributeClass;
     private AttributeFilterType type;
 
     public Filter(){
         attribute = "null";
-        operator = "!";
+        operator = null;
         value = 20;
         attributeClass = null;
         type = null;
     }
 
-    public Filter(String attribute, String operator, Object value, Class<T> attributeClass, AttributeFilterType type) {
+    public Filter(String attribute, OperatorType operator, Object value, Class<T> attributeClass, AttributeFilterType type) {
         this.attribute = attribute;
         this.operator = operator;
         this.value = value;
@@ -37,12 +38,12 @@ public class Filter<T> {
     }
 
     @JsonGetter("operator")
-    public String getOperator() {
+    public OperatorType getOperator() {
         return operator;
     }
 
     @JsonSetter("operator")
-    public void setOperator(String operator) {
+    public void setOperator(OperatorType operator) {
         this.operator = operator;
     }
 

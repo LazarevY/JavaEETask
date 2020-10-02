@@ -25,7 +25,7 @@ public class ComparatorCreator {
         return instance;
     }
 
-    public <T> SpecificComparator<T> createComparator(String operation, Class<T> tClass){
+    public <T> SpecificComparator<T> createComparator(OperatorType operation, Class<T> tClass){
         if (!map.containsKey(tClass))
             throw new IllegalArgumentException("Not implemented factory for class " + tClass.getName());
         return (SpecificComparator<T>) map.get(tClass).createForOperator(operation);

@@ -40,10 +40,12 @@ public abstract class Event implements Serializable {
         return fullDescription();
     }
 
+    @PropertyGetter("eventDate")
     public LocalDate getEventDate() {
         return date;
     }
 
+    @PropertySetter("eventDate")
     public void setEventDate(LocalDate date) {
         this.date = date;
     }
