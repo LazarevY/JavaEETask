@@ -2,11 +2,9 @@ package logic.events;
 
 import annotations.PropertyGetter;
 import annotations.PropertySetter;
-import utils.calendar.CalendarUtils;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Birthday extends Event implements Serializable {
 
