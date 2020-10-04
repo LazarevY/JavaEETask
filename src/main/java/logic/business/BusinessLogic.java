@@ -10,6 +10,7 @@ import data.query.Update;
 import logic.events.Event;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BusinessLogic {
 
@@ -28,6 +29,9 @@ public class BusinessLogic {
     }
 
     public List<Event> getAllEvents(List<Filter<?>> filters){
+        return getAllEvents(filters, Comparator.comparingInt(e -> e.getEventDate().getYear()));
+    }
+    public List<Event> getAllEvents(List<Filter<?>> filters, Comparator<Event> toSortComparator){
         List<Event> events = new ArrayList<>();
 
         for (Map.Entry<Class<? extends Event>, DAO> entry: daoHashMap.entrySet()){
@@ -36,14 +40,20 @@ public class BusinessLogic {
             events.addAll(entry.getValue().select(select));
         }
 
+        events.sort(toSortComparator);
+
         return events;
 
     }
 
     public <T extends Event> List<T> listOf(List<Filter<?>> filters, Class<T> tClass){
+        return listOf(filters, tClass, Comparator.comparingInt(e -> e.getEventDate().getYear()));
+    }
+
+    public <T extends Event> List<T> listOf(List<Filter<?>> filters, Class<T> tClass, Comparator<T> toSortComparator){
         Select<T> select = new Select<>(tClass);
         select.setFilters(filters);
-        return getDao(tClass).select(select);
+        return getDao(tClass).select(select).stream().sorted(toSortComparator).collect(Collectors.toList());
     }
 
     public void addEvents(List<Event> events){
