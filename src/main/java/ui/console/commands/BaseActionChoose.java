@@ -13,13 +13,20 @@ public class BaseActionChoose implements Command{
 
     public BaseActionChoose(BusinessLogic logic){
         commandMap = new HashMap<String, Command>(){{
-            put("view", new ViewAction(logic));
+            put("v", new ViewAction(logic));
+            put("d", new DeleteAction(logic));
+            put("a", new AddAction(logic));
         }};
     }
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {
-            String command = InputManager.getInstance().getStringFromStandardInput("Input command");
+            String command = InputManager.getInstance().getStringFromStandardInput("Choose action:\n" +
+                    "v: View events\n" +
+                    "a: Add events\n" +
+                    "e: Edit event\n" +
+                    "d: Delete events\n" +
+                    "q: Quit\n");
             while (!command.equals("exit")){
                 if (!commandMap.containsKey(command))
                     System.out.println("Unknow command");

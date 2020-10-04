@@ -46,8 +46,18 @@ public class Main {
                         "Desc",
                         "Person",
                         LocalTime.of(17, 0));
+        Birthday b1 =
+                new Birthday(LocalDate.of(2020, Month.APRIL, 10),
+                        "Desc",
+                        "Man",
+                        "Gift");
+        Birthday b2 =
+                new Birthday(LocalDate.of(2020, Month.JUNE, 30),
+                        "Desc",
+                        "Man",
+                        "Gift");
 
-        logic.addEvents(Arrays.asList(a1, a2, a3, a4));
+        logic.addEvents(Arrays.asList(a1, a2, a3, a4, b1, b2));
         BaseActionChoose choose = new BaseActionChoose(logic);
 
         choose.execute(Collections.emptyMap());
