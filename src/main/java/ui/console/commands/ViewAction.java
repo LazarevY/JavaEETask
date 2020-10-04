@@ -4,10 +4,7 @@ import console.io.InputManager;
 import logic.business.BusinessLogic;
 import logic.events.Event;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ViewAction implements Command {
 
@@ -15,6 +12,7 @@ public class ViewAction implements Command {
     private final Map<String, Command> commandMap;
 
     public static final String CHOOSE_MSG = "What I must do?\n" +
+            "s: Select sort parameter\n" +
             "a: View add events\n" +
             "b: View only birthdays\n" +
             "t: View only appointments\n" +
@@ -26,6 +24,7 @@ public class ViewAction implements Command {
             put("a", new ViewAllEvents(businessLogic));
             put("b", new ViewBirthdays(businessLogic));
             put("t", new ViewAppointments(businessLogic));
+            put("s", new SelectSortParameter());
         }};
     }
 
@@ -35,15 +34,26 @@ public class ViewAction implements Command {
         Command.printTemplate("View Action", CHOOSE_MSG);
         String choose = InputManager.getInstance().getStringFromStandardInput("(View Action) Input action");
 
+        Comparator<Event> c = Comparator.comparingInt(event -> event.getEventDate().getYear());
+
+        args.put("sort",c);
+
         while (!choose.equals("q")){
+            ExecuteResult res = new ExecuteResult();
 
             if (!commandMap.containsKey(choose)){
                 System.out.println("Wrong action. Try again\n");
             }
             else {
-                commandMap.get(choose).execute(args);
+                res = commandMap.get(choose).execute(args);
                 Command.printTemplate("View Action", CHOOSE_MSG);
+
             }
+
+            if (choose.equals("s")){
+                args.put("sort", res.getReturnMap().get("sort"));
+            }
+
             choose = InputManager.getInstance().getStringFromStandardInput("(View Action) Input action");
 
         }

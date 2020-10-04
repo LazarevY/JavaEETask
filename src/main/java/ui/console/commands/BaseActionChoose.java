@@ -36,7 +36,7 @@ public class BaseActionChoose implements Command {
                 choose = InputManager.getInstance().getStringFromStandardInput("(Choose Action) Input action");
             }
             else {
-                commandMap.get(choose).execute(Collections.emptyMap());
+                commandMap.get(choose).execute(new HashMap<>());
                 Command.printTemplate("Choose action", CHOOSE_MSG);
                 choose = InputManager.getInstance().getStringFromStandardInput("(Choose Action) Input command");
             }

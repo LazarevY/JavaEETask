@@ -3,8 +3,10 @@ package ui.console.commands;
 import logic.business.BusinessLogic;
 import logic.events.Appointment;
 import logic.events.Birthday;
+import logic.events.Event;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 
 public class ViewAppointments implements Command {
@@ -23,10 +25,12 @@ public class ViewAppointments implements Command {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public ExecuteResult execute(Map<String, Object> args) {
         System.out.println("====== View appointment events ======");
 
-        for (Appointment e: logic.listOf(Collections.emptyList(), Appointment.class))
+        for (Appointment e: logic.listOf(Collections.emptyList(),
+                Appointment.class, (Comparator<Appointment>)args.get("sort")))
             System.out.println(e.shortDescription());
 
         //System.out.println(CHOOSE_MSG);
