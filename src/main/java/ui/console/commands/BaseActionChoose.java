@@ -7,12 +7,19 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BaseActionChoose implements Command{
+public class BaseActionChoose implements Command {
 
     private final Map<String, Command> commandMap;
 
-    public BaseActionChoose(BusinessLogic logic){
-        commandMap = new HashMap<String, Command>(){{
+    public static final String CHOOSE_MSG = "Choose action:\n" +
+            "v: View events\n" +
+            "a: Add events\n" +
+            "e: Edit event\n" +
+            "d: Delete events\n" +
+            "q: Quit";
+
+    public BaseActionChoose(BusinessLogic logic) {
+        commandMap = new HashMap<String, Command>() {{
             put("v", new ViewAction(logic));
             put("d", new DeleteAction(logic));
             put("a", new AddAction(logic));
@@ -21,19 +28,19 @@ public class BaseActionChoose implements Command{
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {
-            String command = InputManager.getInstance().getStringFromStandardInput("Choose action:\n" +
-                    "v: View events\n" +
-                    "a: Add events\n" +
-                    "e: Edit event\n" +
-                    "d: Delete events\n" +
-                    "q: Quit\n");
-            while (!command.equals("exit")){
-                if (!commandMap.containsKey(command))
-                    System.out.println("Unknow command");
-                else
-                    commandMap.get(command).execute(Collections.emptyMap());
-                command = InputManager.getInstance().getStringFromStandardInput("Input command");
+        Command.printTemplate("Choose Action", CHOOSE_MSG);
+        String choose = InputManager.getInstance().getStringFromStandardInput("(Choose Action) Input action");
+        while (!choose.equals("q")) {
+            if (!commandMap.containsKey(choose)) {
+                System.out.println("Wrong action. Try again\n");
+                choose = InputManager.getInstance().getStringFromStandardInput("(Choose Action) Input action");
             }
-            return ExecuteResult.emptySuccessResult();
+            else {
+                commandMap.get(choose).execute(Collections.emptyMap());
+                Command.printTemplate("Choose action", CHOOSE_MSG);
+                choose = InputManager.getInstance().getStringFromStandardInput("(Choose Action) Input command");
+            }
+        }
+        return ExecuteResult.emptySuccessResult();
     }
 }

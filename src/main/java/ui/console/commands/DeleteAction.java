@@ -4,16 +4,18 @@ import console.io.InputManager;
 import data.AttributeFilterType;
 import data.Filter;
 import logic.business.BusinessLogic;
+import logic.events.Event;
 import logic.expressions.comparators.OperatorType;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class DeleteAction implements Command {
 
     private final BusinessLogic logic;
 
-    public static final String CHOOSE_MSG = "Input event id";
+    public static final String CHOOSE_MSG = "(Delete action)Input event id";
 
     public DeleteAction(BusinessLogic logic) {
         this.logic = logic;
@@ -21,7 +23,25 @@ public class DeleteAction implements Command {
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {
+
+        Command.printTemplate("Delete Action", "Enter a event id to delete it.");
+
         Integer id = InputManager.getInstance().getIntFromStandardInput(CHOOSE_MSG);
+
+        List<Event> events;
+
+        while ((events =  logic.getAllEvents(Collections.singletonList(
+                new Filter<>("id", OperatorType.Equal, id, Integer.class, AttributeFilterType.And))))
+                .size() != 1
+        ){
+            id = InputManager.getInstance()
+                    .getIntFromStandardInput(
+                            String.format("No event founded by id %d. Input id again", id)
+                    );
+        }
+
+        Command.printTemplate("Delete Action",
+                String.format("Event deleted: %s", events.get(0).fullDescription()));
 
         logic.removeEvents(
                 Collections.singletonList(new Filter<>("id",OperatorType.Equal, id, Integer.class, AttributeFilterType.And))

@@ -24,13 +24,13 @@ public class ViewBirthdays implements Command {
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {
-        System.out.println("\n====== View birthday events ======\n");
+        System.out.println("====== View birthday events ======");
 
         for (Birthday e: logic.listOf(Collections.emptyList(), Birthday.class))
             System.out.println(e.shortDescription());
 
         //System.out.println(CHOOSE_MSG);
-        System.out.println("\n=============================\n");
+        System.out.println("=============================");
 
         return ExecuteResult.emptySuccessResult();
     }

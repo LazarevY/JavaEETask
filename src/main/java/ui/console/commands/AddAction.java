@@ -15,7 +15,7 @@ public class AddAction implements Command {
 
     public static final String CHOOSE_MSG = "Choose action:\n" +
             "b: Add new birthday event\n" +
-            "q: Return back\n";
+            "q: Return back";
 
     public AddAction(BusinessLogic logic) {
         this.logic = logic;
@@ -23,7 +23,7 @@ public class AddAction implements Command {
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {
-        System.out.println(CHOOSE_MSG);
+        Command.printTemplate("Add Action", CHOOSE_MSG);
 
         String command = InputManager.getInstance().getStringFromStandardInput("Input action");
 
@@ -36,9 +36,14 @@ public class AddAction implements Command {
                         .getReturnMap()
                         .get("input");
                 logic.addEvents(Collections.singletonList(birthday));
+                Command.printTemplate("Add action",
+                        String.format("Birthday added: %s", birthday.fullDescription()));
+            }
+            else {
+                System.out.println("Wrong action. Try again.");
             }
 
-            command = InputManager.getInstance().getStringFromStandardInput("Input action");
+            command = InputManager.getInstance().getStringFromStandardInput("(Add action) Input action");
         }
 
         return ExecuteResult.emptySuccessResult();

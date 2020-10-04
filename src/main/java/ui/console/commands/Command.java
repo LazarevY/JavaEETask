@@ -10,4 +10,11 @@ public interface Command {
 
     }
 
+    static void printTemplate(String header, String body){
+        String headerH = String.format("====== %s ======", header);
+        System.out.println(headerH);
+        System.out.println(body);
+        System.out.println("=".repeat(headerH.length()));
+    }
+
 }

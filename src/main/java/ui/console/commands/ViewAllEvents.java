@@ -23,13 +23,13 @@ public class ViewAllEvents implements Command {
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {
-        System.out.println("\n====== View all events ======\n");
+        System.out.println("====== View all events ======");
 
         for (Event e : logic.getAllEvents(Collections.emptyList()))
             System.out.println(e.shortDescription());
 
         //System.out.println(CHOOSE_MSG);
-        System.out.println("\n=============================\n");
+        System.out.println("=============================");
 
         return ExecuteResult.emptySuccessResult();
 

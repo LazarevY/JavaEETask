@@ -18,7 +18,7 @@ public class ViewAction implements Command {
             "a: View add events\n" +
             "b: View only birthdays\n" +
             "t: View only appointments\n" +
-            "c: Cancel\n";
+            "q: Return back";
 
     public ViewAction(BusinessLogic businessLogic) {
         this.businessLogic = businessLogic;
@@ -32,11 +32,22 @@ public class ViewAction implements Command {
     @Override
     public ExecuteResult execute(Map<String, Object> args) {
 
-        String choose = InputManager.getInstance().getStringFromStandardInput(CHOOSE_MSG);
+        Command.printTemplate("View Action", CHOOSE_MSG);
+        String choose = InputManager.getInstance().getStringFromStandardInput("(View Action) Input action");
 
-        if (!choose.equals("c")){
-            commandMap.get(choose).execute(args);
+        while (!choose.equals("q")){
+
+            if (!commandMap.containsKey(choose)){
+                System.out.println("Wrong action. Try again\n");
+            }
+            else {
+                commandMap.get(choose).execute(args);
+                Command.printTemplate("View Action", CHOOSE_MSG);
+            }
+            choose = InputManager.getInstance().getStringFromStandardInput("(View Action) Input action");
+
         }
+
 
         return ExecuteResult.emptySuccessResult();
     }

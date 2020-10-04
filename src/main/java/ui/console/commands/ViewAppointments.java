@@ -24,13 +24,13 @@ public class ViewAppointments implements Command {
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {
-        System.out.println("\n====== View appointment events ======\n");
+        System.out.println("====== View appointment events ======");
 
         for (Appointment e: logic.listOf(Collections.emptyList(), Appointment.class))
             System.out.println(e.shortDescription());
 
         //System.out.println(CHOOSE_MSG);
-        System.out.println("\n=============================\n");
+        System.out.println("=============================");
 
         return ExecuteResult.emptySuccessResult();
     }
