@@ -1,7 +1,9 @@
 package ui.console.commands;
 
+import console.io.AppointmentReader;
 import console.io.BirthdayReader;
 import console.io.ConsoleClassReader;
+import logic.events.Appointment;
 import logic.events.Birthday;
 
 import java.util.HashMap;
@@ -15,6 +17,7 @@ public class Input implements Command {
     private Input(){
         readerMap = new HashMap<Class<?>, ConsoleClassReader<?>>(){{
            put(Birthday.class, new BirthdayReader());
+           put(Appointment.class, new AppointmentReader());
         }};
     }
 
