@@ -32,7 +32,7 @@ public class BirthdayReader implements ConsoleClassReader<Birthday> {
         String desc = InputManager.getInstance().getStringFromStandardInput("Input description(optional)");
         String gift = InputManager.getInstance().getStringFromStandardInput("Input gift description");
 
-        return new Birthday(date, person, desc, gift);
+        return new Birthday(date, desc, person, gift);
 
     }
 }
