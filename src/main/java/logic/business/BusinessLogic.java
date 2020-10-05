@@ -68,6 +68,7 @@ public class BusinessLogic {
         Update<T> update = new Update<>(tClass);
         update.setAttributes(newAttributes);
         update.setFilters(filters);
+        getDao(tClass).update(update);
     }
 
     public void updateAllEvents(List<Attribute> newAttributes, List<Filter<?>> filters){
