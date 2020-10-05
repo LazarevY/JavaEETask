@@ -28,7 +28,7 @@ public class ViewAllEvents implements Command {
         System.out.println("====== View all events ======");
 
         for (Event e : logic.getAllEvents(Collections.emptyList(), (Comparator<Event>)args.get("sort")))
-            System.out.println(e.shortDescription());
+            System.out.println(args.get("desc").equals("f") ? e.fullDescription() : e.shortDescription());
 
         //System.out.println(CHOOSE_MSG);
         System.out.println("=============================");

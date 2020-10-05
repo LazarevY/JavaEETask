@@ -30,7 +30,7 @@ public class ViewBirthdays implements Command {
 
         for (Birthday e: logic.listOf(Collections.emptyList(), Birthday.class,
                 (Comparator<Birthday>)args.get("sort")))
-            System.out.println(e.shortDescription());
+            System.out.println(args.get("desc").equals("f") ? e.fullDescription() : e.shortDescription());
 
         //System.out.println(CHOOSE_MSG);
         System.out.println("=============================");

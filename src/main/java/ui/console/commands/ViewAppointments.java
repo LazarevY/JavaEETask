@@ -31,7 +31,7 @@ public class ViewAppointments implements Command {
 
         for (Appointment e: logic.listOf(Collections.emptyList(),
                 Appointment.class, (Comparator<Appointment>)args.get("sort")))
-            System.out.println(e.shortDescription());
+            System.out.println(args.get("desc").equals("f") ? e.fullDescription() : e.shortDescription());
 
         //System.out.println(CHOOSE_MSG);
         System.out.println("=============================");

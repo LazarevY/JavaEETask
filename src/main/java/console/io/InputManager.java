@@ -42,7 +42,18 @@ public class InputManager {
     }
 
     public int getIntFromStandardInput(){
-        return scanner.nextInt();
+        Integer i = null;
+
+        while (i == null){
+            try {
+                i = scanner.nextInt();
+            }
+            catch (Exception e){
+                scanner.next();
+                printMessageNoNewLine("No integer value. Try again: ");
+            }
+        }
+        return i;
     }
 
     public String getStringFromStandardInput(String msg){

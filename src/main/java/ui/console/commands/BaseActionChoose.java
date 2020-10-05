@@ -23,6 +23,7 @@ public class BaseActionChoose implements Command {
             put("v", new ViewAction(logic));
             put("d", new DeleteAction(logic));
             put("a", new AddAction(logic));
+            put("e", new EditAction(logic));
         }};
     }
 

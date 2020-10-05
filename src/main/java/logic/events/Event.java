@@ -50,10 +50,12 @@ public abstract class Event implements Serializable {
         this.date = date;
     }
 
+    @PropertyGetter("eventDescription")
     public String getDescription() {
         return description;
     }
 
+    @PropertySetter("eventDescription")
     public void setDescription(String description) {
         this.description = description;
     }

@@ -28,10 +28,12 @@ public class Birthday extends Event implements Serializable {
         this.targetPerson = targetPerson;
     }
 
+    @PropertyGetter("birthdayGift")
     public String getGift() {
         return gift;
     }
 
+    @PropertySetter("birthdayGift")
     public void setGift(String gift) {
         this.gift = gift;
     }

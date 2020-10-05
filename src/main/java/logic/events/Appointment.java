@@ -21,6 +21,7 @@ public class Appointment extends Event implements Serializable {
         return targetPerson;
     }
 
+    @PropertySetter("appointmentPerson")
     public void setTargetPerson(String targetPerson) {
         this.targetPerson = targetPerson;
     }
@@ -30,6 +31,7 @@ public class Appointment extends Event implements Serializable {
         return time;
     }
 
+    @PropertySetter("appointmentTime")
     public void setTime(LocalTime time) {
         this.time = time;
     }

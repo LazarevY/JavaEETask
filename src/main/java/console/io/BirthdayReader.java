@@ -2,16 +2,13 @@ package console.io;
 
 import logic.events.Birthday;
 
-import javax.swing.text.DateFormatter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class BirthdayReader implements ConsoleClassReader<Birthday> {
     @Override
-    public Birthday safeRead() {
+    public Birthday safeRead(String msg) {
         LocalDate date = null;
 
         while (date == null){
