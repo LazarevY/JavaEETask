@@ -26,7 +26,7 @@ public class ViewAction implements Command {
             put("a", new ViewAllEvents(businessLogic));
             put("b", new ViewBirthdays(businessLogic));
             put("t", new ViewAppointments(businessLogic));
-            put("h", new SelectSortParameter());
+            put("s", new SelectSortParameter());
         }};
     }
 
