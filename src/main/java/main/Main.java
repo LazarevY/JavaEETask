@@ -4,14 +4,11 @@ import data.dao.HashMapDao;
 import logic.business.BusinessLogic;
 import logic.events.Appointment;
 import logic.events.Birthday;
-import ui.console.commands.BaseActionChoose;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class Main {
 
@@ -57,9 +54,5 @@ public class Main {
                         "Man",
                         "Gift");
 
-        logic.addEvents(Arrays.asList(a1, a2, a3, a4, b1, b2));
-        BaseActionChoose choose = new BaseActionChoose(logic);
-
-        choose.execute(Collections.emptyMap());
     }
 }
