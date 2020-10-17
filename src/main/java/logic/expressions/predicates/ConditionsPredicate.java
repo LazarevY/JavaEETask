@@ -33,17 +33,27 @@ public class ConditionsPredicate<T extends Event> implements Predicate<T> {
             if (e.check(t))
                 return true;
 
-        boolean orOk = map.get(AttributeFilterType.Or).isEmpty();
-        for (Condition<T, ?> o: map.get(AttributeFilterType.Or))
-            if (o.check(t)){
-                orOk = true;
-                break;
-            }
-        if (!orOk)
-            return false;
-        for (Condition<T, ?> a: map.get(AttributeFilterType.And))
-            if (!a.check(t))
+        boolean ok = false;
+        boolean isOrMapEmpty = map.get(AttributeFilterType.Or).isEmpty();
+        if (!isOrMapEmpty) {
+            for (Condition<T, ?> o : map.get(AttributeFilterType.Or))
+                if (o.check(t)) {
+                    ok = true;
+                    break;
+                }
+            if (!ok)
                 return false;
-        return true;
+        }
+
+        if (map.get(AttributeFilterType.And).isEmpty() && isOrMapEmpty)
+            return false;
+
+        //check And filters
+        {
+            for (Condition<T, ?> a : map.get(AttributeFilterType.And))
+                if (!a.check(t))
+                    return false;
+            return true;
+        }
     }
 }
