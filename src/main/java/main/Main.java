@@ -1,58 +1,51 @@
 package main;
 
-import data.dao.HashMapDao;
-import logic.business.BusinessLogic;
-import logic.events.Appointment;
-import logic.events.Birthday;
-
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class Main {
+    static final String DB_URL = "jdbc:postgresql://localhost:5432/organizer";
+    static final String USER = "lazarev";
+    static final String PASS = "12345";
 
 
-    public static void main(String[] args) throws IOException, CloneNotSupportedException {
 
+    public static void main(String[] args) {
 
-        BusinessLogic logic = new BusinessLogic();
-        HashMapDao<Birthday> birthdayHashMapDao = new HashMapDao<>();
-        HashMapDao<Appointment> appointmentHashMapDao = new HashMapDao<>();
+        System.out.println("Testing connection to PostgreSQL JDBC");
 
-        logic.registerDao(Birthday.class, birthdayHashMapDao);
-        logic.registerDao(Appointment.class, appointmentHashMapDao);
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println("PostgreSQL JDBC Driver is not found. Include it in your library path ");
+            e.printStackTrace();
+            return;
+        }
 
-        Appointment a1 =
-                new Appointment(LocalDate.of(2019, Month.DECEMBER, 30),
-                        "Desc",
-                        "Person",
-                        LocalTime.of(18,10));
-        Appointment a2 =
-                new Appointment(LocalDate.of(2019, Month.DECEMBER, 31),
-                        "Desc",
-                        "Person",
-                        LocalTime.of(12, 30));
-        Appointment a3 =
-                new Appointment(LocalDate.of(2019, Month.DECEMBER, 30),
-                        "Desc",
-                        "Person",
-                        LocalTime.of(14,15));
-        Appointment a4 =
-                new Appointment(LocalDate.of(2019, Month.DECEMBER, 27),
-                        "Desc",
-                        "Person",
-                        LocalTime.of(17, 0));
-        Birthday b1 =
-                new Birthday(LocalDate.of(2020, Month.APRIL, 10),
-                        "Desc",
-                        "Man",
-                        "Gift");
-        Birthday b2 =
-                new Birthday(LocalDate.of(2020, Month.JUNE, 30),
-                        "Desc",
-                        "Man",
-                        "Gift");
+        System.out.println("PostgreSQL JDBC Driver successfully connected");
+        Connection connection = null;
+
+        try {
+            connection = DriverManager
+                    .getConnection(DB_URL, USER, PASS);
+
+        } catch (SQLException e) {
+            System.out.println("Connection Failed");
+            e.printStackTrace();
+            return;
+        }
+
+        if (connection != null) {
+            System.out.println("You successfully connected to database now");
+            try {
+                connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        } else {
+            System.out.println("Failed to make connection to database");
+        }
 
     }
 }
