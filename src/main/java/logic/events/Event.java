@@ -2,12 +2,9 @@ package logic.events;
 
 import annotations.PropertyGetter;
 import annotations.PropertySetter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public abstract class Event implements Serializable {
