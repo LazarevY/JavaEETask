@@ -1,8 +1,11 @@
 package logic.business;
 
+import core.Application;
+import core.ApplicationContext;
 import data.Attribute;
 import data.AttributeFilterType;
 import data.Filter;
+import data.dao.DAO;
 import data.dao.HashMapDao;
 import logic.events.Appointment;
 import logic.events.Birthday;
@@ -11,36 +14,32 @@ import logic.expressions.comparators.OperatorType;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class BusinessLogicTest {
 
     @Test
     public void test000(){
-        BusinessLogic logic = new BusinessLogic();
+        ApplicationContext applicationContext = Application.run("",
+                new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
-        HashMapDao<Birthday> birthdayHashMapDao = new HashMapDao<>();
-        HashMapDao<Appointment> appointmentHashMapDao = new HashMapDao<>();
 
-        logic.registerDao(Birthday.class, birthdayHashMapDao);
-        logic.registerDao(Appointment.class, appointmentHashMapDao);
+        BusinessLogic logic = applicationContext.getObject(BusinessLogic.class);
 
         Birthday birthday =
                 new Birthday(LocalDate.of(2020, Month.APRIL, 12),
                         "Desc",
                         "You",
                         "Gift");
-
         logic.addEvents(Collections.singletonList(birthday));
 
-        List<Event> birthdays = logic.getAllEvents(Collections.emptyList());
+        List<Event> birthdays = logic.getAllEvents(Collections.singletonList(
+                new Filter<>("day", OperatorType.More, 0, AttributeFilterType.Enough)
+        ));
 
         assertEquals(1, birthdays.size());
 
@@ -48,13 +47,11 @@ public class BusinessLogicTest {
 
     @Test
     public void test001(){
-        BusinessLogic logic = new BusinessLogic();
+        ApplicationContext applicationContext = Application.run("",
+                new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
-        HashMapDao<Birthday> birthdayHashMapDao = new HashMapDao<>();
-        HashMapDao<Appointment> appointmentHashMapDao = new HashMapDao<>();
 
-        logic.registerDao(Birthday.class, birthdayHashMapDao);
-        logic.registerDao(Appointment.class, appointmentHashMapDao);
+        BusinessLogic logic = applicationContext.getObject(BusinessLogic.class);
 
         Birthday birthday =
                 new Birthday(LocalDate.of(2020, Month.APRIL, 12),
@@ -74,13 +71,11 @@ public class BusinessLogicTest {
 
     @Test
     public void test002(){
-        BusinessLogic logic = new BusinessLogic();
+        ApplicationContext applicationContext = Application.run("",
+                new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
-        HashMapDao<Birthday> birthdayHashMapDao = new HashMapDao<>();
-        HashMapDao<Appointment> appointmentHashMapDao = new HashMapDao<>();
 
-        logic.registerDao(Birthday.class, birthdayHashMapDao);
-        logic.registerDao(Appointment.class, appointmentHashMapDao);
+        BusinessLogic logic = applicationContext.getObject(BusinessLogic.class);
 
         Birthday birthday =
                 new Birthday(LocalDate.of(2020, Month.APRIL, 12),
@@ -103,14 +98,11 @@ public class BusinessLogicTest {
 
     @Test
     public void test003(){
-        BusinessLogic logic = new BusinessLogic();
+        ApplicationContext applicationContext = Application.run("",
+                new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
-        HashMapDao<Birthday> birthdayHashMapDao = new HashMapDao<>();
-        HashMapDao<Appointment> appointmentHashMapDao = new HashMapDao<>();
 
-        logic.registerDao(Birthday.class, birthdayHashMapDao);
-        logic.registerDao(Appointment.class, appointmentHashMapDao);
-
+        BusinessLogic logic = applicationContext.getObject(BusinessLogic.class);
         Birthday birthday =
                 new Birthday(LocalDate.of(2020, Month.APRIL, 12),
                         "Desc",
@@ -132,13 +124,11 @@ public class BusinessLogicTest {
 
     @Test
     public void test004(){
-        BusinessLogic logic = new BusinessLogic();
+        ApplicationContext applicationContext = Application.run("",
+                new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
-        HashMapDao<Birthday> birthdayHashMapDao = new HashMapDao<>();
-        HashMapDao<Appointment> appointmentHashMapDao = new HashMapDao<>();
 
-        logic.registerDao(Birthday.class, birthdayHashMapDao);
-        logic.registerDao(Appointment.class, appointmentHashMapDao);
+        BusinessLogic logic = applicationContext.getObject(BusinessLogic.class);
 
         Birthday birthday =
                 new Birthday(LocalDate.of(2020, Month.APRIL, 12),
@@ -173,13 +163,11 @@ public class BusinessLogicTest {
 
     @Test
     public void test005(){
-        BusinessLogic logic = new BusinessLogic();
+        ApplicationContext applicationContext = Application.run("",
+                new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
-        HashMapDao<Birthday> birthdayHashMapDao = new HashMapDao<>();
-        HashMapDao<Appointment> appointmentHashMapDao = new HashMapDao<>();
 
-        logic.registerDao(Birthday.class, birthdayHashMapDao);
-        logic.registerDao(Appointment.class, appointmentHashMapDao);
+        BusinessLogic logic = applicationContext.getObject(BusinessLogic.class);
 
         Birthday b0 =
                 new Birthday(LocalDate.of(2020, Month.APRIL, 12),
@@ -221,13 +209,11 @@ public class BusinessLogicTest {
 
     @Test
     public void test006(){
-        BusinessLogic logic = new BusinessLogic();
+        ApplicationContext applicationContext = Application.run("",
+                new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
-        HashMapDao<Birthday> birthdayHashMapDao = new HashMapDao<>();
-        HashMapDao<Appointment> appointmentHashMapDao = new HashMapDao<>();
 
-        logic.registerDao(Birthday.class, birthdayHashMapDao);
-        logic.registerDao(Appointment.class, appointmentHashMapDao);
+        BusinessLogic logic = applicationContext.getObject(BusinessLogic.class);
 
         Birthday b0 =
                 new Birthday(LocalDate.of(2020, Month.APRIL, 12),
@@ -270,13 +256,11 @@ public class BusinessLogicTest {
 
     @Test
     public void test007(){
-        BusinessLogic logic = new BusinessLogic();
+        ApplicationContext applicationContext = Application.run("",
+                new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
-        HashMapDao<Birthday> birthdayHashMapDao = new HashMapDao<>();
-        HashMapDao<Appointment> appointmentHashMapDao = new HashMapDao<>();
 
-        logic.registerDao(Birthday.class, birthdayHashMapDao);
-        logic.registerDao(Appointment.class, appointmentHashMapDao);
+        BusinessLogic logic = applicationContext.getObject(BusinessLogic.class);
 
         Birthday b0 =
                 new Birthday(LocalDate.of(2020, Month.APRIL, 12),
@@ -326,19 +310,17 @@ public class BusinessLogicTest {
 
     @Test
     public void test008(){
-        BusinessLogic logic = new BusinessLogic();
+        ApplicationContext applicationContext = Application.run("",
+                new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
-        HashMapDao<Birthday> birthdayHashMapDao = new HashMapDao<>();
-        HashMapDao<Appointment> appointmentHashMapDao = new HashMapDao<>();
 
-        logic.registerDao(Birthday.class, birthdayHashMapDao);
-        logic.registerDao(Appointment.class, appointmentHashMapDao);
+        BusinessLogic logic = applicationContext.getObject(BusinessLogic.class);
 
         Appointment a1 =
                 new Appointment(LocalDate.of(2019, Month.DECEMBER, 30),
                         "Desc",
                         "Person",
-                        LocalTime.of(18,10));
+                        LocalTime.of(18,0));
         Appointment a2 =
                 new Appointment(LocalDate.of(2019, Month.DECEMBER, 31),
                         "Desc",
@@ -366,7 +348,7 @@ public class BusinessLogicTest {
                                 LocalDate.class,
                                 AttributeFilterType.Enough),
                         new Filter<>("appointmentTime",
-                                OperatorType.Less,
+                                OperatorType.LessEqual,
                                 LocalTime.of(18,0),
                                 LocalTime.class,
                                 AttributeFilterType.And)

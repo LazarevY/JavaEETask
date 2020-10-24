@@ -1,7 +1,6 @@
 package logic.expressions.conditions;
 
 import data.property.PropertyManager;
-import logic.expressions.interfaces.ConditionChecker;
 import logic.expressions.interfaces.SpecificComparator;
 
 import java.lang.reflect.InvocationTargetException;
@@ -17,7 +16,7 @@ public class Condition<TargetType, ValueType> {
         this.value = value;
     }
 
-    public boolean check(TargetType instance){
+    public boolean check(Object instance){
         try {
             return comparator.compare((ValueType) propertyManager.getValue(instance), value);
         } catch (InvocationTargetException | IllegalAccessException e) {

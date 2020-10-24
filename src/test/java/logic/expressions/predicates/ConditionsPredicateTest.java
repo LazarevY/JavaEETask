@@ -13,6 +13,7 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static org.junit.Assert.*;
 
@@ -32,8 +33,8 @@ public class ConditionsPredicateTest {
                         new Filter<>("month", OperatorType.Equal, Month.APRIL.getValue(), Integer.class, AttributeFilterType.Or)
                 );
 
-        ConditionsPredicate<Event> conditionsPredicate =
-                (ConditionsPredicate<Event>) ExpressionsUtils.buildPredicate(filters);
+        Predicate<Object> conditionsPredicate =
+                ExpressionsUtils.buildPredicate(filters, Birthday.class);
 
         assertTrue(conditionsPredicate.test(e));
     }
@@ -51,8 +52,8 @@ public class ConditionsPredicateTest {
                         new Filter<>("month", OperatorType.Equal, Month.FEBRUARY.getValue(), Integer.class, AttributeFilterType.Or)
                 );
 
-        ConditionsPredicate<Event> conditionsPredicate =
-                (ConditionsPredicate<Event>) ExpressionsUtils.buildPredicate(filters);
+        Predicate<Object> conditionsPredicate =
+                ExpressionsUtils.buildPredicate(filters, Birthday.class);
 
         assertTrue(conditionsPredicate.test(e));
     }
@@ -71,8 +72,8 @@ public class ConditionsPredicateTest {
                         new Filter<>("month", OperatorType.Equal, Month.APRIL.getValue(), Integer.class, AttributeFilterType.Or)
                 );
 
-        ConditionsPredicate<Event> conditionsPredicate =
-                (ConditionsPredicate<Event>) ExpressionsUtils.buildPredicate(filters);
+        Predicate<Object> conditionsPredicate =
+                ExpressionsUtils.buildPredicate(filters, Birthday.class);
 
         assertTrue(conditionsPredicate.test(e));
     }
@@ -91,8 +92,8 @@ public class ConditionsPredicateTest {
                         new Filter<>("month", OperatorType.Equal, Month.AUGUST.getValue(), Integer.class, AttributeFilterType.Or)
                 );
 
-        ConditionsPredicate<Event> conditionsPredicate =
-                (ConditionsPredicate<Event>) ExpressionsUtils.buildPredicate(filters);
+        Predicate<Object> conditionsPredicate =
+                ExpressionsUtils.buildPredicate(filters, Birthday.class);
 
         assertFalse(conditionsPredicate.test(e));
     }
@@ -107,8 +108,8 @@ public class ConditionsPredicateTest {
         List<Filter<?>> filters =
                 Collections.emptyList();
 
-        ConditionsPredicate<Event> conditionsPredicate =
-                (ConditionsPredicate<Event>) ExpressionsUtils.buildPredicate(filters);
+        Predicate<Object> conditionsPredicate =
+                ExpressionsUtils.buildPredicate(filters, Birthday.class);
 
         assertFalse(conditionsPredicate.test(e));
     }
@@ -128,8 +129,8 @@ public class ConditionsPredicateTest {
                         new Filter<>("year", OperatorType.Equal, 2019, Integer.class, AttributeFilterType.And)
                 );
 
-        ConditionsPredicate<Event> conditionsPredicate =
-                (ConditionsPredicate<Event>) ExpressionsUtils.buildPredicate(filters);
+        Predicate<Object> conditionsPredicate =
+                ExpressionsUtils.buildPredicate(filters, Birthday.class);
 
         assertFalse(conditionsPredicate.test(e));
     }
@@ -150,8 +151,8 @@ public class ConditionsPredicateTest {
                         new Filter<>("year", OperatorType.Equal, 2019, Integer.class, AttributeFilterType.And)
                 );
 
-        ConditionsPredicate<Event> conditionsPredicate =
-                (ConditionsPredicate<Event>) ExpressionsUtils.buildPredicate(filters);
+        Predicate<Object> conditionsPredicate =
+                ExpressionsUtils.buildPredicate(filters, Birthday.class);
 
         assertFalse(conditionsPredicate.test(e));
     }
@@ -172,8 +173,8 @@ public class ConditionsPredicateTest {
                         new Filter<>("day", OperatorType.Equal, 14, Integer.class, AttributeFilterType.And)
                 );
 
-        ConditionsPredicate<Event> conditionsPredicate =
-                (ConditionsPredicate<Event>) ExpressionsUtils.buildPredicate(filters);
+        Predicate<Object> conditionsPredicate =
+                ExpressionsUtils.buildPredicate(filters, Birthday.class);
 
         assertTrue(conditionsPredicate.test(e));
     }

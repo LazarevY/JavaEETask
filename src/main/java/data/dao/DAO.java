@@ -7,11 +7,11 @@ import data.query.Update;
 
 import java.util.List;
 
-public interface DAO<DataType> {
+public interface DAO {
 
-    void insert(Insert<DataType> insertQuery);
-    void delete(Delete<DataType> deleteQuery);
-    List<DataType> select(Select<DataType> selectQuery);
-    void update(Update<DataType> updateQuery);
+    void insert(Insert<?> insertQuery);
+    void delete(Delete<?> deleteQuery);
+    List<?> select(Select<?> selectQuery);
+    void update(Update<?> updateQuery);
 
 }
