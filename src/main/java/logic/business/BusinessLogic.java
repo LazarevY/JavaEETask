@@ -1,8 +1,8 @@
 package logic.business;
 
 import data.Attribute;
-import data.dao.DAO;
 import data.Filter;
+import data.dao.DAO;
 import data.query.Delete;
 import data.query.Insert;
 import data.query.Select;

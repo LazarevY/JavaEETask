@@ -1,7 +1,7 @@
 package logic.events;
 
-import annotations.PropertyGetter;
-import annotations.PropertySetter;
+import core.annotations.PropertyGetter;
+import core.annotations.PropertySetter;
 
 import java.io.Serializable;
 import java.time.LocalDate;

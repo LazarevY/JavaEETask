@@ -1,5 +1,6 @@
 package core;
 
+import core.interfaces.Config;
 import lombok.Getter;
 import org.reflections.Reflections;
 

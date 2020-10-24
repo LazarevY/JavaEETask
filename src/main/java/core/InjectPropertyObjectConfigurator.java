@@ -1,6 +1,7 @@
 package core;
 
 import core.annotations.InjectProperty;
+import core.interfaces.ObjectConfigurator;
 import lombok.SneakyThrows;
 
 import java.io.BufferedReader;
@@ -32,7 +33,7 @@ public class InjectPropertyObjectConfigurator implements ObjectConfigurator {
 
     @Override
     @SneakyThrows
-    public void configure(Object t) {
+    public void configure(Object t, ApplicationContext context) {
         Class<?> implClass = t.getClass();
         Set<Field> allFields = getAllFields(implClass);
         for (Field field : allFields) {

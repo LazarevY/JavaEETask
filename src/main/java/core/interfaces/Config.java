@@ -1,4 +1,4 @@
-package core;
+package core.interfaces;
 
 /**
  * @author Lazarev Yaroslav
