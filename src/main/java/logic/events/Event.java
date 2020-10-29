@@ -2,6 +2,9 @@ package logic.events;
 
 import core.annotations.PropertyGetter;
 import core.annotations.PropertySetter;
+import database.annotations.AutoGen;
+import database.annotations.Column;
+import database.annotations.Id;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -9,10 +12,14 @@ import java.util.Objects;
 
 public abstract class Event implements Serializable {
 
+    @Id(autoGen = AutoGen.FALSE)
+    @Column
+    private int id;
+    @Column
     protected LocalDate date = LocalDate.ofEpochDay(1);
+    @Column
     protected String description = "";
 
-    private int id;
 
     public Event() {
 

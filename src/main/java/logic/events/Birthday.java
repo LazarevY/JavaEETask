@@ -2,10 +2,13 @@ package logic.events;
 
 import core.annotations.PropertyGetter;
 import core.annotations.PropertySetter;
+import database.annotations.Column;
+import database.annotations.Entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
+@Entity("events")
 public class Birthday extends Event implements Serializable {
 
     public Birthday(LocalDate date, String description,
@@ -15,7 +18,9 @@ public class Birthday extends Event implements Serializable {
         this.gift = gift;
     }
 
+    @Column
     private String targetPerson;
+    @Column
     private String gift;
 
     @PropertyGetter("birthdayPerson")

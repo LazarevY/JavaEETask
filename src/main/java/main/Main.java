@@ -2,11 +2,22 @@ package main;
 
 import core.Application;
 import core.ApplicationContext;
+import data.Attribute;
+import data.AttributeFilterType;
+import data.Filter;
+import data.query.Delete;
+import data.query.Select;
+import data.query.Update;
 import database.DataBase;
 import database.PostgreSQLDataBase;
+import database.sql.dialects.PostgreSQLDialect;
+import database.sql.dialects.SQLDialect;
+import logic.events.Birthday;
+import logic.expressions.comparators.OperatorType;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,15 +26,25 @@ public class Main {
     public static void main(String[] args) throws SQLException{
 
         ApplicationContext context = Application.run("",
-                new HashMap<>(Map.of(DataBase.class, PostgreSQLDataBase.class)));
+                new HashMap<>(Map.of(
+                        DataBase.class, PostgreSQLDataBase.class,
+                        SQLDialect.class, PostgreSQLDialect.class)));
 
-        PostgreSQLDataBase dataBase = context.getObject(PostgreSQLDataBase.class);
+        SQLDialect dialect = context.getObject(SQLDialect.class);
 
-        ResultSet resultSet1 = dataBase.executeQuery("SELECT * FROM car_sharing_schema.autos");
-        while (resultSet1.next()){
-            System.out.println(resultSet1.getString(4));
-        }
+        Birthday birthday = new Birthday(LocalDate.of(2020, 10, 11), "Desc", "Person", "gift");
 
-        dataBase.disconnect();
+        System.out.println(dialect.createInsertQuery(birthday));
+        Delete<Birthday> delete = new Delete<>(Birthday.class);
+        delete.setFilters(Collections.singletonList(new Filter<>("id", OperatorType.Equal, 10, Integer.class, AttributeFilterType.Or)));
+        System.out.println(dialect.createDeleteQuery(delete));
+        Update<Birthday> update = new Update<>(Birthday.class);
+        update.setAttributes(Collections.singletonList(new Attribute("gift", "newGift")));
+        update.setFilters(Collections.singletonList(new Filter<>("id", OperatorType.Equal, 10, Integer.class, AttributeFilterType.Or)));
+        System.out.println(dialect.createUpdateQuery(update));
+        Select<Birthday> select = new Select<>(Birthday.class);
+        select.setFilters(Collections.singletonList(new Filter<>("id", OperatorType.Equal, 10, Integer.class, AttributeFilterType.Or)));
+        System.out.println(dialect.createSelectQuery(select));
+
     }
 }
