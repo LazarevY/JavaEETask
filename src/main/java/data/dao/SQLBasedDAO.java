@@ -60,10 +60,16 @@ public class SQLBasedDAO implements DAO {
             T entity = (T) selectQuery.getDataTypeClass().getDeclaredConstructor().newInstance();
 
             for (Field field : fields) {
-                Object val = converter.convert(set, field.getName().toLowerCase(), field.getType());
-                if (val == null)
-                    throw new IllegalArgumentException("No know how conversion for column " + field.getName().toLowerCase());
                 field.setAccessible(true);
+                Column column = field.getAnnotation(Column.class);
+                String colName = column.value().isEmpty() ?
+                        field.getName() : column.value();
+                colName = colName.toLowerCase();
+                Object val = converter.convert(set, colName, field.getType());
+
+                if (val == null)
+                    throw new IllegalArgumentException("No know how conversion for column " + colName);
+
                 field.set(entity, val);
             }
 
