@@ -8,7 +8,7 @@ import database.annotations.Entity;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-@Entity("events")
+@Entity("birthdays")
 public class Birthday extends Event implements Serializable {
 
     public Birthday(LocalDate date, String description,

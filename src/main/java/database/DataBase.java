@@ -10,9 +10,13 @@ import java.sql.ResultSet;
 
 @Singleton
 public interface DataBase {
-    ResultSet executeQuery(String query);
+    QueryResponse executeQuery(String query);
 
-    void executeUpdate(String query);
+    QueryResponse executeUpdate(String query);
+
+    void commitTransaction();
+
+    void rollbackTransaction();
 
     void disconnect();
 }

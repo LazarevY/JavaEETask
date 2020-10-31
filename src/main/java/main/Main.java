@@ -5,17 +5,17 @@ import core.ApplicationContext;
 import data.Attribute;
 import data.AttributeFilterType;
 import data.Filter;
-import data.query.Delete;
-import data.query.Insert;
-import data.query.Select;
-import data.query.Update;
+import data.query.*;
 import database.DataBase;
 import database.PostgreSQLDataBase;
+import database.QueryResponse;
+import database.SQLContext;
 import database.sql.dialects.PostgreSQLDialect;
 import database.sql.dialects.SQLDialect;
 import logic.events.Birthday;
 import logic.expressions.comparators.OperatorType;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -31,25 +31,41 @@ public class Main {
                         DataBase.class, PostgreSQLDataBase.class,
                         SQLDialect.class, PostgreSQLDialect.class)));
 
-        SQLDialect dialect = context.getObject(SQLDialect.class);
 
-        Birthday birthday = new Birthday(LocalDate.of(2020, 10, 11), "Desc", "Person", "gift");
+        SQLContext sqlContext = context.getObject(SQLContext.class);
 
-        Insert<Birthday> insert = new Insert<>(Birthday.class);
+        Birthday birthday = new Birthday(LocalDate.of(2020, 4, 15),
+                "Desc1",
+                "Pers",
+                "Giffft");
 
-        insert.setBody(Collections.singletonList(birthday));
-
-        System.out.println(dialect.createQuery(insert));
         Delete<Birthday> delete = new Delete<>(Birthday.class);
-        delete.setFilters(Collections.singletonList(new Filter<>("id", OperatorType.Equal, 10, Integer.class, AttributeFilterType.Or)));
-        System.out.println(dialect.createQuery(delete));
-        Update<Birthday> update = new Update<>(Birthday.class);
-        update.setAttributes(Collections.singletonList(new Attribute("gift", "newGift")));
-        update.setFilters(Collections.singletonList(new Filter<>("id", OperatorType.Equal, 10, Integer.class, AttributeFilterType.Or)));
-        System.out.println(dialect.createQuery(update));
+
+        delete.setFilters(Collections.singletonList(new Filter<>("id", OperatorType.Equal, 1, AttributeFilterType.And)));
+
+        QueryResponse r1 = sqlContext.execQuery(delete);
+        System.out.println(r1.getMsg());
+
         Select<Birthday> select = new Select<>(Birthday.class);
-        select.setFilters(Collections.singletonList(new Filter<>("id", OperatorType.Equal, 10, Integer.class, AttributeFilterType.Or)));
-        System.out.println(dialect.createQuery(select));
+
+        QueryResponse response  = sqlContext.execQuery(select);
+
+        if (response.getCode() == 0 && response.getResultSet() != null){
+            ResultSet set = response.getResultSet();
+
+            while (set.next()){
+                StringBuilder builder = new StringBuilder();
+
+                for (int col = 1; col <= set.getMetaData().getColumnCount(); ++col)
+                    builder.append(set.getString(col)).append(" ");
+
+                System.out.println(builder.toString());
+
+            }
+
+        }
+        System.out.println(response.getMsg());
+
 
     }
 }

@@ -2,6 +2,7 @@ package database;
 
 import core.annotations.InjectProperty;
 import lombok.SneakyThrows;
+import org.postgresql.util.PSQLException;
 
 import javax.annotation.PostConstruct;
 import java.sql.*;
@@ -51,27 +52,52 @@ public class PostgreSQLDataBase implements DataBase {
 
         if (connection != null) {
             System.out.println("You successfully connected to database now");
-            connection.setAutoCommit(true);
+            connection.setAutoCommit(false);
         }
+
+
     }
 
     @Override
     @SneakyThrows
-    public ResultSet executeQuery(String query) {
+    public QueryResponse executeQuery(String query) {
         ResultSet resultSet;
+        QueryResponse response = new QueryResponse(null, 0, "");
         try(PreparedStatement statement = connection.prepareStatement(query)){
             resultSet = statement.executeQuery();
         }
+        catch (SQLException e){
+            response.setCode(e.getErrorCode());
+            response.setMsg(e.toString());
+            if (e.getErrorCode() != 0) {
+                e.printStackTrace();
+                rollbackTransaction();
+                return response;
+            }
+            return response;
+        }
 
-        return resultSet;
+        response.setResultSet(resultSet);
+        commitTransaction();
+        return response;
     }
 
     @Override
     @SneakyThrows
-    public void executeUpdate(String query) {
+    public QueryResponse executeUpdate(String query) {
+        QueryResponse response = new QueryResponse(null, 0, "");
         try(PreparedStatement statement = connection.prepareStatement(query)){
             statement.executeUpdate();
         }
+        catch (SQLException e){
+            response.setMsg(e.toString());
+            response.setCode(e.getErrorCode());
+            e.printStackTrace();
+            rollbackTransaction();
+            return response;
+        }
+        commitTransaction();
+        return response;
     }
 
     @SneakyThrows
@@ -79,5 +105,17 @@ public class PostgreSQLDataBase implements DataBase {
     public void disconnect() {
         connection.close();
         System.out.println("Database disconnected successfully");
+    }
+
+    @Override
+    @SneakyThrows
+    public void commitTransaction() {
+        connection.commit();
+    }
+
+    @Override
+    @SneakyThrows
+    public void rollbackTransaction() {
+        connection.rollback();
     }
 }

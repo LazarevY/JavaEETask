@@ -2,11 +2,12 @@ package data.query;
 
 import data.Filter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Select<DataType> extends Query<DataType> {
 
-    private List<Filter<?>> filters;
+    private List<Filter<?>> filters = new ArrayList<>();
 
     public Select(Class<DataType> dataTypeClass) {
         super(dataTypeClass);

@@ -16,7 +16,7 @@ public class PostgreSQLFilterMaker implements SQLFilterMaker {
 
     @Override
     public String makeSQLFilter(Filter<?> filter) {
-        return String.format("`%s`%s%s", filter.getAttribute(),
+        return String.format("\"%s\"%s%s", filter.getAttribute().toLowerCase(),
                 filter.getOperator().getRepresentation(),
                 converter.convert(filter.getValue()));
     }

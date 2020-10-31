@@ -1,14 +1,14 @@
 package data.query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Insert<DataType> extends Query<DataType> {
 
-    private List<DataType> body;
+    private List<DataType> body = new ArrayList<>();
 
     public Insert(Class<DataType> dataTypeClass) {
         super(dataTypeClass);
-        body = null;
     }
 
     public List<DataType> getBody() {

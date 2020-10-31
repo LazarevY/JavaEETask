@@ -1,11 +1,14 @@
 package logic.events;
 
 import core.annotations.PropertyGetter;
+import database.annotations.Column;
+import database.annotations.Entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Entity("appointments")
 public class Appointment extends Event implements Serializable {
 
     public Appointment(LocalDate date, String eventDescription,
@@ -46,6 +49,8 @@ public class Appointment extends Event implements Serializable {
                 "\nDescription: " + description + "\n";
     }
 
+    @Column
     private String targetPerson;
+    @Column
     private LocalTime time;
 }

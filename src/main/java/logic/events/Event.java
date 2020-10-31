@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public abstract class Event implements Serializable {
 
-    @Id(autoGen = AutoGen.FALSE)
+    @Id(autoGen = AutoGen.TRUE)
     @Column
     private int id;
     @Column
