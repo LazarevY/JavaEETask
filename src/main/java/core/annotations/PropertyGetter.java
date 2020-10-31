@@ -1,10 +1,10 @@
-package annotations;
+package core.annotations;
 
 import java.lang.annotation.*;
 
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD})
-public @interface PropertySetter {
+public @interface PropertyGetter {
     String value();
 }

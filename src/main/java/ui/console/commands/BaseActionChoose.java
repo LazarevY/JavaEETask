@@ -1,6 +1,8 @@
 package ui.console.commands;
 
 import console.io.InputManager;
+import core.annotations.InjectMapByEntries;
+import core.annotations.MapEntry;
 import logic.business.BusinessLogic;
 
 import java.util.Collections;
@@ -9,7 +11,12 @@ import java.util.Map;
 
 public class BaseActionChoose implements Command {
 
-    private final Map<String, Command> commandMap;
+    @InjectMapByEntries({
+            @MapEntry(key = "v", implClass = ViewAction.class),
+            @MapEntry(key = "a", implClass = AddAction.class),
+            @MapEntry(key = "e", implClass = EditAction.class),
+            @MapEntry(key = "d", implClass = DeleteAction.class)})
+    private Map<String, Command> commandMap;
 
     public static final String CHOOSE_MSG = "Choose action:\n" +
             "v: View events\n" +
@@ -18,14 +25,6 @@ public class BaseActionChoose implements Command {
             "d: Delete events\n" +
             "q: Quit";
 
-    public BaseActionChoose(BusinessLogic logic) {
-        commandMap = new HashMap<String, Command>() {{
-            put("v", new ViewAction(logic));
-            put("d", new DeleteAction(logic));
-            put("a", new AddAction(logic));
-            put("e", new EditAction(logic));
-        }};
-    }
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {

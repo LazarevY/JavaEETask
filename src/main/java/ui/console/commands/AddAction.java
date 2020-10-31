@@ -2,6 +2,7 @@ package ui.console.commands;
 
 import console.io.BirthdayReader;
 import console.io.InputManager;
+import core.annotations.InjectByType;
 import logic.business.BusinessLogic;
 import logic.events.Appointment;
 import logic.events.Birthday;
@@ -12,16 +13,17 @@ import java.util.Map;
 
 public class AddAction implements Command {
 
-    private final BusinessLogic logic;
+    @InjectByType
+    private BusinessLogic logic;
+
+    @InjectByType
+    private Input input;
 
     public static final String CHOOSE_MSG = "Choose action:\n" +
             "b: Add new birthday event\n" +
             "a: Add new appointment event\n" +
             "q: Return back";
 
-    public AddAction(BusinessLogic logic) {
-        this.logic = logic;
-    }
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {
@@ -32,8 +34,7 @@ public class AddAction implements Command {
         while (!command.equals("q")){
 
             if (command.equals("b")){
-                Birthday birthday = (Birthday) Input
-                        .getInstance()
+                Birthday birthday = (Birthday) input
                         .execute(Map.of("type", Birthday.class))
                         .getReturnMap()
                         .get("input");
@@ -42,8 +43,7 @@ public class AddAction implements Command {
                         String.format("Event added: %s", birthday.fullDescription()));
             }
             else if (command.equals("a")){
-                Appointment appointment = (Appointment) Input
-                        .getInstance()
+                Appointment appointment = (Appointment) input
                         .execute(Map.of("type", Appointment.class))
                         .getReturnMap()
                         .get("input");

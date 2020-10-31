@@ -1,6 +1,8 @@
 package ui.console.commands;
 
 import console.io.InputManager;
+import core.annotations.InjectMapByEntries;
+import core.annotations.MapEntry;
 import logic.business.BusinessLogic;
 import logic.events.Event;
 
@@ -8,8 +10,13 @@ import java.util.*;
 
 public class ViewAction implements Command {
 
-    private final BusinessLogic businessLogic;
-    private final Map<String, Command> commandMap;
+    @InjectMapByEntries({
+            @MapEntry(key = "a", implClass = ViewAllEvents.class),
+            @MapEntry(key = "b", implClass = ViewBirthdays.class),
+            @MapEntry(key = "t", implClass = ViewAppointments.class),
+            @MapEntry(key = "s", implClass = SelectSortParameter.class)
+    })
+    private Map<String, Command> commandMap;
 
     public static final String CHOOSE_MSG = "What I must do?\n" +
             "s: Select sort parameter\n" +
@@ -19,16 +26,6 @@ public class ViewAction implements Command {
             "f: View with full description\n" +
             "d: View with short description\n" +
             "q: Return back";
-
-    public ViewAction(BusinessLogic businessLogic) {
-        this.businessLogic = businessLogic;
-        this.commandMap = new HashMap<String, Command>() {{
-            put("a", new ViewAllEvents(businessLogic));
-            put("b", new ViewBirthdays(businessLogic));
-            put("t", new ViewAppointments(businessLogic));
-            put("s", new SelectSortParameter());
-        }};
-    }
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {

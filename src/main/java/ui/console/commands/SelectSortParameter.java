@@ -3,15 +3,17 @@ package ui.console.commands;
 import console.io.InputManager;
 import logic.events.Event;
 
+import javax.annotation.PostConstruct;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SelectSortParameter implements Command {
 
-    private final Map<String, Comparator<Event>> comparatorMap;
+    private Map<String, Comparator<Event>> comparatorMap;
 
-    public SelectSortParameter() {
+    @PostConstruct
+    public void init() {
         comparatorMap = new HashMap<String, Comparator<Event>>() {{
             put("d", Comparator.comparingInt(event -> event.getEventDate().getDayOfMonth()));
             put("m", Comparator.comparingInt(event -> event.getEventDate().getMonthValue()));

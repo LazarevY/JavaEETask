@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.Objects;
 
 public class Cloner {
-    public static <T> T clone(T orig) {
+    public static <T extends Serializable> T clone(T orig) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream ous;
         try {

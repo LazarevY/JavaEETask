@@ -1,5 +1,8 @@
 package annotations;
 
+import core.annotations.PropertyGetter;
+import core.annotations.PropertySetter;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;

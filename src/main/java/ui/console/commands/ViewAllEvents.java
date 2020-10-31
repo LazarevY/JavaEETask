@@ -1,5 +1,6 @@
 package ui.console.commands;
 
+import core.annotations.InjectByType;
 import logic.business.BusinessLogic;
 import logic.events.Event;
 
@@ -16,11 +17,8 @@ public class ViewAllEvents implements Command {
             //"c: Clean all filters\n" +
             "q: Cancel\n";
 
-    private final BusinessLogic logic;
-
-    public ViewAllEvents(BusinessLogic logic) {
-        this.logic = logic;
-    }
+    @InjectByType
+    private BusinessLogic logic;
 
     @Override
     @SuppressWarnings("unchecked")

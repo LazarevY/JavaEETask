@@ -1,7 +1,6 @@
 package logic.expressions.predicates;
 
 import data.AttributeFilterType;
-import logic.events.Event;
 import logic.expressions.conditions.Condition;
 
 import java.util.ArrayList;
@@ -9,41 +8,65 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class ConditionsPredicate<T extends Event> implements Predicate<T> {
+public class ConditionsPredicate implements Predicate<Object> {
 
-    private HashMap<AttributeFilterType, List<Condition<T, ?>>> map;
+    private final Class dataTypeClass;
+    private HashMap<AttributeFilterType, List<Condition<Object, ?>>> map;
 
 
-    public ConditionsPredicate() {
-        this.map = new HashMap<AttributeFilterType, List<Condition<T, ?>>>(){{
+    public ConditionsPredicate(Class dataTypeClass) {
+        this.dataTypeClass = dataTypeClass;
+        this.map = new HashMap<AttributeFilterType, List<Condition<Object, ?>>>(){{
             put(AttributeFilterType.And, new ArrayList<>());
             put(AttributeFilterType.Or, new ArrayList<>());
             put(AttributeFilterType.Enough, new ArrayList<>());
         }};
     }
 
-    public void addCondition(Condition<T, ?> condition, AttributeFilterType filterType){
+    public void addCondition(Condition<Object, Object> condition, AttributeFilterType filterType){
         map.get(filterType).add(condition);
     }
 
     @Override
-    public boolean test(T t) {
+    public boolean test(Object t) {
 
-        for (Condition<T, ?> e: map.get(AttributeFilterType.Enough))
+        boolean allEmpty = true;
+
+        for (List<Condition<Object, ?>> value : map.values()) {
+            if (!value.isEmpty()) {
+                allEmpty = false;
+                break;
+            }
+        }
+
+        if (allEmpty)
+            return true;
+
+        for (Condition<Object, ?> e: map.get(AttributeFilterType.Enough))
             if (e.check(t))
                 return true;
 
-        boolean orOk = map.get(AttributeFilterType.Or).isEmpty();
-        for (Condition<T, ?> o: map.get(AttributeFilterType.Or))
-            if (o.check(t)){
-                orOk = true;
-                break;
-            }
-        if (!orOk)
-            return false;
-        for (Condition<T, ?> a: map.get(AttributeFilterType.And))
-            if (!a.check(t))
+        boolean ok = false;
+        boolean isOrMapEmpty = map.get(AttributeFilterType.Or).isEmpty();
+        if (!isOrMapEmpty) {
+            for (Condition<Object, ?> o : map.get(AttributeFilterType.Or))
+                if (o.check(t)) {
+                    ok = true;
+                    break;
+                }
+            if (!ok)
                 return false;
-        return true;
+        }
+
+        if (map.get(AttributeFilterType.And).isEmpty() && isOrMapEmpty)
+            return false;
+
+        //check And filters
+        {
+            for (Condition<Object, ?> a : map.get(AttributeFilterType.And))
+                if (!a.check(t))
+                    return false;
+            return true;
+        }
     }
 }

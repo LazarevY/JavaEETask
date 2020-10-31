@@ -1,5 +1,6 @@
 package console.io;
 
+import core.annotations.InjectByType;
 import logic.events.Appointment;
 import ui.console.commands.Input;
 
@@ -10,6 +11,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 public class AppointmentReader implements ConsoleClassReader<Appointment> {
+
+    @InjectByType
+    private Input input;
+
     @Override
     @SuppressWarnings("duplicated")
     public Appointment safeRead(String msg) {
@@ -28,7 +33,7 @@ public class AppointmentReader implements ConsoleClassReader<Appointment> {
             }
         }
 
-        LocalTime time = (LocalTime) Input.getInstance().execute(Map.of("type", LocalTime.class
+        LocalTime time = (LocalTime) input.execute(Map.of("type", LocalTime.class
         , "msg", "Input time in format like 18:30"))
                 .getReturnMap().get("input");
 

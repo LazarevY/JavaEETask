@@ -1,21 +1,25 @@
 package logic.events;
 
-import annotations.PropertyGetter;
-import annotations.PropertySetter;
-import com.fasterxml.jackson.annotation.JsonGetter;
+import core.annotations.PropertyGetter;
+import core.annotations.PropertySetter;
+import database.annotations.AutoGen;
+import database.annotations.Column;
+import database.annotations.Id;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public abstract class Event implements Serializable {
 
+    @Id(autoGen = AutoGen.TRUE)
+    @Column
+    private int id;
+    @Column
     protected LocalDate date = LocalDate.ofEpochDay(1);
+    @Column
     protected String description = "";
 
-    private int id;
 
     public Event() {
 

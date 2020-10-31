@@ -1,5 +1,6 @@
 package ui.console.commands;
 
+import core.annotations.InjectByType;
 import logic.business.BusinessLogic;
 import logic.events.Birthday;
 import logic.events.Event;
@@ -10,7 +11,8 @@ import java.util.Map;
 
 public class ViewBirthdays implements Command {
 
-    private final BusinessLogic logic;
+    @InjectByType
+    private  BusinessLogic logic;
 
     public static final String CHOOSE_MSG = "Choose action:\n" +
             //"f: Add filter\n" +
@@ -18,10 +20,6 @@ public class ViewBirthdays implements Command {
             "v: View\n" +
             //"c: Clean all filters\n" +
             "q: Cancel\n";
-
-    public ViewBirthdays(BusinessLogic logic) {
-        this.logic = logic;
-    }
 
     @Override
     @SuppressWarnings("unchecked")

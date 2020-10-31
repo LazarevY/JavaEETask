@@ -1,20 +1,23 @@
 package ui.console.commands;
 
 import console.io.*;
+import core.annotations.Singleton;
 import logic.events.Appointment;
 import logic.events.Birthday;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
+@Singleton
 public class Input implements Command {
 
-    private final Map<Class<?>, ConsoleClassReader<?>> readerMap;
-    private static Input instance;
+    private Map<Class<?>, ConsoleClassReader<?>> readerMap;
 
-    private Input(){
+    @PostConstruct
+    private void init(){
         readerMap = new HashMap<Class<?>, ConsoleClassReader<?>>(){{
            put(Birthday.class, new BirthdayReader());
            put(Appointment.class, new AppointmentReader());
@@ -23,11 +26,6 @@ public class Input implements Command {
         }};
     }
 
-    public static Input getInstance(){
-        if (instance == null)
-            instance = new Input();
-        return instance;
-    }
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {

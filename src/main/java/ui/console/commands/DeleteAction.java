@@ -1,6 +1,7 @@
 package ui.console.commands;
 
 import console.io.InputManager;
+import core.annotations.InjectByType;
 import data.AttributeFilterType;
 import data.Filter;
 import logic.business.BusinessLogic;
@@ -13,13 +14,11 @@ import java.util.Map;
 
 public class DeleteAction implements Command {
 
-    private final BusinessLogic logic;
+    @InjectByType
+    private BusinessLogic logic;
 
     public static final String CHOOSE_MSG = "(Delete action)Input event id";
 
-    public DeleteAction(BusinessLogic logic) {
-        this.logic = logic;
-    }
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {

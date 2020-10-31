@@ -1,12 +1,15 @@
 package logic.events;
 
-import annotations.PropertyGetter;
-import annotations.PropertySetter;
+import core.annotations.PropertyGetter;
+import core.annotations.PropertySetter;
+import database.annotations.Column;
+import database.annotations.Entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Entity("appointments")
 public class Appointment extends Event implements Serializable {
 
     public Appointment(LocalDate date, String eventDescription,
@@ -14,6 +17,12 @@ public class Appointment extends Event implements Serializable {
         super(date, eventDescription);
         this.targetPerson = targetPerson;
         this.time = time;
+    }
+
+    public Appointment(){
+        super(LocalDate.now(), "");
+        targetPerson = "";
+        time = LocalTime.NOON;
     }
 
     @PropertyGetter("appointmentPerson")
@@ -49,6 +58,8 @@ public class Appointment extends Event implements Serializable {
                 "\nDescription: " + description + "\n";
     }
 
+    @Column
     private String targetPerson;
+    @Column("appointmentTime")
     private LocalTime time;
 }

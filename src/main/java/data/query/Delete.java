@@ -2,11 +2,12 @@ package data.query;
 
 import data.Filter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Delete<DataType> extends Query<DataType> {
 
-    private List<Filter<?>> filters;
+    private List<Filter<?>> filters = new ArrayList<>();
 
     public Delete(Class<DataType> dataTypeClass) {
         super(dataTypeClass);

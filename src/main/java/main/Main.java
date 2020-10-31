@@ -1,65 +1,46 @@
 package main;
 
-import data.dao.HashMapDao;
-import logic.business.BusinessLogic;
-import logic.events.Appointment;
+import core.Application;
+import core.ApplicationContext;
+import data.Attribute;
+import data.AttributeFilterType;
+import data.Filter;
+import data.dao.DAO;
+import data.dao.SQLBasedDAO;
+import data.query.*;
+import database.DataBase;
+import database.PostgreSQLDataBase;
+import database.QueryResponse;
+import database.SQLContext;
+import database.sql.dialects.PostgreSQLDialect;
+import database.sql.dialects.SQLDialect;
 import logic.events.Birthday;
-import ui.console.commands.BaseActionChoose;
+import logic.expressions.comparators.OperatorType;
+import ui.console.ConsoleUI;
 
-import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
 
+    public static void main(String[] args) throws SQLException{
 
-    public static void main(String[] args) throws IOException, CloneNotSupportedException {
+        ApplicationContext context = Application.run("",
+                new HashMap<>(Map.of(
+                        DataBase.class, PostgreSQLDataBase.class,
+                        SQLDialect.class, PostgreSQLDialect.class,
+                        DAO.class, SQLBasedDAO.class)));
+
+        ConsoleUI ui = context.getObject(ConsoleUI.class);
+
+        ui.show();
 
 
-        BusinessLogic logic = new BusinessLogic();
-        HashMapDao<Birthday> birthdayHashMapDao = new HashMapDao<>();
-        HashMapDao<Appointment> appointmentHashMapDao = new HashMapDao<>();
 
-        logic.registerDao(Birthday.class, birthdayHashMapDao);
-        logic.registerDao(Appointment.class, appointmentHashMapDao);
-
-        Appointment a1 =
-                new Appointment(LocalDate.of(2019, Month.DECEMBER, 30),
-                        "Desc",
-                        "Person",
-                        LocalTime.of(18,10));
-        Appointment a2 =
-                new Appointment(LocalDate.of(2019, Month.DECEMBER, 31),
-                        "Desc",
-                        "Person",
-                        LocalTime.of(12, 30));
-        Appointment a3 =
-                new Appointment(LocalDate.of(2019, Month.DECEMBER, 30),
-                        "Desc",
-                        "Person",
-                        LocalTime.of(14,15));
-        Appointment a4 =
-                new Appointment(LocalDate.of(2019, Month.DECEMBER, 27),
-                        "Desc",
-                        "Person",
-                        LocalTime.of(17, 0));
-        Birthday b1 =
-                new Birthday(LocalDate.of(2020, Month.APRIL, 10),
-                        "Desc",
-                        "Man",
-                        "Gift");
-        Birthday b2 =
-                new Birthday(LocalDate.of(2020, Month.JUNE, 30),
-                        "Desc",
-                        "Man",
-                        "Gift");
-
-        logic.addEvents(Arrays.asList(a1, a2, a3, a4, b1, b2));
-        BaseActionChoose choose = new BaseActionChoose(logic);
-
-        choose.execute(Collections.emptyMap());
     }
 }

@@ -1,11 +1,9 @@
 package ui;
 
+import core.annotations.Singleton;
 import logic.business.BusinessLogic;
 
-public abstract class UI {
-    protected BusinessLogic logic;
 
-    public UI(BusinessLogic logic) {
-        this.logic = logic;
-    }
+public interface UI {
+    void show();
 }

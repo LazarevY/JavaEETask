@@ -1,7 +1,12 @@
 package data;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class Attribute {
+    @Getter @Setter
     private String name;
+    @Getter @Setter
     private Object value;
 
     public Attribute(String name, Object value) {
@@ -9,19 +14,4 @@ public class Attribute {
         this.value = value;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Object getValue() {
-        return value;
-    }
-
-    public void setValue(Object value) {
-        this.value = value;
-    }
 }
