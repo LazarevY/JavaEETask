@@ -6,6 +6,7 @@ import data.Attribute;
 import data.AttributeFilterType;
 import data.Filter;
 import data.query.Delete;
+import data.query.Insert;
 import data.query.Select;
 import data.query.Update;
 import database.DataBase;
@@ -34,17 +35,21 @@ public class Main {
 
         Birthday birthday = new Birthday(LocalDate.of(2020, 10, 11), "Desc", "Person", "gift");
 
-        System.out.println(dialect.createInsertQuery(birthday));
+        Insert<Birthday> insert = new Insert<>(Birthday.class);
+
+        insert.setBody(Collections.singletonList(birthday));
+
+        System.out.println(dialect.createQuery(insert));
         Delete<Birthday> delete = new Delete<>(Birthday.class);
         delete.setFilters(Collections.singletonList(new Filter<>("id", OperatorType.Equal, 10, Integer.class, AttributeFilterType.Or)));
-        System.out.println(dialect.createDeleteQuery(delete));
+        System.out.println(dialect.createQuery(delete));
         Update<Birthday> update = new Update<>(Birthday.class);
         update.setAttributes(Collections.singletonList(new Attribute("gift", "newGift")));
         update.setFilters(Collections.singletonList(new Filter<>("id", OperatorType.Equal, 10, Integer.class, AttributeFilterType.Or)));
-        System.out.println(dialect.createUpdateQuery(update));
+        System.out.println(dialect.createQuery(update));
         Select<Birthday> select = new Select<>(Birthday.class);
         select.setFilters(Collections.singletonList(new Filter<>("id", OperatorType.Equal, 10, Integer.class, AttributeFilterType.Or)));
-        System.out.println(dialect.createSelectQuery(select));
+        System.out.println(dialect.createQuery(select));
 
     }
 }

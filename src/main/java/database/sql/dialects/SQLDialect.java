@@ -1,6 +1,7 @@
 package database.sql.dialects;
 
 import data.query.Delete;
+import data.query.Query;
 import data.query.Select;
 import data.query.Update;
 
@@ -10,8 +11,5 @@ import data.query.Update;
 
 
 public interface SQLDialect {
-    String createInsertQuery(Object entity);
-    String createDeleteQuery(Delete<?> query);
-    String createUpdateQuery(Update<?> query);
-    String createSelectQuery(Select<?> query);
+    String createQuery(Query<?> query);
 }
