@@ -18,6 +18,12 @@ public class Appointment extends Event implements Serializable {
         this.time = time;
     }
 
+    public Appointment(){
+        super(LocalDate.now(), "");
+        targetPerson = "";
+        time = LocalTime.NOON;
+    }
+
     @PropertyGetter("appointmentPerson")
     public String getTargetPerson() {
         return targetPerson;

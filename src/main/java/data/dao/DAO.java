@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface DAO {
 
-    void insert(Insert<?> insertQuery);
-    void delete(Delete<?> deleteQuery);
-    List<?> select(Select<?> selectQuery);
-    void update(Update<?> updateQuery);
+    <T> void insert(Insert<T> insertQuery);
+    <T> void delete(Delete<T> deleteQuery);
+    <T> List<?> select(Select<T> selectQuery);
+    <T> void update(Update<T> updateQuery);
 
 }

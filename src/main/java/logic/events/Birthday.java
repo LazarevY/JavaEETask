@@ -18,6 +18,12 @@ public class Birthday extends Event implements Serializable {
         this.gift = gift;
     }
 
+    public Birthday(){
+        super(LocalDate.now(), "");
+        targetPerson = "";
+        gift = "";
+    }
+
     @Column
     private String targetPerson;
     @Column

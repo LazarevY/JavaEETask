@@ -5,6 +5,7 @@ import core.ApplicationContext;
 import data.Attribute;
 import data.AttributeFilterType;
 import data.Filter;
+import data.dao.SQLBasedDAO;
 import data.query.*;
 import database.DataBase;
 import database.PostgreSQLDataBase;
@@ -20,6 +21,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Main {
@@ -39,32 +41,16 @@ public class Main {
                 "Pers",
                 "Giffft");
 
-        Delete<Birthday> delete = new Delete<>(Birthday.class);
-
-        delete.setFilters(Collections.singletonList(new Filter<>("id", OperatorType.Equal, 1, AttributeFilterType.And)));
-
-        QueryResponse r1 = sqlContext.execQuery(delete);
-        System.out.println(r1.getMsg());
 
         Select<Birthday> select = new Select<>(Birthday.class);
 
-        QueryResponse response  = sqlContext.execQuery(select);
+        SQLBasedDAO dao = context.getObject(SQLBasedDAO.class);
 
-        if (response.getCode() == 0 && response.getResultSet() != null){
-            ResultSet set = response.getResultSet();
+        List<Birthday> select1 = dao.select(select);
 
-            while (set.next()){
-                StringBuilder builder = new StringBuilder();
-
-                for (int col = 1; col <= set.getMetaData().getColumnCount(); ++col)
-                    builder.append(set.getString(col)).append(" ");
-
-                System.out.println(builder.toString());
-
-            }
-
+        for (Birthday birthday1 : select1) {
+            System.out.println(birthday1.shortDescription());
         }
-        System.out.println(response.getMsg());
 
 
     }

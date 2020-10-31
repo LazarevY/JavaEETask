@@ -1,6 +1,7 @@
 package database;
 
 import core.annotations.InjectProperty;
+import core.annotations.Singleton;
 import lombok.SneakyThrows;
 import org.postgresql.util.PSQLException;
 
@@ -11,7 +12,7 @@ import java.sql.*;
  * @author Lazarev Yaroslav
  */
 
-
+@Singleton
 public class PostgreSQLDataBase implements DataBase {
 
     @InjectProperty()

@@ -35,7 +35,7 @@ public class HashMapDao implements DAO {
     }
 
     @Override
-    public void insert(Insert<?> insertQuery) {
+    public <T> void insert(Insert<T> insertQuery) {
         for (Object e : insertQuery.getBody()) {
             if (!(e instanceof Event))
                 throw new IllegalArgumentException(e.getClass() + " not supported");
@@ -46,7 +46,7 @@ public class HashMapDao implements DAO {
     }
 
     @Override
-    public void delete(Delete<?> deleteQuery) {
+    public <T> void delete(Delete<T> deleteQuery) {
         Predicate<Object> predicate = buildPredicate(deleteQuery.getFilters(), deleteQuery.getDataTypeClass());
         List<Map<Integer, Event>> maps = getMapListForType(deleteQuery.getDataTypeClass());
         for (Map<Integer, Event> map : maps) {
@@ -69,7 +69,7 @@ public class HashMapDao implements DAO {
     }
 
     @Override
-    public List<?> select(Select<?> selectQuery) {
+    public <T> List<T> select(Select<T> selectQuery) {
         Predicate<Object> predicate = buildPredicate(selectQuery.getFilters(), selectQuery.getDataTypeClass());
         List<Event> events = new ArrayList<>();
 
@@ -81,12 +81,12 @@ public class HashMapDao implements DAO {
             );
         }
 
-        return new ArrayList<>(events);
+        return new ArrayList<T>((Collection<? extends T>) events);
 
     }
 
     @Override
-    public void update(Update<?> updateQuery) {
+    public <T> void update(Update<T> updateQuery) {
 
         Predicate predicate =
                 buildPredicate(updateQuery.getFilters(), updateQuery.getDataTypeClass());
