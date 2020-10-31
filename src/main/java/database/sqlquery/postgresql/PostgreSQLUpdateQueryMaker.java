@@ -32,7 +32,7 @@ public class PostgreSQLUpdateQueryMaker implements SQLUpdateQueryMaker {
 
         List<Attribute> attributes;
         Set<String> fieldsName =
-                getAllFields(entityClass).stream().map(Field::getName).collect(Collectors.toSet());
+                getAllFields(entityClass).stream().map(Field::getName).map(String::toLowerCase).collect(Collectors.toSet());
         attributes = query.getAttributes()
 
                 .stream().filter(attribute -> fieldsName.contains(attribute.getName()))
@@ -52,7 +52,7 @@ public class PostgreSQLUpdateQueryMaker implements SQLUpdateQueryMaker {
 
         for (Attribute attribute : attributes) {
             builder.append(" ");
-            builder.append(String.format("`%s` = %s,", attribute.getName(), converter.convert(attribute.getValue())));
+            builder.append(String.format("\"%s\" = %s,", attribute.getName().toLowerCase(), converter.convert(attribute.getValue())));
         }
         builder.deleteCharAt(builder.length() - 1);
 

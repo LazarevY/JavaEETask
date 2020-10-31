@@ -31,7 +31,7 @@ public class PostgreSQLDeleteQueryMaker implements SQLDeleteQueryMaker {
         utils.addTableName(entityClass, builder);
 
         Set<String> fieldsName =
-                getAllFields(entityClass).stream().map(Field::getName).collect(Collectors.toSet());
+                getAllFields(entityClass).stream().map(Field::getName).map(String::toLowerCase).collect(Collectors.toSet());
 
         utils.addWherePredicateIfNeeded(builder, fieldsName, query.getFilters());
         builder.append(";");

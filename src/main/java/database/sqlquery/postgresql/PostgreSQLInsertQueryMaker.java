@@ -70,12 +70,12 @@ public class PostgreSQLInsertQueryMaker implements SQLInsertQueryMaker {
                 Column c = field.getAnnotation(Column.class);
                 String colName = c.value().isEmpty() ? field.getName() : c.value();
                 Object colValue = field.get(entityObject);
-                columns.add(new AbstractMap.SimpleEntry<>(colName, colValue));
+                columns.add(new AbstractMap.SimpleEntry<>(colName.toLowerCase(), colValue));
             }
         }
 
         for (Map.Entry<String, Object> column : columns) {
-            builder.append(String.format("`%s`,", column.getKey()));
+            builder.append(String.format("\"%s\",", column.getKey()));
         }
         builder.deleteCharAt(builder.length() - 1);
         builder.append(") VALUES (");
