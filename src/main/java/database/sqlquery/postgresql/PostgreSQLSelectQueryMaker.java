@@ -1,6 +1,7 @@
 package database.sqlquery.postgresql;
 
 import core.annotations.InjectByType;
+import core.annotations.InterfaceForType;
 import data.query.Select;
 import database.annotations.Entity;
 import database.sqlquery.SQLSelectQueryMaker;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 
 import static org.reflections.ReflectionUtils.getAllFields;
 
+@InterfaceForType(Select.class)
 public class PostgreSQLSelectQueryMaker implements SQLSelectQueryMaker {
 
     @InjectByType

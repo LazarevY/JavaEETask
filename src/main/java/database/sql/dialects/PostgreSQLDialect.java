@@ -3,6 +3,7 @@ package database.sql.dialects;
 import core.annotations.InjectByType;
 import core.annotations.InjectMapClassKeyByEntries;
 import core.annotations.MapKeyClassEntry;
+import core.annotations.MapTypeIfcForType;
 import data.Attribute;
 import data.Filter;
 import data.filterutils.SQLFilterMaker;
@@ -32,12 +33,7 @@ import static org.reflections.ReflectionUtils.getAllFields;
 
 public class PostgreSQLDialect implements SQLDialect {
 
-    @InjectMapClassKeyByEntries({
-            @MapKeyClassEntry(key = Insert.class, implClass = PostgreSQLInsertQueryMaker.class),
-            @MapKeyClassEntry(key = Select.class, implClass = PostgreSQLSelectQueryMaker.class),
-            @MapKeyClassEntry(key = Delete.class, implClass = PostgreSQLDeleteQueryMaker.class),
-            @MapKeyClassEntry(key = Update.class, implClass = PostgreSQLUpdateQueryMaker.class)
-    })
+    @MapTypeIfcForType(SQLQueryMaker.class)
     private Map<Class<? extends Query>, SQLQueryMaker<? extends Query<?>>> sqlQueryMakerMap;
 
 

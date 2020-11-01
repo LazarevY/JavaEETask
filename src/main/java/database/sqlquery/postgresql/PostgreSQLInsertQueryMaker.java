@@ -1,6 +1,7 @@
 package database.sqlquery.postgresql;
 
 import core.annotations.InjectByType;
+import core.annotations.InterfaceForType;
 import data.ObjectToPostgreSQLConverter;
 import data.query.Insert;
 import database.annotations.AutoGen;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 import static org.reflections.ReflectionUtils.getAllFields;
 
+@InterfaceForType(Insert.class)
 public class PostgreSQLInsertQueryMaker implements SQLInsertQueryMaker {
 
     @InjectByType
