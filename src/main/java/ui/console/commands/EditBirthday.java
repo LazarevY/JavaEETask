@@ -2,13 +2,11 @@ package ui.console.commands;
 
 import console.io.InputManager;
 import core.annotations.InjectByType;
-import core.annotations.InjectMapByEntries;
 import data.Attribute;
 import data.AttributeFilterType;
 import data.Filter;
 import logic.business.BusinessLogic;
 import logic.events.Birthday;
-import logic.events.Event;
 import logic.expressions.comparators.OperatorType;
 
 import java.time.LocalDate;
@@ -31,12 +29,15 @@ public class EditBirthday implements Command{
             "g: Gift description\n" +
             "q: Return back";
 
+    @InjectByType
+    private InputManager inputManager;
+
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {
         Command.printTemplate("Birthday edit action", CHOOSE_MSG);
 
-        String command = InputManager.getInstance().getStringFromStandardInput("(Birthday event action) Choose param");
+        String command = inputManager.getStringFromStandardInput("(Birthday event action) Choose param");
 
         Attribute attribute;
 
@@ -51,30 +52,30 @@ public class EditBirthday implements Command{
                                     .execute(Map.of("type", LocalDate.class, "msg", "Input date"))
                                     .getReturnMap().get("input");
 
-                    attribute = new Attribute("eventDate",
+                    attribute = new Attribute("date",
                             date);
                     break;
                 case "e":
-                    attribute = new Attribute("eventDescription",
-                            InputManager.getInstance().getStringFromStandardInput("Type new description"));
+                    attribute = new Attribute("description",
+                            inputManager.getStringFromStandardInput("Type new description"));
 
                     break;
                 case "p":
-                    attribute = new Attribute("birthdayPerson",
-                            InputManager.getInstance().getStringFromStandardInput("Type new person"));
+                    attribute = new Attribute("targetPerson",
+                            inputManager.getStringFromStandardInput("Type new person"));
                     break;
                 case "g":
-                    attribute = new Attribute("birthdayGift",
-                            InputManager.getInstance().getStringFromStandardInput("Type new gift"));
+                    attribute = new Attribute("gift",
+                            inputManager.getStringFromStandardInput("Type new gift"));
                     break;
                 default:
-                    command = InputManager.getInstance().getStringFromStandardInput("Wrong. Input again");
+                    command = inputManager.getStringFromStandardInput("Wrong. Input again");
                     continue;
             }
 
 
             edit(getIdFilter(), attribute);
-            command = InputManager.getInstance().getStringFromStandardInput("(Birthday event action) Choose param");
+            command = inputManager.getStringFromStandardInput("(Birthday event action) Choose param");
         }
 
         return ExecuteResult.emptySuccessResult();
@@ -89,7 +90,7 @@ public class EditBirthday implements Command{
     }
 
     private Filter<Integer> getIdFilter() {
-        Integer id = InputManager.getInstance().getIntFromStandardInput("Input id of event");
+        Integer id = inputManager.getIntFromStandardInput("Input id of event");
 
         List<Birthday> events;
 
@@ -98,7 +99,7 @@ public class EditBirthday implements Command{
                 Birthday.class))
                 .size() != 1
         ) {
-            id = InputManager.getInstance()
+            id = inputManager
                     .getIntFromStandardInput(
                             String.format("No event founded by id %d. Input id again", id)
                     );

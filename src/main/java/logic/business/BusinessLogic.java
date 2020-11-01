@@ -9,8 +9,12 @@ import data.query.Delete;
 import data.query.Insert;
 import data.query.Select;
 import data.query.Update;
+import logic.events.Appointment;
+import logic.events.Birthday;
 import logic.events.Event;
+import org.reflections.ReflectionUtils;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,6 +24,13 @@ public class BusinessLogic {
     @InjectByType
     private DAO dao;
 
+    private List<Class<? extends Event>> eventsImplClasses;
+
+    @PostConstruct
+    private void init(){
+        eventsImplClasses = Arrays.asList(Appointment.class, Birthday.class);
+    }
+
 
     public List<Event> getAllEvents(List<Filter<?>> filters) {
         return getAllEvents(filters, Comparator.comparingInt(e -> e.getEventDate().getYear()));
@@ -28,9 +39,9 @@ public class BusinessLogic {
     public List<Event> getAllEvents(List<Filter<?>> filters, Comparator<Event> toSortComparator) {
         List<Event> events = new ArrayList<>();
 
-        Select<? extends Event> select = new Select<>(Event.class);
-        select.setFilters(filters);
-        events.addAll((List<? extends Event>) dao.select(select));
+        for (Class<? extends Event> implClass : eventsImplClasses) {
+            events.addAll(listOf(filters, implClass));
+        }
 
         events.sort(toSortComparator);
 
@@ -45,7 +56,7 @@ public class BusinessLogic {
     public <T extends Event> List<T> listOf(List<Filter<?>> filters, Class<T> tClass, Comparator<T> toSortComparator) {
         Select<T> select = new Select<>(tClass);
         select.setFilters(filters);
-        List<T> values = (List<T>) dao.select(select);
+        List<T> values = dao.select(select);
         return values.stream().sorted(toSortComparator).collect(Collectors.toList());
     }
 
@@ -65,14 +76,19 @@ public class BusinessLogic {
     }
 
     public void updateAllEvents(List<Attribute> newAttributes, List<Filter<?>> filters) {
-        Update<? extends Event> update = new Update<>(Event.class);
-        update.setFilters(filters);
-        update.setAttributes(newAttributes);
-        dao.update(update);
+        for (Class<? extends Event> implClass : eventsImplClasses) {
+            updateEvents(newAttributes, filters, implClass);
+        }
     }
 
     public void removeEvents(List<Filter<?>> filters) {
-        Delete<? extends Event> delete = new Delete<>(Event.class);
+        for (Class<? extends Event> implClass : eventsImplClasses) {
+            removeEventsType(filters, implClass);
+        }
+    }
+
+    public <T extends Event> void removeEventsType(List<Filter<?>> filters, Class<T> type){
+        Delete<? extends Event> delete = new Delete<>(type);
         delete.setFilters(filters);
         dao.delete(delete);
     }

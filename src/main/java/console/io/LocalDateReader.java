@@ -1,17 +1,25 @@
 package console.io;
 
+import core.annotations.InjectByType;
+import core.annotations.Singleton;
+import ui.console.commands.Input;
+
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+@Singleton
 public class LocalDateReader implements ConsoleClassReader<LocalDate> {
+
+    @InjectByType
+    private InputManager inputManager;
+
     @Override
     public LocalDate safeRead(String msg) {
         LocalDate date = null;
 
         while (date == null){
-            String s = InputManager
-                    .getInstance()
+            String s = inputManager
                     .getStringFromStandardInput(msg + " Format like (2020-09-22)");
             try {
                 date = LocalDate.parse(s, DateTimeFormatter.ofPattern("yyyy-MM-dd"));

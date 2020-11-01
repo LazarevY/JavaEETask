@@ -29,12 +29,15 @@ public class EditAppointmentAction implements Command {
             "t: Time of appointment\n" +
             "q: Return back";
 
+    @InjectByType
+    private InputManager inputManager;
+
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {
         Command.printTemplate("Birthday edit action", CHOOSE_MSG);
 
-        String command = InputManager.getInstance().getStringFromStandardInput("(Appointment event action) Choose param");
+        String command = inputManager.getStringFromStandardInput("(Appointment event action) Choose param");
 
         Attribute attribute;
 
@@ -49,17 +52,17 @@ public class EditAppointmentAction implements Command {
                                     .execute(Map.of("type", LocalDate.class, "msg", "Input date"))
                                     .getReturnMap().get("input");
 
-                    attribute = new Attribute("eventDate",
+                    attribute = new Attribute("date",
                             date);
                     break;
                 case "e":
-                    attribute = new Attribute("eventDescription",
-                            InputManager.getInstance().getStringFromStandardInput("Type new description"));
+                    attribute = new Attribute("description",
+                            inputManager.getStringFromStandardInput("Type new description"));
 
                     break;
                 case "p":
-                    attribute = new Attribute("appointmentPerson",
-                            InputManager.getInstance().getStringFromStandardInput("Type new person"));
+                    attribute = new Attribute("targetPerson",
+                            inputManager.getStringFromStandardInput("Type new person"));
                     break;
                 case "t":
                     attribute = new Attribute("appointmentTime",
@@ -68,13 +71,13 @@ public class EditAppointmentAction implements Command {
                     .getReturnMap().get("input"));
                     break;
                 default:
-                    command = InputManager.getInstance().getStringFromStandardInput("Wrong. Input again");
+                    command = inputManager.getStringFromStandardInput("Wrong. Input again");
                     continue;
             }
 
 
             edit(getIdFilter(), attribute);
-            command = InputManager.getInstance().getStringFromStandardInput("(Appointment event action) Choose param");
+            command = inputManager.getStringFromStandardInput("(Appointment event action) Choose param");
         }
 
         return ExecuteResult.emptySuccessResult();
@@ -89,16 +92,15 @@ public class EditAppointmentAction implements Command {
     }
 
     private Filter<Integer> getIdFilter() {
-        Integer id = InputManager.getInstance().getIntFromStandardInput("Input id of event");
+        Integer id = inputManager.getIntFromStandardInput("Input id of event");
 
-        List<Appointment> events;
 
-        while ((events = logic.listOf(Collections.singletonList(
+        while (logic.listOf(Collections.singletonList(
                 new Filter<>("id", OperatorType.Equal, id, Integer.class, AttributeFilterType.And)),
-                Appointment.class))
+                Appointment.class)
                 .size() != 1
         ) {
-            id = InputManager.getInstance()
+            id = inputManager
                     .getIntFromStandardInput(
                             String.format("No event founded by id %d. Input id again", id)
                     );

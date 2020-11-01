@@ -28,12 +28,15 @@ public class EditEventAction implements Command {
             "e: Description of event\n" +
             "q: Return back";
 
+    @InjectByType
+    private InputManager inputManager;
+
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {
         Command.printTemplate("Event edit action", CHOOSE_MSG);
 
-        String command = InputManager.getInstance().getStringFromStandardInput("(Edit event action) Choose param");
+        String command = inputManager.getStringFromStandardInput("(Edit event action) Choose param");
 
         Attribute attribute;
 
@@ -51,15 +54,15 @@ public class EditEventAction implements Command {
                                 date);
             } else if (command.equals("e")) {
                 attribute = new Attribute("eventDescription",
-                                InputManager.getInstance().getStringFromStandardInput("Type new description"));
+                                inputManager.getStringFromStandardInput("Type new description"));
             } else {
-                command = InputManager.getInstance().getStringFromStandardInput("Wrong. Input again");
+                command = inputManager.getStringFromStandardInput("Wrong. Input again");
                 continue;
             }
 
 
             edit(getIdFilter(), attribute);
-            command = InputManager.getInstance().getStringFromStandardInput("(Edit event action) Choose param");
+            command = inputManager.getStringFromStandardInput("(Edit event action) Choose param");
         }
 
         return ExecuteResult.emptySuccessResult();
@@ -73,7 +76,7 @@ public class EditEventAction implements Command {
     }
 
     private Filter<Integer> getIdFilter() {
-        Integer id = InputManager.getInstance().getIntFromStandardInput("Input id of event");
+        Integer id = inputManager.getIntFromStandardInput("Input id of event");
 
         List<Event> events;
 
@@ -81,7 +84,7 @@ public class EditEventAction implements Command {
                 new Filter<>("id", OperatorType.Equal, id, Integer.class, AttributeFilterType.And))))
                 .size() != 1
         ) {
-            id = InputManager.getInstance()
+            id = inputManager
                     .getIntFromStandardInput(
                             String.format("No event founded by id %d. Input id again", id)
                     );

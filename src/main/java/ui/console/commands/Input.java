@@ -1,6 +1,8 @@
 package ui.console.commands;
 
 import console.io.*;
+import core.annotations.InjectMapClassKeyByEntries;
+import core.annotations.MapKeyClassEntry;
 import core.annotations.Singleton;
 import logic.events.Appointment;
 import logic.events.Birthday;
@@ -14,18 +16,13 @@ import java.util.Map;
 @Singleton
 public class Input implements Command {
 
+    @InjectMapClassKeyByEntries({
+            @MapKeyClassEntry(key = Birthday.class, implClass = BirthdayReader.class),
+            @MapKeyClassEntry(key = Appointment.class, implClass = AppointmentReader.class),
+            @MapKeyClassEntry(key = LocalDate.class, implClass = LocalDateReader.class),
+            @MapKeyClassEntry(key = LocalTime.class, implClass = LocalTimeReader.class)
+    })
     private Map<Class<?>, ConsoleClassReader<?>> readerMap;
-
-    @PostConstruct
-    private void init(){
-        readerMap = new HashMap<Class<?>, ConsoleClassReader<?>>(){{
-           put(Birthday.class, new BirthdayReader());
-           put(Appointment.class, new AppointmentReader());
-           put(LocalDate.class, new LocalDateReader());
-           put(LocalTime.class, new LocalTimeReader());
-        }};
-    }
-
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {

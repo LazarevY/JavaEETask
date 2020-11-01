@@ -1,6 +1,7 @@
 package console.io;
 
 import core.annotations.InjectByType;
+import core.annotations.Singleton;
 import logic.events.Appointment;
 import ui.console.commands.Input;
 
@@ -10,10 +11,14 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
+@Singleton
 public class AppointmentReader implements ConsoleClassReader<Appointment> {
 
     @InjectByType
-    private Input input;
+    private LocalTimeReader timeReader;
+
+    @InjectByType
+    private InputManager inputManager;
 
     @Override
     @SuppressWarnings("duplicated")
@@ -21,8 +26,7 @@ public class AppointmentReader implements ConsoleClassReader<Appointment> {
         LocalDate date = null;
 
         while (date == null) {
-            String s = InputManager
-                    .getInstance()
+            String s = inputManager
                     .getStringFromStandardInput("Input date of birthday in format yyyy-mm-dd(like 2020-09-20)");
             try {
                 date = LocalDate.parse(s, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -33,12 +37,10 @@ public class AppointmentReader implements ConsoleClassReader<Appointment> {
             }
         }
 
-        LocalTime time = (LocalTime) input.execute(Map.of("type", LocalTime.class
-        , "msg", "Input time in format like 18:30"))
-                .getReturnMap().get("input");
+        LocalTime time = timeReader.safeRead("Input time in format like 18:30");
 
-        String person = InputManager.getInstance().getStringFromStandardInput("Input appointment man");
-        String desc = InputManager.getInstance().getStringFromStandardInput("Input description(optional)");
+        String person = inputManager.getStringFromStandardInput("Input appointment man");
+        String desc = inputManager.getStringFromStandardInput("Input description(optional)");
 
         return new Appointment(date, desc, person, time);
     }

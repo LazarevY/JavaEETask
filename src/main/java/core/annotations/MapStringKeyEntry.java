@@ -4,6 +4,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface InjectMapByEntries {
-    MapEntry[] value() default {};
+public @interface MapStringKeyEntry {
+    String key();
+    Class<?> implClass();
 }

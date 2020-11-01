@@ -24,12 +24,15 @@ public class AddAction implements Command {
             "a: Add new appointment event\n" +
             "q: Return back";
 
+    @InjectByType
+    private InputManager inputManager;
+
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {
         Command.printTemplate("Add Action", CHOOSE_MSG);
 
-        String command = InputManager.getInstance().getStringFromStandardInput("Input action");
+        String command = inputManager.getStringFromStandardInput("Input action");
 
         while (!command.equals("q")){
 
@@ -55,7 +58,7 @@ public class AddAction implements Command {
                 System.out.println("Wrong action. Try again.");
             }
 
-            command = InputManager.getInstance().getStringFromStandardInput("(Add action) Input action");
+            command = inputManager.getStringFromStandardInput("(Add action) Input action");
         }
 
         return ExecuteResult.emptySuccessResult();

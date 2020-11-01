@@ -1,20 +1,20 @@
 package ui.console.commands;
 
 import console.io.InputManager;
-import core.annotations.InjectMapByEntries;
-import core.annotations.MapEntry;
-import logic.business.BusinessLogic;
+import core.annotations.InjectByType;
+import core.annotations.InjectMapStringKeyByEntries;
+import core.annotations.MapStringKeyEntry;
 import logic.events.Event;
 
 import java.util.*;
 
 public class ViewAction implements Command {
 
-    @InjectMapByEntries({
-            @MapEntry(key = "a", implClass = ViewAllEvents.class),
-            @MapEntry(key = "b", implClass = ViewBirthdays.class),
-            @MapEntry(key = "t", implClass = ViewAppointments.class),
-            @MapEntry(key = "s", implClass = SelectSortParameter.class)
+    @InjectMapStringKeyByEntries({
+            @MapStringKeyEntry(key = "a", implClass = ViewAllEvents.class),
+            @MapStringKeyEntry(key = "b", implClass = ViewBirthdays.class),
+            @MapStringKeyEntry(key = "t", implClass = ViewAppointments.class),
+            @MapStringKeyEntry(key = "s", implClass = SelectSortParameter.class)
     })
     private Map<String, Command> commandMap;
 
@@ -27,11 +27,14 @@ public class ViewAction implements Command {
             "d: View with short description\n" +
             "q: Return back";
 
+    @InjectByType
+    private InputManager inputManager;
+
     @Override
     public ExecuteResult execute(Map<String, Object> args) {
 
         Command.printTemplate("View Action", CHOOSE_MSG);
-        String choose = InputManager.getInstance().getStringFromStandardInput("(View Action) Input action");
+        String choose = inputManager.getStringFromStandardInput("(View Action) Input action");
 
         Comparator<Event> c = Comparator.comparingInt(event -> event.getEventDate().getYear());
 
@@ -44,7 +47,7 @@ public class ViewAction implements Command {
 
             if (choose.equals("f") || choose.equals("d")) {
                 argsMap.put("desc", choose);
-                choose = InputManager.getInstance().getStringFromStandardInput("(View Action) Input action");
+                choose = inputManager.getStringFromStandardInput("(View Action) Input action");
                 continue;
             }
 
@@ -60,7 +63,7 @@ public class ViewAction implements Command {
                 argsMap.put("sort", res.getReturnMap().get("sort"));
             }
 
-            choose = InputManager.getInstance().getStringFromStandardInput("(View Action) Input action");
+            choose = inputManager.getStringFromStandardInput("(View Action) Input action");
 
         }
 

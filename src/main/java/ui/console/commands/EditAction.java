@@ -1,33 +1,34 @@
 package ui.console.commands;
 
 import console.io.InputManager;
-import core.annotations.InjectMapByEntries;
-import core.annotations.MapEntry;
-import logic.business.BusinessLogic;
+import core.annotations.InjectByType;
+import core.annotations.InjectMapStringKeyByEntries;
+import core.annotations.MapStringKeyEntry;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class EditAction implements Command {
 
-    @InjectMapByEntries({
-            @MapEntry(key = "a", implClass = EditEventAction.class),
-            @MapEntry(key = "t", implClass = EditAppointmentAction.class),
-            @MapEntry(key = "b", implClass = EditBirthday.class)
+    @InjectMapStringKeyByEntries({
+            @MapStringKeyEntry(key = "t", implClass = EditAppointmentAction.class),
+            @MapStringKeyEntry(key = "b", implClass = EditBirthday.class)
     })
     private Map<String, Command> commandMap;
 
     public static final String CHOOSE_MSG = "Choose action:\n" +
-            "a: Edit any event\n" +
             "b: Edit birthday event\n" +
             "t: Edit appointment event\n" +
             "q: Return back";
+
+    @InjectByType
+    private InputManager inputManager;
 
 
     @Override
     public ExecuteResult execute(Map<String, Object> args) {
         Command.printTemplate("Edit Action", CHOOSE_MSG);
-        String choose = InputManager.getInstance().getStringFromStandardInput("(Edit Action) Input action");
+        String choose = inputManager.getStringFromStandardInput("(Edit Action) Input action");
         while (!choose.equals("q")){
             if (!commandMap.containsKey(choose)){
                 System.out.println("Wrong action. Try again\n");
@@ -37,7 +38,7 @@ public class EditAction implements Command {
                 Command.printTemplate("View Action", CHOOSE_MSG);
 
             }
-            choose = InputManager.getInstance().getStringFromStandardInput("(Edit Action) Input action");
+            choose = inputManager.getStringFromStandardInput("(Edit Action) Input action");
 
         }
 

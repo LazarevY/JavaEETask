@@ -1,6 +1,7 @@
 package ui.console.commands;
 
 import console.io.InputManager;
+import core.annotations.InjectByType;
 import logic.events.Event;
 
 import javax.annotation.PostConstruct;
@@ -11,6 +12,9 @@ import java.util.Map;
 public class SelectSortParameter implements Command {
 
     private Map<String, Comparator<Event>> comparatorMap;
+
+    @InjectByType
+    private InputManager inputManager;
 
     @PostConstruct
     public void init() {
@@ -28,11 +32,11 @@ public class SelectSortParameter implements Command {
                 "d: Day\n" +
                         "m: Month\n" +
                         "y: Year\n");
-        String parameter = InputManager.getInstance()
+        String parameter = inputManager
                 .getStringFromStandardInput("Input sort parameter");
 
         while (!comparatorMap.containsKey(parameter)) {
-            parameter = InputManager.getInstance()
+            parameter = inputManager
                     .getStringFromStandardInput("Wrong parameter. Input again");
         }
         ExecuteResult res = new ExecuteResult();

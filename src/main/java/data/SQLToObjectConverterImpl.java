@@ -11,7 +11,7 @@ public class SQLToObjectConverterImpl implements SQLToObjectConverter {
     @SneakyThrows
     public <T> T convert(ResultSet set, String colName, Class<T> type) {
         if (set.findColumn(colName) < 1)
-            return null;
+            throw new IllegalArgumentException(String.format("No know column '%s'", colName));
 
         if (type == String.class)
             return (T) set.getString(colName);
@@ -24,7 +24,7 @@ public class SQLToObjectConverterImpl implements SQLToObjectConverter {
         else if(type == LocalTime.class)
             return (T)set.getTime(colName).toLocalTime();
 
-        return null;
+        throw new IllegalArgumentException(String.format("No know how convert class '%s'", type.getName()));
 
     }
 }

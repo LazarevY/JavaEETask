@@ -1,18 +1,13 @@
 package console.io;
 
+import core.annotations.Singleton;
+
 import java.util.Scanner;
 
+@Singleton
 public class InputManager {
 
     private Scanner scanner;
-
-    private static InputManager manager;
-
-    public static InputManager getInstance(){
-        if (manager == null)
-            manager = new InputManager();
-        return manager;
-    }
 
     public InputManager() {
         scanner = new Scanner(System.in);
@@ -63,7 +58,14 @@ public class InputManager {
 
 
     public String getStringFromStandardInput(){
-        return scanner.nextLine();
+        String s = scanner.nextLine();
+
+        while (s.isEmpty()){
+            s = scanner.nextLine();
+        }
+
+        return s;
+
     }
 
 
