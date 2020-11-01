@@ -20,6 +20,11 @@ public class KeyClassMapInjectObjectConfigurator implements ObjectConfigurator {
 
             field.setAccessible(true);
 
+            if (!field.getType().isAssignableFrom(Map.class)){
+                throw new Exception("Illegal use annotation " + InjectMapClassKeyByEntries.class + ": field " +
+                        field.getName() +" is not Map!");
+            }
+
             InjectMapClassKeyByEntries a = field.getAnnotation(InjectMapClassKeyByEntries.class);
 
             Map<Class<?>, Object> map = new HashMap<>();

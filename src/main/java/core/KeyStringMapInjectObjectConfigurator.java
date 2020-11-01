@@ -1,6 +1,7 @@
 package core;
 
 import core.ApplicationContext;
+import core.annotations.InjectMapClassKeyByEntries;
 import core.annotations.InjectMapStringKeyByEntries;
 import core.annotations.MapStringKeyEntry;
 import core.interfaces.ObjectConfigurator;
@@ -19,6 +20,11 @@ public class KeyStringMapInjectObjectConfigurator implements ObjectConfigurator 
             if (field.isAnnotationPresent(InjectMapStringKeyByEntries.class)) {
 
                 field.setAccessible(true);
+
+                if (!field.getType().isAssignableFrom(Map.class)){
+                    throw new Exception("Illegal use annotation " + InjectMapStringKeyByEntries.class + ": field " +
+                            field.getName() +" is not Map!");
+                }
 
                 InjectMapStringKeyByEntries a = field.getAnnotation(InjectMapStringKeyByEntries.class);
 
