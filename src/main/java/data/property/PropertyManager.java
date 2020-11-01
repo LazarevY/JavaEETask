@@ -1,9 +1,12 @@
 package data.property;
 
-import annotations.ReflectionUtils;
+import core.annotations.PropertyGetter;
+import core.annotations.PropertySetter;
+import org.reflections.ReflectionUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PropertyManager {
@@ -41,7 +44,9 @@ public class PropertyManager {
 
     private static Method getGetter(Class<?> targetClass, String propertyName){
         List<Method> methods  =
-                ReflectionUtils.getAllPropertyGetterAnnotatedWithValue(propertyName, targetClass);
+                new ArrayList<>(ReflectionUtils.getAllMethods(targetClass,
+                        m ->    m.isAnnotationPresent(PropertyGetter.class) &&
+                                m.getAnnotation(PropertyGetter.class).value().equals(propertyName)));
         if (methods.size() != 1){
             throw new IllegalArgumentException("Target method didn't founded or count of methods more that 1");
         }
@@ -49,7 +54,9 @@ public class PropertyManager {
     }
     private static Method getSetter(Class<?> targetClass, String propertyName){
         List<Method> methods  =
-                ReflectionUtils.getAllPropertySetterAnnotatedWithValue(propertyName, targetClass);
+                new ArrayList<>(ReflectionUtils.getAllMethods(targetClass,
+                        m ->    m.isAnnotationPresent(PropertySetter.class) &&
+                                m.getAnnotation(PropertySetter.class).value().equals(propertyName)));
         if (methods.size() != 1){
             throw new IllegalArgumentException("Target method didn't founded or count of methods more that 1");
         }
