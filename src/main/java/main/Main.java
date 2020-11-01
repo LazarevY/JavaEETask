@@ -5,6 +5,7 @@ import core.ApplicationContext;
 import data.Attribute;
 import data.AttributeFilterType;
 import data.Filter;
+import data.dao.DAO;
 import data.dao.SQLBasedDAO;
 import data.query.*;
 import database.DataBase;
@@ -15,6 +16,7 @@ import database.sql.dialects.PostgreSQLDialect;
 import database.sql.dialects.SQLDialect;
 import logic.events.Birthday;
 import logic.expressions.comparators.OperatorType;
+import ui.console.ConsoleUI;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,26 +33,13 @@ public class Main {
         ApplicationContext context = Application.run("",
                 new HashMap<>(Map.of(
                         DataBase.class, PostgreSQLDataBase.class,
-                        SQLDialect.class, PostgreSQLDialect.class)));
+                        SQLDialect.class, PostgreSQLDialect.class,
+                        DAO.class, SQLBasedDAO.class)));
 
+        ConsoleUI ui = context.getObject(ConsoleUI.class);
 
-        SQLContext sqlContext = context.getObject(SQLContext.class);
+        ui.show();
 
-        Birthday birthday = new Birthday(LocalDate.of(2020, 4, 15),
-                "Desc1",
-                "Pers",
-                "Giffft");
-
-
-        Select<Birthday> select = new Select<>(Birthday.class);
-
-        SQLBasedDAO dao = context.getObject(SQLBasedDAO.class);
-
-        List<Birthday> select1 = dao.select(select);
-
-        for (Birthday birthday1 : select1) {
-            System.out.println(birthday1.shortDescription());
-        }
 
 
     }

@@ -32,10 +32,15 @@ public class PostgreSQLUpdateQueryMaker implements SQLUpdateQueryMaker {
 
         List<Attribute> attributes;
         Set<String> fieldsName =
-                getAllFields(entityClass).stream().map(Field::getName).map(String::toLowerCase).collect(Collectors.toSet());
+                getAllFields(entityClass)
+                        .stream()
+                        .map(Field::getName)
+                        .map(String::toLowerCase)
+                        .collect(Collectors.toSet());
         attributes = query.getAttributes()
 
-                .stream().filter(attribute -> fieldsName.contains(attribute.getName()))
+                .stream()
+                .filter(attribute -> fieldsName.contains(attribute.getName().toLowerCase()))
                 .collect(Collectors.toList());
 
         if (attributes.isEmpty()) {

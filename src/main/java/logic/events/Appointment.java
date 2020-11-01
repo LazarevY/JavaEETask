@@ -1,6 +1,7 @@
 package logic.events;
 
 import core.annotations.PropertyGetter;
+import core.annotations.PropertySetter;
 import database.annotations.Column;
 import database.annotations.Entity;
 
@@ -29,6 +30,7 @@ public class Appointment extends Event implements Serializable {
         return targetPerson;
     }
 
+    @PropertySetter("appointmentPerson")
     public void setTargetPerson(String targetPerson) {
         this.targetPerson = targetPerson;
     }
@@ -38,6 +40,7 @@ public class Appointment extends Event implements Serializable {
         return time;
     }
 
+    @PropertySetter("appointmentTime")
     public void setTime(LocalTime time) {
         this.time = time;
     }
@@ -57,6 +60,6 @@ public class Appointment extends Event implements Serializable {
 
     @Column
     private String targetPerson;
-    @Column
+    @Column("appointmentTime")
     private LocalTime time;
 }

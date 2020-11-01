@@ -11,7 +11,7 @@ public interface DAO {
 
     <T> void insert(Insert<T> insertQuery);
     <T> void delete(Delete<T> deleteQuery);
-    <T> List<?> select(Select<T> selectQuery);
+    <T> List<T> select(Select<T> selectQuery);
     <T> void update(Update<T> updateQuery);
 
 }

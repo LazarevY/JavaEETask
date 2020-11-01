@@ -14,8 +14,8 @@ public class ObjectToPostgreSQLConverter implements ObjectToSQLConverter {
         else if (o instanceof LocalDate)
             return String.format("TIMESTAMP '%s'", o.toString());
         else if (o instanceof LocalTime)
-            return String.format("TIMESTAMP '%s'",
-                    ((LocalTime)o).format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm::ss")));
+            return String.format("TIME '%s'",
+                    ((LocalTime)o).format(DateTimeFormatter.ofPattern("hh:mm:ss")));
         else
             return String.format("%s", o.toString());
     }

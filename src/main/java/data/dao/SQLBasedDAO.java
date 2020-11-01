@@ -1,6 +1,7 @@
 package data.dao;
 
 import core.annotations.InjectByType;
+import core.annotations.Singleton;
 import data.ObjectToPostgreSQLConverter;
 import data.SQLToObjectConverter;
 import data.query.Delete;
@@ -22,6 +23,7 @@ import java.util.Set;
 
 import static org.reflections.ReflectionUtils.getAllFields;
 
+@Singleton
 public class SQLBasedDAO implements DAO {
 
     @InjectByType
@@ -33,11 +35,17 @@ public class SQLBasedDAO implements DAO {
     @Override
     public <T> void insert(Insert<T> insertQuery) {
         QueryResponse response = context.execQuery(insertQuery);
+        if (response.getCode() != 0) {
+            System.err.println(response.getMsg());
+        }
     }
 
     @Override
     public <T> void delete(Delete<T> deleteQuery) {
         QueryResponse response = context.execQuery(deleteQuery);
+        if (response.getCode() != 0) {
+            System.err.println(response.getMsg());
+        }
     }
 
     @Override
@@ -47,13 +55,16 @@ public class SQLBasedDAO implements DAO {
 
         QueryResponse response = context.execQuery(selectQuery);
 
-        if (response.getCode() != 0 || response.getResultSet() == null)
+        if (response.getCode() != 0 || response.getResultSet() == null) {
+            System.err.println(response.getMsg());
             return entities;
+        }
 
         ResultSet set = response.getResultSet();
 
         Set<Field> fields = getAllFields(selectQuery.getDataTypeClass(),
                 field -> field.isAnnotationPresent(Column.class));
+
 
         while (set.next()) {
 
@@ -66,9 +77,6 @@ public class SQLBasedDAO implements DAO {
                         field.getName() : column.value();
                 colName = colName.toLowerCase();
                 Object val = converter.convert(set, colName, field.getType());
-
-                if (val == null)
-                    throw new IllegalArgumentException("No know how conversion for column " + colName);
 
                 field.set(entity, val);
             }
@@ -83,6 +91,9 @@ public class SQLBasedDAO implements DAO {
 
     @Override
     public <T> void update(Update<T> updateQuery) {
-        context.execQuery(updateQuery);
+        QueryResponse response = context.execQuery(updateQuery);
+        if (response.getCode() !=0){
+            System.err.println(response.getMsg());
+        }
     }
 }
