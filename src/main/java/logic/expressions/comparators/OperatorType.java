@@ -8,9 +8,9 @@ public enum OperatorType {
     Equal("="),
     NotEqual("!=");
 
-    private String representation;
+    private final String representation;
 
-    OperatorType(String repr){
+    OperatorType(String repr) {
         this.representation = repr;
     }
 

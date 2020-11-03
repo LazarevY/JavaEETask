@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class TimeComparatorsFactory implements SpecificComparatorFactory<LocalTime> {
 
-    private HashMap<OperatorType, SpecificComparator<LocalTime>> map;
+    private final HashMap<OperatorType, SpecificComparator<LocalTime>> map;
 
     public TimeComparatorsFactory() {
         map = new HashMap<OperatorType, SpecificComparator<LocalTime>>() {{

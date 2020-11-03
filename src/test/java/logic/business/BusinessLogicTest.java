@@ -1,12 +1,12 @@
 package logic.business;
 
-import core.Application;
-import core.ApplicationContext;
+import core.dao.DAO;
+import core.dao.HashMapDao;
+import core.inverseofcontrol.boot.Application;
+import core.inverseofcontrol.boot.ApplicationContext;
 import data.Attribute;
 import data.AttributeFilterType;
 import data.Filter;
-import data.dao.DAO;
-import data.dao.HashMapDao;
 import logic.events.Appointment;
 import logic.events.Birthday;
 import logic.events.Event;
@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 public class BusinessLogicTest {
 
     @Test
-    public void test000(){
+    public void test000() {
         ApplicationContext applicationContext = Application.run("",
                 new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
@@ -46,7 +46,7 @@ public class BusinessLogicTest {
     }
 
     @Test
-    public void test001(){
+    public void test001() {
         ApplicationContext applicationContext = Application.run("",
                 new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
@@ -70,7 +70,7 @@ public class BusinessLogicTest {
     }
 
     @Test
-    public void test002(){
+    public void test002() {
         ApplicationContext applicationContext = Application.run("",
                 new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
@@ -97,7 +97,7 @@ public class BusinessLogicTest {
     }
 
     @Test
-    public void test003(){
+    public void test003() {
         ApplicationContext applicationContext = Application.run("",
                 new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
@@ -114,7 +114,7 @@ public class BusinessLogicTest {
         List<Appointment> appointments = logic.listOf(Collections.emptyList(), Appointment.class);
         List<Birthday> birthdays = logic.listOf(
                 Collections.singletonList(
-                        new Filter<>("day", OperatorType.Equal, 11,Integer.class, AttributeFilterType.And)
+                        new Filter<>("day", OperatorType.Equal, 11, Integer.class, AttributeFilterType.And)
                 ), Birthday.class);
 
         assertEquals(0, appointments.size());
@@ -123,7 +123,7 @@ public class BusinessLogicTest {
     }
 
     @Test
-    public void test004(){
+    public void test004() {
         ApplicationContext applicationContext = Application.run("",
                 new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
@@ -146,10 +146,10 @@ public class BusinessLogicTest {
         List<Appointment> appointments = logic.listOf(Collections.emptyList(), Appointment.class);
         logic.updateAllEvents(
                 Collections.singletonList(
-                  new Attribute("day", 20)
+                        new Attribute("day", 20)
                 ),
                 Collections.singletonList(
-                        new Filter<>("day", OperatorType.Equal, 12,Integer.class, AttributeFilterType.And)
+                        new Filter<>("day", OperatorType.Equal, 12, Integer.class, AttributeFilterType.And)
                 ));
 
         birthdays =
@@ -162,7 +162,7 @@ public class BusinessLogicTest {
     }
 
     @Test
-    public void test005(){
+    public void test005() {
         ApplicationContext applicationContext = Application.run("",
                 new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
@@ -196,19 +196,18 @@ public class BusinessLogicTest {
 
         List<Event> events =
                 logic.getAllEvents(Arrays.asList(
-                        new Filter<>("day", OperatorType.LessEqual, 20,Integer.class, AttributeFilterType.And),
-                        new Filter<>("month", OperatorType.LessEqual, Month.AUGUST.getValue(),Integer.class, AttributeFilterType.And),
-                        new Filter<>("year", OperatorType.LessEqual, 2020,Integer.class, AttributeFilterType.And)
+                        new Filter<>("day", OperatorType.LessEqual, 20, Integer.class, AttributeFilterType.And),
+                        new Filter<>("month", OperatorType.LessEqual, Month.AUGUST.getValue(), Integer.class, AttributeFilterType.And),
+                        new Filter<>("year", OperatorType.LessEqual, 2020, Integer.class, AttributeFilterType.And)
                 ));
 
         assertEquals(3, events.size());
 
 
-
     }
 
     @Test
-    public void test006(){
+    public void test006() {
         ApplicationContext applicationContext = Application.run("",
                 new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
@@ -255,7 +254,7 @@ public class BusinessLogicTest {
     }
 
     @Test
-    public void test007(){
+    public void test007() {
         ApplicationContext applicationContext = Application.run("",
                 new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
@@ -289,7 +288,7 @@ public class BusinessLogicTest {
                 new Appointment(LocalDate.of(2019, Month.DECEMBER, 30),
                         "Desc",
                         "Person",
-                        LocalTime.of(18,0,0,0));
+                        LocalTime.of(18, 0, 0, 0));
 
         logic.addEvents(Arrays.asList(b0, b1, b2, b3));
         logic.addEvents(Collections.singletonList(a1));
@@ -309,7 +308,7 @@ public class BusinessLogicTest {
     }
 
     @Test
-    public void test008(){
+    public void test008() {
         ApplicationContext applicationContext = Application.run("",
                 new HashMap<>(Map.of(DAO.class, HashMapDao.class)));
 
@@ -320,7 +319,7 @@ public class BusinessLogicTest {
                 new Appointment(LocalDate.of(2019, Month.DECEMBER, 30),
                         "Desc",
                         "Person",
-                        LocalTime.of(18,0));
+                        LocalTime.of(18, 0));
         Appointment a2 =
                 new Appointment(LocalDate.of(2019, Month.DECEMBER, 31),
                         "Desc",
@@ -330,7 +329,7 @@ public class BusinessLogicTest {
                 new Appointment(LocalDate.of(2019, Month.DECEMBER, 30),
                         "Desc",
                         "Person",
-                        LocalTime.of(14,15));
+                        LocalTime.of(14, 15));
         Appointment a4 =
                 new Appointment(LocalDate.of(2019, Month.DECEMBER, 27),
                         "Desc",
@@ -349,7 +348,7 @@ public class BusinessLogicTest {
                                 AttributeFilterType.Enough),
                         new Filter<>("appointmentTime",
                                 OperatorType.LessEqual,
-                                LocalTime.of(18,0),
+                                LocalTime.of(18, 0),
                                 LocalTime.class,
                                 AttributeFilterType.And)
                 ));

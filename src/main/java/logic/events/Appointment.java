@@ -1,9 +1,9 @@
 package logic.events;
 
-import core.annotations.PropertyGetter;
-import core.annotations.PropertySetter;
-import database.annotations.Column;
-import database.annotations.Entity;
+import core.database.annotations.Column;
+import core.database.annotations.Entity;
+import core.inverseofcontrol.annotations.PropertyGetter;
+import core.inverseofcontrol.annotations.PropertySetter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,6 +12,11 @@ import java.time.LocalTime;
 @Entity("appointments")
 public class Appointment extends Event implements Serializable {
 
+    @Column
+    private String targetPerson;
+    @Column("appointmentTime")
+    private LocalTime time;
+
     public Appointment(LocalDate date, String eventDescription,
                        String targetPerson, LocalTime time) {
         super(date, eventDescription);
@@ -19,7 +24,7 @@ public class Appointment extends Event implements Serializable {
         this.time = time;
     }
 
-    public Appointment(){
+    public Appointment() {
         super(LocalDate.now(), "");
         targetPerson = "";
         time = LocalTime.NOON;
@@ -52,14 +57,10 @@ public class Appointment extends Event implements Serializable {
     }
 
     @Override
-    public String fullDescription(){
+    public String fullDescription() {
         return shortDescription() +
                 "Appointment time: " + time.toString() +
                 "\nDescription: " + description + "\n";
     }
 
-    @Column
-    private String targetPerson;
-    @Column("appointmentTime")
-    private LocalTime time;
 }

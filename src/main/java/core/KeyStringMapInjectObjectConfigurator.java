@@ -1,10 +1,9 @@
 package core;
 
-import core.ApplicationContext;
-import core.annotations.InjectMapClassKeyByEntries;
-import core.annotations.InjectMapStringKeyByEntries;
-import core.annotations.MapStringKeyEntry;
-import core.interfaces.ObjectConfigurator;
+import core.inverseofcontrol.annotations.InjectMapStringKeyByEntries;
+import core.inverseofcontrol.annotations.MapStringKeyEntry;
+import core.inverseofcontrol.boot.ApplicationContext;
+import core.inverseofcontrol.interfaces.ObjectConfigurator;
 import lombok.SneakyThrows;
 import org.reflections.ReflectionUtils;
 
@@ -21,9 +20,9 @@ public class KeyStringMapInjectObjectConfigurator implements ObjectConfigurator 
 
                 field.setAccessible(true);
 
-                if (!field.getType().isAssignableFrom(Map.class)){
+                if (!field.getType().isAssignableFrom(Map.class)) {
                     throw new Exception("Illegal use annotation " + InjectMapStringKeyByEntries.class + ": field " +
-                            field.getName() +" is not Map!");
+                            field.getName() + " is not Map!");
                 }
 
                 InjectMapStringKeyByEntries a = field.getAnnotation(InjectMapStringKeyByEntries.class);

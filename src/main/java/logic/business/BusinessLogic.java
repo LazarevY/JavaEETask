@@ -1,10 +1,11 @@
 package logic.business;
 
-import core.annotations.InjectByType;
-import core.annotations.Singleton;
+
+import core.dao.DAO;
+import core.inverseofcontrol.annotations.InjectByType;
+import core.inverseofcontrol.annotations.Singleton;
 import data.Attribute;
 import data.Filter;
-import data.dao.DAO;
 import data.query.Delete;
 import data.query.Insert;
 import data.query.Select;
@@ -12,7 +13,6 @@ import data.query.Update;
 import logic.events.Appointment;
 import logic.events.Birthday;
 import logic.events.Event;
-import org.reflections.ReflectionUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
@@ -27,7 +27,7 @@ public class BusinessLogic {
     private List<Class<? extends Event>> eventsImplClasses;
 
     @PostConstruct
-    private void init(){
+    private void init() {
         eventsImplClasses = Arrays.asList(Appointment.class, Birthday.class);
     }
 
@@ -87,7 +87,8 @@ public class BusinessLogic {
         }
     }
 
-    public <T extends Event> void removeEventsType(List<Filter<?>> filters, Class<T> type){
+
+    public <T extends Event> void removeEventsType(List<Filter<?>> filters, Class<T> type) {
         Delete<? extends Event> delete = new Delete<>(type);
         delete.setFilters(filters);
         dao.delete(delete);

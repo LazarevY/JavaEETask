@@ -5,15 +5,26 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
 @AllArgsConstructor
 public class Filter<T> {
-    @Getter @Setter private String attribute;
-    @Getter @Setter private OperatorType operator;
-    @Getter @Setter private T value;
-    @Getter @Setter private Class<T> attributeClass;
-    @Getter @Setter private AttributeFilterType type;
+    @Getter
+    @Setter
+    private String attribute;
+    @Getter
+    @Setter
+    private OperatorType operator;
+    @Getter
+    @Setter
+    private T value;
+    @Getter
+    @Setter
+    private Class<T> attributeClass;
+    @Getter
+    @Setter
+    private AttributeFilterType type;
 
-    public Filter(){
+    public Filter() {
         attribute = "null";
         operator = null;
         value = null;
@@ -22,9 +33,9 @@ public class Filter<T> {
     }
 
     public Filter(String attribute,
-            OperatorType operator,
-            T value,
-            AttributeFilterType type){
+                  OperatorType operator,
+                  T value,
+                  AttributeFilterType type) {
         this(attribute, operator, value, (Class<T>) value.getClass(), type);
 
     }

@@ -1,17 +1,17 @@
 package data;
 
+import core.database.maping.PostgreObjectMapper;
+import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class ObjectToPostgreSQLConverterTest {
 
     @Test
-    public void test000(){
-        ObjectToPostgreSQLConverter converter = new ObjectToPostgreSQLConverter();
-        String toTest = "`\"str\"`";
+    public void test000() {
+        PostgreObjectMapper converter = new PostgreObjectMapper();
+        String toTest = "'str'";
 
-        assertEquals(toTest, converter.convert("str"));
+        Assert.assertEquals(toTest, converter.convert("str"));
 
     }
 }

@@ -15,12 +15,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ConditionsPredicateTest {
 
     @Test
-    public void test000(){
+    public void test000() {
         Event e = new Birthday(LocalDate.of(2020, Month.APRIL, 14),
                 "Desc",
                 "Person",
@@ -38,8 +39,9 @@ public class ConditionsPredicateTest {
 
         assertTrue(conditionsPredicate.test(e));
     }
+
     @Test
-    public void test001(){
+    public void test001() {
         Event e = new Birthday(LocalDate.of(2020, Month.APRIL, 14),
                 "Desc",
                 "Person",
@@ -59,7 +61,7 @@ public class ConditionsPredicateTest {
     }
 
     @Test
-    public void test002(){
+    public void test002() {
         Event e = new Birthday(LocalDate.of(2020, Month.APRIL, 14),
                 "Desc",
                 "Person",
@@ -79,7 +81,7 @@ public class ConditionsPredicateTest {
     }
 
     @Test
-    public void test003(){
+    public void test003() {
         Event e = new Birthday(LocalDate.of(2020, Month.APRIL, 14),
                 "Desc",
                 "Person",
@@ -97,8 +99,9 @@ public class ConditionsPredicateTest {
 
         assertFalse(conditionsPredicate.test(e));
     }
+
     @Test
-    public void test004(){
+    public void test004() {
         Event e = new Birthday(LocalDate.of(2020, Month.APRIL, 14),
                 "Desc",
                 "Person",
@@ -115,7 +118,7 @@ public class ConditionsPredicateTest {
     }
 
     @Test
-    public void test005(){
+    public void test005() {
         Event e = new Birthday(LocalDate.of(2020, Month.APRIL, 14),
                 "Desc",
                 "Person",
@@ -136,7 +139,7 @@ public class ConditionsPredicateTest {
     }
 
     @Test
-    public void test006(){
+    public void test006() {
         Event e = new Birthday(LocalDate.of(2020, Month.APRIL, 14),
                 "Desc",
                 "Person",
@@ -158,7 +161,7 @@ public class ConditionsPredicateTest {
     }
 
     @Test
-    public void test007(){
+    public void test007() {
         Event e = new Birthday(LocalDate.of(2020, Month.APRIL, 14),
                 "Desc",
                 "Person",
@@ -178,7 +181,6 @@ public class ConditionsPredicateTest {
 
         assertTrue(conditionsPredicate.test(e));
     }
-
 
 
 }
