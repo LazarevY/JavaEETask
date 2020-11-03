@@ -1,7 +1,6 @@
 package ui.console;
 
-import core.annotations.InjectByType;
-import logic.business.BusinessLogic;
+import core.inverseofcontrol.annotations.InjectByType;
 import ui.UI;
 import ui.console.commands.BaseActionChoose;
 

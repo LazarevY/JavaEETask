@@ -7,7 +7,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class SpecificComparatorFactoryTest {
 
@@ -47,9 +48,9 @@ public class SpecificComparatorFactoryTest {
     @Test
     public void test003() {
         SpecificComparator<LocalTime> comparator =
-                            ComparatorCreator.getInstance().createComparator(OperatorType.Less, LocalTime.class);
+                ComparatorCreator.getInstance().createComparator(OperatorType.Less, LocalTime.class);
         LocalTime t1 = LocalTime.of(23, 10);
-        LocalTime t2 = LocalTime.of(23,11);
+        LocalTime t2 = LocalTime.of(23, 11);
 
         assertTrue(comparator.compare(t1, t2));
 
@@ -60,7 +61,7 @@ public class SpecificComparatorFactoryTest {
         SpecificComparator<LocalTime> comparator =
                 ComparatorCreator.getInstance().createComparator(OperatorType.NotEqual, LocalTime.class);
         LocalTime t1 = LocalTime.of(23, 10);
-        LocalTime t2 = LocalTime.of(23,11);
+        LocalTime t2 = LocalTime.of(23, 11);
 
         assertTrue(comparator.compare(t1, t2));
 
@@ -71,7 +72,7 @@ public class SpecificComparatorFactoryTest {
         SpecificComparator<LocalTime> comparator =
                 ComparatorCreator.getInstance().createComparator(OperatorType.Equal, LocalTime.class);
         LocalTime t1 = LocalTime.of(23, 10);
-        LocalTime t2 = LocalTime.of(23,10);
+        LocalTime t2 = LocalTime.of(23, 10);
 
         assertTrue(comparator.compare(t1, t2));
 

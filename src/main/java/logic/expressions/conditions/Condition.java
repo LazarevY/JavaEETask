@@ -16,13 +16,12 @@ public class Condition<TargetType, ValueType> {
         this.value = value;
     }
 
-    public boolean check(Object instance){
+    public boolean check(Object instance) {
         try {
             return comparator.compare((ValueType) propertyManager.getValue(instance), value);
         } catch (InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
-        }
-        catch (ClassCastException e){
+        } catch (ClassCastException e) {
             System.err.println("Wrong parameter type");
             e.printStackTrace();
         }

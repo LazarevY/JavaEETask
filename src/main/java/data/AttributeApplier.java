@@ -20,8 +20,8 @@ public class AttributeApplier {
         this.attributes = attributes;
     }
 
-    public void applyFor(Object o){
-        for (Attribute attribute: attributes)
+    public void applyFor(Object o) {
+        for (Attribute attribute : attributes)
             new PropertyManager(attribute.getName()).setValue(o, attribute.getValue());
     }
 }

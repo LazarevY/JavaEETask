@@ -1,7 +1,7 @@
 package ui.console.commands;
 
 import console.io.InputManager;
-import core.annotations.InjectByType;
+import core.inverseofcontrol.annotations.InjectByType;
 import data.Attribute;
 import data.AttributeFilterType;
 import data.Filter;
@@ -11,23 +11,19 @@ import logic.expressions.comparators.OperatorType;
 
 import java.time.LocalDate;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class EditEventAction implements Command {
 
-    @InjectByType
-    private  BusinessLogic logic;
-
-    @InjectByType
-    private Input input;
-
     public static final String CHOOSE_MSG = "Choose param for edit:\n" +
             "d: Date of event\n" +
             "e: Description of event\n" +
             "q: Return back";
-
+    @InjectByType
+    private BusinessLogic logic;
+    @InjectByType
+    private Input input;
     @InjectByType
     private InputManager inputManager;
 
@@ -51,10 +47,10 @@ public class EditEventAction implements Command {
                                 .getReturnMap().get("input");
 
                 attribute = new Attribute("eventDate",
-                                date);
+                        date);
             } else if (command.equals("e")) {
                 attribute = new Attribute("eventDescription",
-                                inputManager.getStringFromStandardInput("Type new description"));
+                        inputManager.getStringFromStandardInput("Type new description"));
             } else {
                 command = inputManager.getStringFromStandardInput("Wrong. Input again");
                 continue;

@@ -7,12 +7,12 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.time.Month;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class PropertyManagerTest {
 
     @Test
-    public void test000(){
+    public void test000() {
 
         Event e =
                 new Birthday(LocalDate.of(2020, Month.JANUARY, 20),
@@ -28,7 +28,7 @@ public class PropertyManagerTest {
     }
 
     @Test
-    public void test001(){
+    public void test001() {
 
         Birthday e =
                 new Birthday(LocalDate.of(2020, Month.JANUARY, 20),

@@ -11,19 +11,19 @@ import java.util.function.Predicate;
 public class ConditionsPredicate implements Predicate<Object> {
 
     private final Class dataTypeClass;
-    private HashMap<AttributeFilterType, List<Condition<Object, ?>>> map;
+    private final HashMap<AttributeFilterType, List<Condition<Object, ?>>> map;
 
 
     public ConditionsPredicate(Class dataTypeClass) {
         this.dataTypeClass = dataTypeClass;
-        this.map = new HashMap<AttributeFilterType, List<Condition<Object, ?>>>(){{
+        this.map = new HashMap<AttributeFilterType, List<Condition<Object, ?>>>() {{
             put(AttributeFilterType.And, new ArrayList<>());
             put(AttributeFilterType.Or, new ArrayList<>());
             put(AttributeFilterType.Enough, new ArrayList<>());
         }};
     }
 
-    public void addCondition(Condition<Object, Object> condition, AttributeFilterType filterType){
+    public void addCondition(Condition<Object, Object> condition, AttributeFilterType filterType) {
         map.get(filterType).add(condition);
     }
 
@@ -42,7 +42,7 @@ public class ConditionsPredicate implements Predicate<Object> {
         if (allEmpty)
             return true;
 
-        for (Condition<Object, ?> e: map.get(AttributeFilterType.Enough))
+        for (Condition<Object, ?> e : map.get(AttributeFilterType.Enough))
             if (e.check(t))
                 return true;
 

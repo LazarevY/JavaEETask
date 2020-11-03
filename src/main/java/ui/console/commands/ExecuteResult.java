@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ExecuteResult {
-    private int status;
     private final Map<String, Object> returnMap;
+    private int status;
 
-    public ExecuteResult(){
+    public ExecuteResult() {
         this(0);
     }
 
@@ -16,7 +16,7 @@ public class ExecuteResult {
         returnMap = new HashMap<>();
     }
 
-    public static ExecuteResult emptySuccessResult(){
+    public static ExecuteResult emptySuccessResult() {
         return new ExecuteResult();
     }
 
@@ -32,7 +32,7 @@ public class ExecuteResult {
         return returnMap;
     }
 
-    public void addReturnParameter(String name, Object param){
+    public void addReturnParameter(String name, Object param) {
         returnMap.put(name, param);
     }
 }

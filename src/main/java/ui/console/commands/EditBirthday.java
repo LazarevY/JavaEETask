@@ -1,7 +1,7 @@
 package ui.console.commands;
 
 import console.io.InputManager;
-import core.annotations.InjectByType;
+import core.inverseofcontrol.annotations.InjectByType;
 import data.Attribute;
 import data.AttributeFilterType;
 import data.Filter;
@@ -14,13 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class EditBirthday implements Command{
-
-    @InjectByType
-    private BusinessLogic logic;
-
-    @InjectByType
-    private Input input;
+public class EditBirthday implements Command {
 
     public static final String CHOOSE_MSG = "Choose param for edit:\n" +
             "d: Date of event\n" +
@@ -28,7 +22,10 @@ public class EditBirthday implements Command{
             "p: Birthday person\n" +
             "g: Gift description\n" +
             "q: Return back";
-
+    @InjectByType
+    private BusinessLogic logic;
+    @InjectByType
+    private Input input;
     @InjectByType
     private InputManager inputManager;
 

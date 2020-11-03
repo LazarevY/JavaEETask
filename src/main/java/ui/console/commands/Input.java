@@ -1,16 +1,14 @@
 package ui.console.commands;
 
 import console.io.*;
-import core.annotations.InjectMapClassKeyByEntries;
-import core.annotations.MapKeyClassEntry;
-import core.annotations.Singleton;
+import core.inverseofcontrol.annotations.InjectMapClassKeyByEntries;
+import core.inverseofcontrol.annotations.MapKeyClassEntry;
+import core.inverseofcontrol.annotations.Singleton;
 import logic.events.Appointment;
 import logic.events.Birthday;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
 import java.util.Map;
 
 @Singleton

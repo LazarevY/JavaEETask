@@ -1,7 +1,7 @@
 package ui.console.commands;
 
 import console.io.InputManager;
-import core.annotations.InjectByType;
+import core.inverseofcontrol.annotations.InjectByType;
 import data.Attribute;
 import data.AttributeFilterType;
 import data.Filter;
@@ -12,15 +12,9 @@ import logic.expressions.comparators.OperatorType;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 public class EditAppointmentAction implements Command {
-
-    @InjectByType
-    private BusinessLogic logic;
-    @InjectByType
-    private Input input;
 
     public static final String CHOOSE_MSG = "Choose param for edit:\n" +
             "d: Date of event\n" +
@@ -28,7 +22,10 @@ public class EditAppointmentAction implements Command {
             "p: Appointment person\n" +
             "t: Time of appointment\n" +
             "q: Return back";
-
+    @InjectByType
+    private BusinessLogic logic;
+    @InjectByType
+    private Input input;
     @InjectByType
     private InputManager inputManager;
 
@@ -66,9 +63,8 @@ public class EditAppointmentAction implements Command {
                     break;
                 case "t":
                     attribute = new Attribute("appointmentTime",
-                            (LocalTime)
-                    input.execute(Map.of("type", LocalTime.class, "msg", "Input time in format like 18:30"))
-                    .getReturnMap().get("input"));
+                            input.execute(Map.of("type", LocalTime.class, "msg", "Input time in format like 18:30"))
+                                    .getReturnMap().get("input"));
                     break;
                 default:
                     command = inputManager.getStringFromStandardInput("Wrong. Input again");

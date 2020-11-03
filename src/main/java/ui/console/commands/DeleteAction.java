@@ -1,7 +1,7 @@
 package ui.console.commands;
 
 import console.io.InputManager;
-import core.annotations.InjectByType;
+import core.inverseofcontrol.annotations.InjectByType;
 import data.AttributeFilterType;
 import data.Filter;
 import logic.business.BusinessLogic;
@@ -16,11 +16,9 @@ import java.util.Map;
 
 public class DeleteAction implements Command {
 
+    public static final String CHOOSE_MSG = "(Delete action)Input event id";
     @InjectByType
     private BusinessLogic logic;
-
-    public static final String CHOOSE_MSG = "(Delete action)Input event id";
-
     @InjectByType
     private InputManager inputManager;
 
@@ -33,13 +31,12 @@ public class DeleteAction implements Command {
         Class<? extends Event> eventClass = null;
 
         String st = inputManager.getStringFromStandardInput("Choose type of event: b - Birthday, a - Appointment");
-        while (eventClass == null){
+        while (eventClass == null) {
 
             if (st.equals("b")) {
                 eventClass = Birthday.class;
                 break;
-            }
-            else if (st.equals("a")) {
+            } else if (st.equals("a")) {
                 eventClass = Appointment.class;
                 break;
             }
@@ -52,10 +49,10 @@ public class DeleteAction implements Command {
 
         List<? extends Event> events;
 
-        while ((events =  logic.listOf(Collections.singletonList(
+        while ((events = logic.listOf(Collections.singletonList(
                 new Filter<>("id", OperatorType.Equal, id, Integer.class, AttributeFilterType.And)), eventClass))
                 .size() != 1
-        ){
+        ) {
             id = inputManager
                     .getIntFromStandardInput(
                             String.format("No event founded by id %d. Input id again", id)
@@ -66,7 +63,7 @@ public class DeleteAction implements Command {
                 String.format("Event deleted: %s", events.get(0).fullDescription()));
 
         logic.removeEventsType(
-                Collections.singletonList(new Filter<>("id",OperatorType.Equal, id, Integer.class, AttributeFilterType.And)),
+                Collections.singletonList(new Filter<>("id", OperatorType.Equal, id, Integer.class, AttributeFilterType.And)),
                 eventClass
         );
 

@@ -1,10 +1,10 @@
 package logic.events;
 
-import core.annotations.PropertyGetter;
-import core.annotations.PropertySetter;
-import database.annotations.AutoGen;
-import database.annotations.Column;
-import database.annotations.Id;
+import core.database.annotations.AutoGen;
+import core.database.annotations.Column;
+import core.database.annotations.Id;
+import core.inverseofcontrol.annotations.PropertyGetter;
+import core.inverseofcontrol.annotations.PropertySetter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,13 +12,13 @@ import java.util.Objects;
 
 public abstract class Event implements Serializable {
 
-    @Id(autoGen = AutoGen.TRUE)
-    @Column
-    private int id;
     @Column
     protected LocalDate date = LocalDate.ofEpochDay(1);
     @Column
     protected String description = "";
+    @Id(autoGen = AutoGen.TRUE)
+    @Column
+    private int id;
 
 
     public Event() {
@@ -89,32 +89,32 @@ public abstract class Event implements Serializable {
     }
 
     @PropertyGetter("day")
-    private int getDay(){
+    private int getDay() {
         return date.getDayOfMonth();
     }
 
     @PropertySetter("day")
-    private void setDay(int value){
+    private void setDay(int value) {
         date = LocalDate.of(date.getYear(), date.getMonth(), value);
     }
 
     @PropertyGetter("month")
-    private int getMonthValue(){
+    private int getMonthValue() {
         return date.getMonthValue();
     }
 
     @PropertySetter("month")
-    private void setMonth(int value){
+    private void setMonth(int value) {
         date = LocalDate.of(date.getYear(), value, date.getDayOfMonth());
     }
 
     @PropertyGetter("year")
-    private int getYear(){
+    private int getYear() {
         return date.getYear();
     }
 
     @PropertySetter("year")
-    private void setYear(int value){
+    private void setYear(int value) {
         date = LocalDate.of(value, date.getMonth(), date.getDayOfMonth());
     }
 }

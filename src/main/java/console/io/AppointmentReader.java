@@ -1,15 +1,13 @@
 package console.io;
 
-import core.annotations.InjectByType;
-import core.annotations.Singleton;
+import core.inverseofcontrol.annotations.InjectByType;
+import core.inverseofcontrol.annotations.Singleton;
 import logic.events.Appointment;
-import ui.console.commands.Input;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
 
 @Singleton
 public class AppointmentReader implements ConsoleClassReader<Appointment> {

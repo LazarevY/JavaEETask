@@ -1,7 +1,7 @@
 package ui.console.commands;
 
 import console.io.InputManager;
-import core.annotations.InjectByType;
+import core.inverseofcontrol.annotations.InjectByType;
 import logic.events.Event;
 
 import javax.annotation.PostConstruct;

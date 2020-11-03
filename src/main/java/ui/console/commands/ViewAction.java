@@ -1,22 +1,16 @@
 package ui.console.commands;
 
 import console.io.InputManager;
-import core.annotations.InjectByType;
-import core.annotations.InjectMapStringKeyByEntries;
-import core.annotations.MapStringKeyEntry;
+import core.inverseofcontrol.annotations.InjectByType;
+import core.inverseofcontrol.annotations.InjectMapStringKeyByEntries;
+import core.inverseofcontrol.annotations.MapStringKeyEntry;
 import logic.events.Event;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ViewAction implements Command {
-
-    @InjectMapStringKeyByEntries({
-            @MapStringKeyEntry(key = "a", implClass = ViewAllEvents.class),
-            @MapStringKeyEntry(key = "b", implClass = ViewBirthdays.class),
-            @MapStringKeyEntry(key = "t", implClass = ViewAppointments.class),
-            @MapStringKeyEntry(key = "s", implClass = SelectSortParameter.class)
-    })
-    private Map<String, Command> commandMap;
 
     public static final String CHOOSE_MSG = "What I must do?\n" +
             "s: Select sort parameter\n" +
@@ -26,7 +20,13 @@ public class ViewAction implements Command {
             "f: View with full description\n" +
             "d: View with short description\n" +
             "q: Return back";
-
+    @InjectMapStringKeyByEntries({
+            @MapStringKeyEntry(key = "a", implClass = ViewAllEvents.class),
+            @MapStringKeyEntry(key = "b", implClass = ViewBirthdays.class),
+            @MapStringKeyEntry(key = "t", implClass = ViewAppointments.class),
+            @MapStringKeyEntry(key = "s", implClass = SelectSortParameter.class)
+    })
+    private Map<String, Command> commandMap;
     @InjectByType
     private InputManager inputManager;
 

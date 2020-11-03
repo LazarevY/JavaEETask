@@ -1,9 +1,9 @@
 package logic.events;
 
-import core.annotations.PropertyGetter;
-import core.annotations.PropertySetter;
-import database.annotations.Column;
-import database.annotations.Entity;
+import core.database.annotations.Column;
+import core.database.annotations.Entity;
+import core.inverseofcontrol.annotations.PropertyGetter;
+import core.inverseofcontrol.annotations.PropertySetter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -11,23 +11,25 @@ import java.time.LocalDate;
 @Entity("birthdays")
 public class Birthday extends Event implements Serializable {
 
+    private static final String DEFAULT_PERSON = "Person doesn't setted";
+    private static final String DEFAULT_PRESENT_DESCRIPTION = "No present description";
+    @Column
+    private String targetPerson;
+    @Column
+    private String gift;
+
     public Birthday(LocalDate date, String description,
-                    String targetPerson, String gift){
+                    String targetPerson, String gift) {
         super(date, description);
         this.targetPerson = targetPerson;
         this.gift = gift;
     }
 
-    public Birthday(){
+    public Birthday() {
         super(LocalDate.now(), "");
         targetPerson = "";
         gift = "";
     }
-
-    @Column
-    private String targetPerson;
-    @Column
-    private String gift;
 
     @PropertyGetter("birthdayPerson")
     public String getTargetPerson() {
@@ -65,7 +67,4 @@ public class Birthday extends Event implements Serializable {
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
-
-    private static final String DEFAULT_PERSON = "Person doesn't setted";
-    private static final String DEFAULT_PRESENT_DESCRIPTION = "No present description";
 }
