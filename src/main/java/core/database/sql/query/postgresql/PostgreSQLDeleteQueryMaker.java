@@ -3,6 +3,7 @@ package core.database.sql.query.postgresql;
 import core.database.annotations.Entity;
 import core.database.sql.query.SQLDeleteQueryMaker;
 import core.inverseofcontrol.annotations.InjectByType;
+import core.inverseofcontrol.annotations.InterfaceForType;
 import data.query.Delete;
 
 import java.lang.reflect.Field;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 
 import static org.reflections.ReflectionUtils.getAllFields;
 
+@InterfaceForType(Delete.class)
 public class PostgreSQLDeleteQueryMaker implements SQLDeleteQueryMaker {
 
     @InjectByType

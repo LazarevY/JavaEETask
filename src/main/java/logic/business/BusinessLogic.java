@@ -1,5 +1,6 @@
 package logic.business;
 
+
 import core.dao.DAO;
 import core.inverseofcontrol.annotations.InjectByType;
 import core.inverseofcontrol.annotations.Singleton;

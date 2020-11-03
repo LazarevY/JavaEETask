@@ -7,6 +7,7 @@ import core.database.annotations.Id;
 import core.database.maping.PostgreObjectMapper;
 import core.database.sql.query.SQLInsertQueryMaker;
 import core.inverseofcontrol.annotations.InjectByType;
+import core.inverseofcontrol.annotations.InterfaceForType;
 import data.query.Insert;
 import lombok.SneakyThrows;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 import static org.reflections.ReflectionUtils.getAllFields;
 
+@InterfaceForType(Insert.class)
 public class PostgreSQLInsertQueryMaker implements SQLInsertQueryMaker {
 
     @InjectByType

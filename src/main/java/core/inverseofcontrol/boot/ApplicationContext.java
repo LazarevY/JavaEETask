@@ -15,11 +15,12 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ApplicationContext implements Context {
 
-    @Setter
-    private ObjectFactory factory;
     private final Map<Class, Object> cache = new ConcurrentHashMap<>();
     @Getter
     private final Config config;
+    @Setter
+    private ObjectFactory factory;
+
 
     public ApplicationContext(Config config) {
         this.config = config;

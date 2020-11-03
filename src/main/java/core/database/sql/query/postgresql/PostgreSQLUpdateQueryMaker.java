@@ -4,6 +4,7 @@ import core.database.annotations.Entity;
 import core.database.maping.PostgreObjectMapper;
 import core.database.sql.query.SQLUpdateQueryMaker;
 import core.inverseofcontrol.annotations.InjectByType;
+import core.inverseofcontrol.annotations.InterfaceForType;
 import data.Attribute;
 import data.query.Update;
 
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 import static org.reflections.ReflectionUtils.getAllFields;
 
+@InterfaceForType(Update.class)
 public class PostgreSQLUpdateQueryMaker implements SQLUpdateQueryMaker {
 
     @InjectByType

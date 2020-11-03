@@ -62,4 +62,5 @@ public class Appointment extends Event implements Serializable {
                 "Appointment time: " + time.toString() +
                 "\nDescription: " + description + "\n";
     }
+
 }
