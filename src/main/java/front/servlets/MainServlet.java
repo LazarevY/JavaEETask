@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/")
 public class MainServlet extends HttpServlet {
@@ -16,8 +17,11 @@ public class MainServlet extends HttpServlet {
         ServletContext selvletContext = getServletContext();
         selvletContext.setAttribute("name", "Tom");
         selvletContext.setAttribute("age", 35);
-
-        getServletContext().getRequestDispatcher("/jspmain.jsp").forward(req, resp);
+        PrintWriter out = resp.getWriter();
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        out.print("{\"name\": \"sssss\"}");
+        out.flush();
     }
 
     @Override
