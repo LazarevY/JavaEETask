@@ -1,5 +1,7 @@
 package logic.events;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import core.database.annotations.AutoGen;
 import core.database.annotations.Column;
 import core.database.annotations.Id;
@@ -10,6 +12,13 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.CLASS,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Birthday.class, name = "birthday"),
+        @JsonSubTypes.Type(value = Appointment.class, name = "appointment")
+})
 public abstract class Event implements Serializable {
 
     @Column

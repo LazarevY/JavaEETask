@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.lang.reflect.Field;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -24,8 +23,7 @@ public class InjectPropertyObjectConfigurator implements ObjectConfigurator {
 
     @SneakyThrows
     public InjectPropertyObjectConfigurator() {
-        String path = Objects.requireNonNull(ClassLoader.getSystemClassLoader()
-                .getResource("applications.properties")).getPath();
+        String path = "/home/lazarev/LazarevY/Learn/JavaEETask/src/main/resources/applications.properties";
         Stream<String> lines = new BufferedReader(new FileReader(path)).lines();
         propertiesMap = lines.map(line -> line.split("="))
                 .collect(Collectors.toMap(arr -> arr[0], arr -> arr[1]));
