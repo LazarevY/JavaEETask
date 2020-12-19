@@ -4,6 +4,7 @@ import core.database.DataBase;
 import core.database.sql.dialects.SQLDialect;
 import core.inverseofcontrol.annotations.InjectByType;
 import data.query.Query;
+import data.query.Select;
 
 public class SQLContext {
 
@@ -21,7 +22,10 @@ public class SQLContext {
             return new QueryResponse(null, -1, "Error by create query");
         }
 
-        return dataBase.executeQuery(queryStr);
+        if (query instanceof Select)
+            return dataBase.executeQuery(queryStr);
+        else
+            return dataBase.executeUpdate(queryStr);
 
 
     }

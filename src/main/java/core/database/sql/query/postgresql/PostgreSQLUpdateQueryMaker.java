@@ -1,5 +1,6 @@
 package core.database.sql.query.postgresql;
 
+import core.database.annotations.Column;
 import core.database.annotations.Entity;
 import core.database.maping.PostgreObjectMapper;
 import core.database.sql.query.SQLUpdateQueryMaker;
@@ -8,7 +9,6 @@ import core.inverseofcontrol.annotations.InterfaceForType;
 import data.Attribute;
 import data.query.Update;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -34,11 +34,11 @@ public class PostgreSQLUpdateQueryMaker implements SQLUpdateQueryMaker {
 
         List<Attribute> attributes;
         Set<String> fieldsName =
-                getAllFields(entityClass)
-                        .stream()
-                        .map(Field::getName)
-                        .map(String::toLowerCase)
-                        .collect(Collectors.toSet());
+                getAllFields(entityClass).stream().filter(f -> f.isAnnotationPresent(Column.class))
+                        .map(field -> {
+                            Column annotation = field.getAnnotation(Column.class);
+                            return annotation.value().equals("") ? field.getName() : annotation.value();
+                        }).map(String::toLowerCase).collect(Collectors.toSet());
         attributes = query.getAttributes()
 
                 .stream()
