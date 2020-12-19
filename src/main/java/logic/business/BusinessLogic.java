@@ -50,7 +50,9 @@ public class BusinessLogic {
     }
 
     public <T extends Event> List<T> listOf(List<Filter<?>> filters, Class<T> tClass) {
-        return listOf(filters, tClass, Comparator.comparingInt(e -> e.getEventDate().getYear()));
+        Select<T> select = new Select<>(tClass);
+        select.setFilters(filters);
+        return dao.select(select);
     }
 
     public <T extends Event> List<T> listOf(List<Filter<?>> filters, Class<T> tClass, Comparator<T> toSortComparator) {
