@@ -13,7 +13,7 @@ public class PostgreObjectMapper implements ObjectMapper {
             return String.format("TIMESTAMP '%s'", o.toString());
         else if (o instanceof LocalTime)
             return String.format("TIME '%s'",
-                    ((LocalTime) o).format(DateTimeFormatter.ofPattern("hh:mm:ss")));
+                    ((LocalTime) o).format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         else
             return String.format("%s", o.toString());
     }

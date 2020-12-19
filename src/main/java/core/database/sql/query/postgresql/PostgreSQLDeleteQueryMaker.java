@@ -1,12 +1,12 @@
 package core.database.sql.query.postgresql;
 
+import core.database.annotations.Column;
 import core.database.annotations.Entity;
 import core.database.sql.query.SQLDeleteQueryMaker;
 import core.inverseofcontrol.annotations.InjectByType;
 import core.inverseofcontrol.annotations.InterfaceForType;
 import data.query.Delete;
 
-import java.lang.reflect.Field;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,7 +33,11 @@ public class PostgreSQLDeleteQueryMaker implements SQLDeleteQueryMaker {
         utils.addTableName(entityClass, builder);
 
         Set<String> fieldsName =
-                getAllFields(entityClass).stream().map(Field::getName).map(String::toLowerCase).collect(Collectors.toSet());
+                getAllFields(entityClass).stream().filter(f->f.isAnnotationPresent(Column.class))
+                        .map(field -> {
+                            Column annotation = field.getAnnotation(Column.class);
+                            return annotation.value().equals("")? field.getName(): annotation.value();
+                        }).map(String::toLowerCase).collect(Collectors.toSet());
 
         utils.addWherePredicateIfNeeded(builder, fieldsName, query.getFilters());
         builder.append(";");
