@@ -229,7 +229,7 @@ export default {
         person: this.addForm.person,
         desc: this.addForm.desc,
         gift: this.addForm.gift,
-        date: this.addForm.date,
+        date: this.dateToString(this.addForm.date),
         time: this.addForm.time,
       }
       this.$refs.addModal.hide();
@@ -258,6 +258,14 @@ export default {
         console.log(error)
       })
     },
+    dateToString(date){
+      if (date == null)
+        return null;
+      let month = date.getMonth() + 1 + 100;
+      let day = date.getDate() + 100;
+      return date.getFullYear().toString() + "-" +
+        month.toString().substr(1,2) + "-" + day.toString().substr(1,2);
+    },
     onEditSubmit(){
       let payload = {
         id: this.editForm.id,
@@ -265,7 +273,7 @@ export default {
         person: this.editForm.person,
         desc: this.editForm.desc,
         gift: this.editForm.gift,
-        date: this.editForm.date,
+        date: this.dateToString(this.editForm.date),
         time: this.editForm.time,
       }
       this.$refs.editModal.hide();
@@ -286,8 +294,8 @@ export default {
         types: types,
         sort: this.filterForm.sort,
         sortDesc: this.filterForm.sortDesc,
-        beginDate: this.filterForm.startDate,
-        endDate: this.filterForm.endDate,
+        beginDate: this.dateToString(this.filterForm.startDate),
+        endDate: this.dateToString(this.filterForm.endDate),
       }
       this.loadFiltered(payload)
     },

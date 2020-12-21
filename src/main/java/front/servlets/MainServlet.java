@@ -118,7 +118,8 @@ public class MainServlet extends HttpServlet {
                 Comparator<T> c1 = Comparator.comparingInt(event -> event.getEventDate().getDayOfMonth());
                 return desc ? c1.reversed() : c1;
             default:
-                return Comparator.comparingInt(event -> event.getEventDate().getYear());
+                Comparator<T> c2 = Comparator.comparingInt(event -> event.getEventDate().getYear());
+                return desc ? c2.reversed() : c2;
         }
     }
 }
